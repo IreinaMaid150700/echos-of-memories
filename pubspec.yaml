@@ -91,6 +91,8 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^2.13.1
   injectable_generator: ^2.6.2
+  mocktail: ^1.0.0
+  bloc_test: ^9.1.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
