@@ -13,18 +13,32 @@ class _PrivacyCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _PrivacyToggleRow(
-            icon: Icons.visibility_off_outlined,
-            title: 'Ẩn khỏi widget',
-            value: false,
-            onChanged: (_) {},
+          BlocSelector<CreateMomentCubit, CreateMomentState, bool>(
+            selector: (state) {
+              return state.hideFromWidget;
+            },
+            builder: (context, hideFromWidget) {
+              return _PrivacyToggleRow(
+                icon: Icons.visibility_off_outlined,
+                title: 'Ẩn khỏi widget',
+                value: hideFromWidget,
+                onChanged: context.read<CreateMomentCubit>().toggleHiddenWidget,
+              );
+            },
           ),
           Divider(height: 1, color: context.themeColors.borderSubtle),
-          _PrivacyToggleRow(
-            icon: Icons.favorite_outline,
-            title: 'Đánh dấu yêu thích',
-            value: false,
-            onChanged: (_) {},
+          BlocSelector<CreateMomentCubit, CreateMomentState, bool>(
+            selector: (state) {
+              return state.isLoved;
+            },
+            builder: (context, isLoved) {
+              return _PrivacyToggleRow(
+                icon: Icons.favorite_outline,
+                title: 'Đánh dấu yêu thích',
+                value: isLoved,
+                onChanged: context.read<CreateMomentCubit>().toggleLoved,
+              );
+            },
           ),
           Divider(height: 1, color: context.themeColors.borderSubtle),
           const _PrivacyToggleWithPrompt(),

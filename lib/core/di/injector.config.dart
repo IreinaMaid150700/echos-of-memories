@@ -15,6 +15,16 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
+import '../../features/create_moment/data/repositories/tag_repository_impl.dart'
+    as _i167;
+import '../../features/create_moment/domain/repositories/tag_repository.dart'
+    as _i705;
+import '../../features/create_moment/domain/usecases/create_tag_usecase.dart'
+    as _i938;
+import '../../features/create_moment/domain/usecases/delete_tag_usecase.dart'
+    as _i74;
+import '../../features/create_moment/domain/usecases/get_tags_usecase.dart'
+    as _i173;
 import '../../features/theme/data/repositories/theme_repository_impl.dart'
     as _i592;
 import '../../features/theme/domain/repositories/theme_repository.dart'
@@ -65,6 +75,18 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i636.PreferencesService>(
       () => _i636.PreferencesService(gh<_i460.SharedPreferences>()),
+    );
+    gh.lazySingleton<_i705.TagRepository>(
+      () => _i167.TagRepositoryImpl(gh<_i690.AppDatabase>()),
+    );
+    gh.factory<_i938.CreateTagUseCase>(
+      () => _i938.CreateTagUseCase(gh<_i705.TagRepository>()),
+    );
+    gh.factory<_i74.DeleteTagUseCase>(
+      () => _i74.DeleteTagUseCase(gh<_i705.TagRepository>()),
+    );
+    gh.factory<_i173.GetTagsUseCase>(
+      () => _i173.GetTagsUseCase(gh<_i705.TagRepository>()),
     );
     gh.lazySingleton<_i869.ThemeRepository>(
       () => _i592.ThemeRepositoryImpl(gh<_i636.PreferencesService>()),

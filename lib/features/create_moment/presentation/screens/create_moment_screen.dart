@@ -2,11 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:music_app/core/di/injector.dart';
 import 'package:music_app/core/theme/app_colors.dart';
 import 'package:music_app/core/theme/app_custom_colors.dart';
 import 'package:music_app/core/utils/extensions/date_time_extension.dart';
 import 'package:music_app/core/widgets/under_development_dialog.dart';
 import 'package:music_app/features/create_moment/domain/enum/create_moment_direct_enum.dart';
+import 'package:music_app/features/create_moment/domain/usecases/get_tags_usecase.dart';
 import 'package:music_app/features/create_moment/presentation/cubit/create_moment_cubit.dart';
 
 part 'widgets/_create_app_bar.dart';
@@ -27,7 +29,9 @@ class CreateMomentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => CreateMomentCubit(),
+      create: (_) => CreateMomentCubit(
+        getTagsUseCase: getIt<GetTagsUseCase>(),
+      )..initialData(),
       child: const _CreateMomentBody(),
     );
   }
