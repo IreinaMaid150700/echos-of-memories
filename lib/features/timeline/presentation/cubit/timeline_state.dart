@@ -1,0 +1,3 @@
+class TimelineState {
+  const TimelineState();
+}

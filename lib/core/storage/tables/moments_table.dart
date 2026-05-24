@@ -1,0 +1,31 @@
+import 'package:drift/drift.dart';
+
+class Moments extends Table {
+  TextColumn get id => text()();
+  TextColumn get title => text().nullable()();
+  TextColumn get note => text().nullable()();
+  TextColumn get coverAssetId => text().nullable()();
+  TextColumn get moodId => text().nullable()();
+  DateTimeColumn get momentDate => dateTime()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get deletedAt => dateTime().nullable()();
+  RealColumn get latitude => real().nullable()();
+  RealColumn get longitude => real().nullable()();
+  TextColumn get locationName => text().nullable()();
+  TextColumn get address => text().nullable()();
+  TextColumn get city => text().nullable()();
+  TextColumn get country => text().nullable()();
+  BoolColumn get isFavorite => boolean().withDefault(const Constant(false))();
+  BoolColumn get isPinned => boolean().withDefault(const Constant(false))();
+  BoolColumn get isHiddenFromWidget =>
+      boolean().withDefault(const Constant(false))();
+  TextColumn get deviceId => text()();
+  IntColumn get schemaVersion => integer().withDefault(const Constant(1))();
+  BoolColumn get isLocked => boolean().withDefault(const Constant(false))();
+  BoolColumn get isSensitive => boolean().withDefault(const Constant(false))();
+  TextColumn get toneId => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
