@@ -2,13 +2,43 @@ import 'dart:io';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:music_app/core/cubit/base_cubit.dart';
+import 'package:music_app/core/utils/models/loaded.dart';
 import 'package:music_app/features/create_moment/domain/enum/create_moment_direct_enum.dart';
+import 'package:music_app/features/create_moment/domain/models/tag_entity.dart';
+import 'package:music_app/features/create_moment/domain/usecases/get_tags_usecase.dart';
 import 'package:image_picker/image_picker.dart';
 part 'create_moment_state.dart';
 part 'create_moment_cubit.freezed.dart';
 
 class CreateMomentCubit extends BaseCubit<CreateMomentState> {
-  CreateMomentCubit() : super(const CreateMomentState());
+  final GetTagsUseCase _getTagsUseCase;
+
+  CreateMomentCubit({required GetTagsUseCase getTagsUseCase})
+    : _getTagsUseCase = getTagsUseCase,
+      super(const CreateMomentState());
+
+  Future<void> initialData() async {
+    await loadTagsSuggestions();
+  }
+
+  Future<void> loadTagsSuggestions() async {
+    await execute(
+      loadingState: state.copyWith(
+        tagsSuggestions: state.tagsSuggestions.toLoading(),
+      ),
+      action: () => _getTagsUseCase(),
+      onSuccess: (tags) => state.copyWith(
+        tagsSuggestions: state.tagsSuggestions.toSuccess(tags),
+      ),
+      onFailure: (f) => state.copyWith(
+        tagsSuggestions: state.tagsSuggestions.toFailure(f.message),
+      ),
+    );
+  }
+
+  void updateInputText(String text) {
+    emit(state.copyWith(inputText: text));
+  }
 
   void onChangeNote(String? value) {
     emit(state.copyWith(note: value));
@@ -17,6 +47,18 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
   void toggleLockedMoment(bool value) {
     if (value != state.isLockMoment) {
       emit(state.copyWith(isLockMoment: value));
+    }
+  }
+
+  void toggleLoved(bool value) {
+    if (value != state.isLoved) {
+      emit(state.copyWith(isLoved: value));
+    }
+  }
+
+  void toggleHiddenWidget(bool value) {
+    if (value != state.hideFromWidget) {
+      emit(state.copyWith(hideFromWidget: value));
     }
   }
 
@@ -32,7 +74,7 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
           ),
         );
       }
-    } catch (e) {
+    } catch (_) {
       emit(
         state.copyWith(
           createMomentDirectEnum:
@@ -40,19 +82,9 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
         ),
       );
     }
-    // final LostDataResponse response = await picker.retrieveLostData();
-    // if (response.isEmpty) {
-    //   return;
-    // }
-    // final List<XFile>? files = response.files;
-    // if (files != null) {
-    //   _handleLostFiles(files);
-    // } else {
-    //   _handleError(response.exception);
-    // }
   }
 
-  Future<void> selectedLocation() async {
+  void showDevelopmentDialog() {
     emit(
       state.copyWith(
         createMomentDirectEnum: CreateMomentDirectEnum.showDialogDevelopment,
@@ -61,21 +93,34 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
     );
   }
 
-  Future<void> selectedDate() async {
-    emit(
-      state.copyWith(
-        createMomentDirectEnum: CreateMomentDirectEnum.showDialogDevelopment,
-        timeStamp: DateTime.now().millisecondsSinceEpoch,
-      ),
+  void addTag(String tagName) {
+    final normalizedName = tagName.trim().toLowerCase().replaceAll('#', '');
+    if (normalizedName.isEmpty) return;
+
+    final exists = state.tagsSelected.any(
+      (t) => t.normalizedName == normalizedName,
     );
+    if (exists) return;
+
+    final newTag = TagEntity(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      name: normalizedName,
+      normalizedName: normalizedName,
+    );
+
+    emit(state.copyWith(tagsSelected: [...state.tagsSelected, newTag]));
   }
 
-  Future<void> addCollections() async {
-    emit(
-      state.copyWith(
-        createMomentDirectEnum: CreateMomentDirectEnum.showDialogDevelopment,
-        timeStamp: DateTime.now().millisecondsSinceEpoch,
-      ),
+  void addTagFromSuggestion(TagEntity tag) {
+    final exists = state.tagsSelected.any(
+      (t) => t.id == tag.id || t.normalizedName == tag.normalizedName,
     );
+    if (exists) return;
+    emit(state.copyWith(tagsSelected: [...state.tagsSelected, tag]));
+  }
+
+  void removeTag(String tagId) {
+    final updatedTags = state.tagsSelected.where((t) => t.id != tagId).toList();
+    emit(state.copyWith(tagsSelected: updatedTags));
   }
 }

@@ -22,7 +22,7 @@ class _DateLocationCard extends StatelessWidget {
                 icon: Icons.calendar_today_outlined,
                 label: 'Ngày khoảnh khắc',
                 value: momentDate.toVietnamese(showYear: false),
-                onTap: () => context.read<CreateMomentCubit>().selectedDate(),
+                onTap: () => context.read<CreateMomentCubit>().showDevelopmentDialog(),
               );
             },
           ),

@@ -7,11 +7,13 @@ abstract class CreateMomentState with _$CreateMomentState {
     @Default([]) List<File> imagePicker,
     String? note,
     DateTime? momentDate,
-    @Default([]) List<String> tagsIdSelect,
+    @Default([]) List<TagEntity> tagsSelected,
     String? toneIdSelected,
     @Default(false) bool hideFromWidget,
     @Default(false) bool isLockMoment,
     @Default(false) bool isLoved,
     @Default(0) int timeStamp,
+    @Default(Loaded<List<TagEntity>>()) Loaded<List<TagEntity>> tagsSuggestions,
+    @Default('') String inputText,
   }) = _CreateMomentState;
 }
