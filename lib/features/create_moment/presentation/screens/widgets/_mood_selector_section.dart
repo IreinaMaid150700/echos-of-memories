@@ -4,11 +4,44 @@ class _MoodSelectorSection extends StatelessWidget {
   const _MoodSelectorSection();
 
   static const _moods = [
-    (emoji: '🌿', label: 'Bình yên', bgColorKey: 'moodCalmBackground', textColorKey: 'moodCalmText'),
-    (emoji: '😊', label: 'Vui vẻ', bgColorKey: 'moodWarmBackground', textColorKey: 'moodWarmText'),
-    (emoji: '🌙', label: 'Trầm lắng', bgColorKey: 'moodFocusedBackground', textColorKey: 'moodFocusedText'),
-    (emoji: '😮‍💨', label: 'Mệt mỏi', bgColorKey: 'moodFocusedBackground', textColorKey: 'moodFocusedText'),
-    (emoji: '✨', label: 'Biết ơn', bgColorKey: 'moodCalmBackground', textColorKey: 'moodCalmText'),
+    (
+      emoji: '🌿',
+      label: 'Bình yên',
+      bgColorKey: 'moodCalmBackground',
+      textColorKey: 'moodCalmText',
+    ),
+    (
+      emoji: '😊',
+      label: 'Vui vẻ',
+      bgColorKey: 'moodWarmBackground',
+      textColorKey: 'moodWarmText',
+    ),
+    (
+      emoji: '🌙',
+      label: 'Trầm lắng',
+      bgColorKey: 'moodFocusedBackground',
+      textColorKey: 'moodFocusedText',
+    ),
+    (
+      emoji: '😮‍💨',
+      label: 'Mệt mỏi',
+      bgColorKey: 'moodFocusedBackground',
+      textColorKey: 'moodFocusedText',
+    ),
+    (
+      emoji: '✨',
+      label: 'Biết ơn',
+      bgColorKey: 'moodCalmBackground',
+      textColorKey: 'moodCalmText',
+    ),
+  ];
+
+  static const _moodColors = [
+    Color(0xFFE6F1DF),
+    Color(0xFFFFE2D8),
+    Color(0xFFF4DFC7),
+    Color(0xFFF5E8DF),
+    Color(0xFFFFF0C8),
   ];
 
   @override
@@ -20,12 +53,14 @@ class _MoodSelectorSection extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
           child: Text(
             'Tâm trạng',
-            style: context.textTheme.labelMedium?.copyWith(
+            style: context.textTheme.bodyLarge?.copyWith(
               color: context.themeColors.textMuted,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 0.11,
             ),
           ),
         ),
-        const Gap(AppSpacing.xs),
+        const Gap(AppSpacing.sm),
         SizedBox(
           height: 44,
           child: ListView.separated(
@@ -38,28 +73,14 @@ class _MoodSelectorSection extends StatelessWidget {
               return _MoodChip(
                 emoji: mood.emoji,
                 label: mood.label,
-                bgColor: _getColor(context, mood.bgColorKey),
-                textColor: _getColor(context, mood.textColorKey),
+                bgColor: _moodColors[index],
+                textColor: const Color(0xFF5F4A3E),
               );
             },
           ),
         ),
       ],
     );
-  }
-
-  Color _getColor(BuildContext context, String key) {
-    switch (key) {
-      case 'moodCalmBackground': return context.themeColors.moodCalmBackground;
-      case 'moodWarmBackground': return context.themeColors.moodWarmBackground;
-      case 'moodFocusedBackground': return context.themeColors.moodFocusedBackground;
-      case 'moodPeacefulBackground': return context.themeColors.moodPeacefulBackground;
-      case 'moodCalmText': return context.themeColors.moodCalmText;
-      case 'moodWarmText': return context.themeColors.moodWarmText;
-      case 'moodFocusedText': return context.themeColors.moodFocusedText;
-      case 'moodPeacefulText': return context.themeColors.moodPeacefulText;
-      default: return context.themeColors.moodCalmBackground;
-    }
   }
 }
 
@@ -86,6 +107,7 @@ class _MoodChip extends StatelessWidget {
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(AppRadius.full),
+        border: Border.all(color: const Color(0xFFB7D6AF), width: 1),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -94,7 +116,11 @@ class _MoodChip extends StatelessWidget {
           const Gap(AppSpacing.xxs),
           Text(
             label,
-            style: context.textTheme.labelMedium?.copyWith(color: textColor),
+            style: TextStyle(
+              color: textColor,
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ],
       ),

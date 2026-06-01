@@ -29,9 +29,9 @@ class CreateMomentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => CreateMomentCubit(
-        getTagsUseCase: getIt<GetTagsUseCase>(),
-      )..initialData(),
+      create: (_) =>
+          CreateMomentCubit(getTagsUseCase: getIt<GetTagsUseCase>())
+            ..initialData(),
       child: const _CreateMomentBody(),
     );
   }

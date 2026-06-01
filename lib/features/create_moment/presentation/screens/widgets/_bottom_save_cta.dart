@@ -16,37 +16,69 @@ class _BottomSaveCta extends StatelessWidget {
             bottom: MediaQuery.of(context).padding.bottom + AppSpacing.md,
           ),
           decoration: BoxDecoration(
-            color: context.themeColors.background,
-            border: Border(
-              top: BorderSide(
-                color: context.themeColors.borderSubtle,
-                width: 1,
-              ),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                context.themeColors.background,
+                context.themeColors.background.withValues(alpha: 0),
+              ],
+              stops: const [0.7, 1.0],
             ),
           ),
-          child: SizedBox(
-            width: double.infinity,
-            height: 52,
-            child: ElevatedButton(
-              onPressed: isEnabled ? () {} : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: isEnabled
-                    ? context.themeColors.primary
-                    : context.themeColors.primary.withValues(alpha: 0.5),
-                foregroundColor: context.themeColors.surface,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadius.lg),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: double.infinity,
+                height: 54,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        const Color(0xFFDC8669),
+                        const Color(0xFFC96C53),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(AppRadius.full),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFC96C53).withValues(alpha: 0.34),
+                        blurRadius: 34,
+                        offset: const Offset(0, 14),
+                      ),
+                    ],
+                  ),
+                  child: ElevatedButton(
+                    onPressed: isEnabled ? () {} : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.full),
+                      ),
+                    ),
+                    child: Text(
+                      'Lưu lại khoảnh khắc',
+                      style: context.textTheme.titleMedium?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ),
                 ),
               ),
-              child: Text(
-                'Lưu lại',
-                style: context.textTheme.titleMedium?.copyWith(
-                  color: context.themeColors.surface,
-                  fontWeight: FontWeight.w600,
+              const Gap(AppSpacing.xs),
+              Text(
+                '· Lưu riêng tư trên thiết bị này ·',
+                style: context.textTheme.labelSmall?.copyWith(
+                  color: context.themeColors.textMuted,
                 ),
               ),
-            ),
+            ],
           ),
         );
       },

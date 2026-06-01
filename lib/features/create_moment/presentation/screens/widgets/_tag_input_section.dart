@@ -28,8 +28,10 @@ class _TagEyebrow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       'Tags',
-      style: context.textTheme.titleMedium?.copyWith(
-        fontWeight: FontWeight.w600,
+      style: context.textTheme.bodyLarge?.copyWith(
+        color: context.themeColors.textMuted,
+        fontWeight: FontWeight.w800,
+        letterSpacing: 0.11,
       ),
     );
   }
@@ -123,26 +125,34 @@ class _TagInputShellState extends State<_TagInputShell> {
         horizontal: AppSpacing.md,
         vertical: AppSpacing.sm,
       ),
-      constraints: const BoxConstraints(minHeight: 52),
+      constraints: const BoxConstraints(minHeight: 58),
       decoration: BoxDecoration(
-        color: context.themeColors.surface,
-        borderRadius: BorderRadius.circular(AppRadius.xl),
-        border: Border.all(
-          color: context.themeColors.borderSubtle.withValues(alpha: 0.78),
-        ),
+        color: context.themeColors.surface.withValues(alpha: 0.82),
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(color: context.themeColors.borderSubtle),
       ),
       child: Row(
         children: [
-          Text(
-            '#',
-            style: TextStyle(
-              color: context.themeColors.primary,
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-              fontFamily: 'JetBrainsMono',
+          Container(
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(
+              color: const Color(0xFFF8E5DA),
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Text(
+                '#',
+                style: TextStyle(
+                  color: context.themeColors.primary,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'JetBrainsMono',
+                ),
+              ),
             ),
           ),
-          const Gap(AppSpacing.xs),
+          const Gap(AppSpacing.sm),
           Expanded(
             child: TextField(
               controller: _controller,
@@ -167,8 +177,6 @@ class _TagInputShellState extends State<_TagInputShell> {
               onSubmitted: (_) => _onFocusLost(),
             ),
           ),
-          const Gap(AppSpacing.xs),
-          _ClearButton(onPressed: _clearInput),
         ],
       ),
     );
