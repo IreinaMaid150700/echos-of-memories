@@ -43,20 +43,25 @@ class AppDatabase extends _$AppDatabase {
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
+      beforeOpen: (details) async {
+        await customStatement('PRAGMA foreign_keys = ON');
+      },
       onCreate: (Migrator m) async {
         await m.createAll();
 
+        // Partial index for timeline — covers both deleted filter and date sort
         await m.createIndex(
-          Index('idx_moments_moment_date',
-              'CREATE INDEX idx_moments_moment_date ON moments(moment_date)'),
+          Index('idx_moments_timeline',
+              'CREATE INDEX idx_moments_timeline ON moments(moment_date DESC) WHERE deleted_at IS NULL'),
         );
         await m.createIndex(
           Index('idx_moments_deleted_at',
               'CREATE INDEX idx_moments_deleted_at ON moments(deleted_at)'),
         );
+        // Partial index — plain bool index has near-zero cardinality benefit
         await m.createIndex(
           Index('idx_moments_is_favorite',
-              'CREATE INDEX idx_moments_is_favorite ON moments(is_favorite)'),
+              'CREATE INDEX idx_moments_is_favorite ON moments(moment_date DESC) WHERE deleted_at IS NULL AND is_favorite = 1'),
         );
 
         await m.createIndex(
@@ -89,6 +94,12 @@ class AppDatabase extends _$AppDatabase {
         await m.createIndex(
           Index('idx_moment_tones_tone_pack_id',
               'CREATE INDEX idx_moment_tones_tone_pack_id ON moment_tones(tone_pack_id)'),
+        );
+
+        // Unique partial index — prevents duplicate normalized tags (ignores soft-deleted)
+        await m.createIndex(
+          Index('idx_moment_tags_normalized_name_unique',
+              'CREATE UNIQUE INDEX idx_moment_tags_normalized_name_unique ON moment_tags(normalized_name) WHERE deleted_at IS NULL'),
         );
       },
       onUpgrade: (Migrator m, int from, int to) async {},

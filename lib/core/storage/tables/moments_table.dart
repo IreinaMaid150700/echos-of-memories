@@ -1,11 +1,14 @@
 import 'package:drift/drift.dart';
 
+import 'moment_moods_table.dart';
+import 'moment_tones_table.dart';
+
 class Moments extends Table {
   TextColumn get id => text()();
   TextColumn get title => text().nullable()();
   TextColumn get note => text().nullable()();
   TextColumn get coverAssetId => text().nullable()();
-  TextColumn get moodId => text().nullable()();
+  TextColumn get moodId => text().nullable().references(MomentMoods, #id, onDelete: KeyAction.setNull)();
   DateTimeColumn get momentDate => dateTime()();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();
@@ -24,7 +27,7 @@ class Moments extends Table {
   IntColumn get schemaVersion => integer().withDefault(const Constant(1))();
   BoolColumn get isLocked => boolean().withDefault(const Constant(false))();
   BoolColumn get isSensitive => boolean().withDefault(const Constant(false))();
-  TextColumn get toneId => text().nullable()();
+  TextColumn get toneId => text().nullable().references(MomentTones, #id, onDelete: KeyAction.setNull)();
 
   @override
   Set<Column> get primaryKey => {id};

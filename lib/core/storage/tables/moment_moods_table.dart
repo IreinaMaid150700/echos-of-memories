@@ -17,4 +17,10 @@ class MomentMoods extends Table {
 
   @override
   Set<Column> get primaryKey => {id};
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+        {moodPackId, key},
+        {moodPackId, code},
+      ];
 }
