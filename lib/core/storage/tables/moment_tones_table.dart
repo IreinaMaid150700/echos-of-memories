@@ -1,9 +1,11 @@
 import 'package:drift/drift.dart';
 
+import 'moment_tone_packs_table.dart';
+
 class MomentTones extends Table {
   TextColumn get id => text()();
   TextColumn get code => text()();
-  TextColumn get tonePackId => text()();
+  TextColumn get tonePackId => text().references(MomentTonePacks, #id)();
   TextColumn get name => text()();
   TextColumn get key => text()();
   TextColumn get lightColorHex => text()();
@@ -16,4 +18,10 @@ class MomentTones extends Table {
 
   @override
   Set<Column> get primaryKey => {id};
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+        {tonePackId, key},
+        {tonePackId, code},
+      ];
 }

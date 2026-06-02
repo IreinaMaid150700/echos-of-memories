@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateMomentState {
 
- CreateMomentDirectEnum? get createMomentDirectEnum; List<File> get imagePicker; String? get note; DateTime? get momentDate; List<String> get tagsIdSelect; String? get toneIdSelected; bool get hideFromWidget; bool get isLockMoment; bool get isLoved; int get timeStamp;
+ CreateMomentDirectEnum? get createMomentDirectEnum; List<File> get imagePicker; String? get note; DateTime? get momentDate; List<TagEntity> get tagsSelected; String? get toneIdSelected; bool get hideFromWidget; bool get isLockMoment; bool get isLoved; int get timeStamp; Loaded<List<TagEntity>> get tagsSuggestions; String get inputText;
 /// Create a copy of CreateMomentState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $CreateMomentStateCopyWith<CreateMomentState> get copyWith => _$CreateMomentStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateMomentState&&(identical(other.createMomentDirectEnum, createMomentDirectEnum) || other.createMomentDirectEnum == createMomentDirectEnum)&&const DeepCollectionEquality().equals(other.imagePicker, imagePicker)&&(identical(other.note, note) || other.note == note)&&(identical(other.momentDate, momentDate) || other.momentDate == momentDate)&&const DeepCollectionEquality().equals(other.tagsIdSelect, tagsIdSelect)&&(identical(other.toneIdSelected, toneIdSelected) || other.toneIdSelected == toneIdSelected)&&(identical(other.hideFromWidget, hideFromWidget) || other.hideFromWidget == hideFromWidget)&&(identical(other.isLockMoment, isLockMoment) || other.isLockMoment == isLockMoment)&&(identical(other.isLoved, isLoved) || other.isLoved == isLoved)&&(identical(other.timeStamp, timeStamp) || other.timeStamp == timeStamp));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateMomentState&&(identical(other.createMomentDirectEnum, createMomentDirectEnum) || other.createMomentDirectEnum == createMomentDirectEnum)&&const DeepCollectionEquality().equals(other.imagePicker, imagePicker)&&(identical(other.note, note) || other.note == note)&&(identical(other.momentDate, momentDate) || other.momentDate == momentDate)&&const DeepCollectionEquality().equals(other.tagsSelected, tagsSelected)&&(identical(other.toneIdSelected, toneIdSelected) || other.toneIdSelected == toneIdSelected)&&(identical(other.hideFromWidget, hideFromWidget) || other.hideFromWidget == hideFromWidget)&&(identical(other.isLockMoment, isLockMoment) || other.isLockMoment == isLockMoment)&&(identical(other.isLoved, isLoved) || other.isLoved == isLoved)&&(identical(other.timeStamp, timeStamp) || other.timeStamp == timeStamp)&&(identical(other.tagsSuggestions, tagsSuggestions) || other.tagsSuggestions == tagsSuggestions)&&(identical(other.inputText, inputText) || other.inputText == inputText));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,createMomentDirectEnum,const DeepCollectionEquality().hash(imagePicker),note,momentDate,const DeepCollectionEquality().hash(tagsIdSelect),toneIdSelected,hideFromWidget,isLockMoment,isLoved,timeStamp);
+int get hashCode => Object.hash(runtimeType,createMomentDirectEnum,const DeepCollectionEquality().hash(imagePicker),note,momentDate,const DeepCollectionEquality().hash(tagsSelected),toneIdSelected,hideFromWidget,isLockMoment,isLoved,timeStamp,tagsSuggestions,inputText);
 
 @override
 String toString() {
-  return 'CreateMomentState(createMomentDirectEnum: $createMomentDirectEnum, imagePicker: $imagePicker, note: $note, momentDate: $momentDate, tagsIdSelect: $tagsIdSelect, toneIdSelected: $toneIdSelected, hideFromWidget: $hideFromWidget, isLockMoment: $isLockMoment, isLoved: $isLoved, timeStamp: $timeStamp)';
+  return 'CreateMomentState(createMomentDirectEnum: $createMomentDirectEnum, imagePicker: $imagePicker, note: $note, momentDate: $momentDate, tagsSelected: $tagsSelected, toneIdSelected: $toneIdSelected, hideFromWidget: $hideFromWidget, isLockMoment: $isLockMoment, isLoved: $isLoved, timeStamp: $timeStamp, tagsSuggestions: $tagsSuggestions, inputText: $inputText)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $CreateMomentStateCopyWith<$Res>  {
   factory $CreateMomentStateCopyWith(CreateMomentState value, $Res Function(CreateMomentState) _then) = _$CreateMomentStateCopyWithImpl;
 @useResult
 $Res call({
- CreateMomentDirectEnum? createMomentDirectEnum, List<File> imagePicker, String? note, DateTime? momentDate, List<String> tagsIdSelect, String? toneIdSelected, bool hideFromWidget, bool isLockMoment, bool isLoved, int timeStamp
+ CreateMomentDirectEnum? createMomentDirectEnum, List<File> imagePicker, String? note, DateTime? momentDate, List<TagEntity> tagsSelected, String? toneIdSelected, bool hideFromWidget, bool isLockMoment, bool isLoved, int timeStamp, Loaded<List<TagEntity>> tagsSuggestions, String inputText
 });
 
 
@@ -62,19 +62,21 @@ class _$CreateMomentStateCopyWithImpl<$Res>
 
 /// Create a copy of CreateMomentState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? createMomentDirectEnum = freezed,Object? imagePicker = null,Object? note = freezed,Object? momentDate = freezed,Object? tagsIdSelect = null,Object? toneIdSelected = freezed,Object? hideFromWidget = null,Object? isLockMoment = null,Object? isLoved = null,Object? timeStamp = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? createMomentDirectEnum = freezed,Object? imagePicker = null,Object? note = freezed,Object? momentDate = freezed,Object? tagsSelected = null,Object? toneIdSelected = freezed,Object? hideFromWidget = null,Object? isLockMoment = null,Object? isLoved = null,Object? timeStamp = null,Object? tagsSuggestions = null,Object? inputText = null,}) {
   return _then(_self.copyWith(
 createMomentDirectEnum: freezed == createMomentDirectEnum ? _self.createMomentDirectEnum : createMomentDirectEnum // ignore: cast_nullable_to_non_nullable
 as CreateMomentDirectEnum?,imagePicker: null == imagePicker ? _self.imagePicker : imagePicker // ignore: cast_nullable_to_non_nullable
 as List<File>,note: freezed == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
 as String?,momentDate: freezed == momentDate ? _self.momentDate : momentDate // ignore: cast_nullable_to_non_nullable
-as DateTime?,tagsIdSelect: null == tagsIdSelect ? _self.tagsIdSelect : tagsIdSelect // ignore: cast_nullable_to_non_nullable
-as List<String>,toneIdSelected: freezed == toneIdSelected ? _self.toneIdSelected : toneIdSelected // ignore: cast_nullable_to_non_nullable
+as DateTime?,tagsSelected: null == tagsSelected ? _self.tagsSelected : tagsSelected // ignore: cast_nullable_to_non_nullable
+as List<TagEntity>,toneIdSelected: freezed == toneIdSelected ? _self.toneIdSelected : toneIdSelected // ignore: cast_nullable_to_non_nullable
 as String?,hideFromWidget: null == hideFromWidget ? _self.hideFromWidget : hideFromWidget // ignore: cast_nullable_to_non_nullable
 as bool,isLockMoment: null == isLockMoment ? _self.isLockMoment : isLockMoment // ignore: cast_nullable_to_non_nullable
 as bool,isLoved: null == isLoved ? _self.isLoved : isLoved // ignore: cast_nullable_to_non_nullable
 as bool,timeStamp: null == timeStamp ? _self.timeStamp : timeStamp // ignore: cast_nullable_to_non_nullable
-as int,
+as int,tagsSuggestions: null == tagsSuggestions ? _self.tagsSuggestions : tagsSuggestions // ignore: cast_nullable_to_non_nullable
+as Loaded<List<TagEntity>>,inputText: null == inputText ? _self.inputText : inputText // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -159,10 +161,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CreateMomentDirectEnum? createMomentDirectEnum,  List<File> imagePicker,  String? note,  DateTime? momentDate,  List<String> tagsIdSelect,  String? toneIdSelected,  bool hideFromWidget,  bool isLockMoment,  bool isLoved,  int timeStamp)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CreateMomentDirectEnum? createMomentDirectEnum,  List<File> imagePicker,  String? note,  DateTime? momentDate,  List<TagEntity> tagsSelected,  String? toneIdSelected,  bool hideFromWidget,  bool isLockMoment,  bool isLoved,  int timeStamp,  Loaded<List<TagEntity>> tagsSuggestions,  String inputText)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CreateMomentState() when $default != null:
-return $default(_that.createMomentDirectEnum,_that.imagePicker,_that.note,_that.momentDate,_that.tagsIdSelect,_that.toneIdSelected,_that.hideFromWidget,_that.isLockMoment,_that.isLoved,_that.timeStamp);case _:
+return $default(_that.createMomentDirectEnum,_that.imagePicker,_that.note,_that.momentDate,_that.tagsSelected,_that.toneIdSelected,_that.hideFromWidget,_that.isLockMoment,_that.isLoved,_that.timeStamp,_that.tagsSuggestions,_that.inputText);case _:
   return orElse();
 
 }
@@ -180,10 +182,10 @@ return $default(_that.createMomentDirectEnum,_that.imagePicker,_that.note,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CreateMomentDirectEnum? createMomentDirectEnum,  List<File> imagePicker,  String? note,  DateTime? momentDate,  List<String> tagsIdSelect,  String? toneIdSelected,  bool hideFromWidget,  bool isLockMoment,  bool isLoved,  int timeStamp)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CreateMomentDirectEnum? createMomentDirectEnum,  List<File> imagePicker,  String? note,  DateTime? momentDate,  List<TagEntity> tagsSelected,  String? toneIdSelected,  bool hideFromWidget,  bool isLockMoment,  bool isLoved,  int timeStamp,  Loaded<List<TagEntity>> tagsSuggestions,  String inputText)  $default,) {final _that = this;
 switch (_that) {
 case _CreateMomentState():
-return $default(_that.createMomentDirectEnum,_that.imagePicker,_that.note,_that.momentDate,_that.tagsIdSelect,_that.toneIdSelected,_that.hideFromWidget,_that.isLockMoment,_that.isLoved,_that.timeStamp);case _:
+return $default(_that.createMomentDirectEnum,_that.imagePicker,_that.note,_that.momentDate,_that.tagsSelected,_that.toneIdSelected,_that.hideFromWidget,_that.isLockMoment,_that.isLoved,_that.timeStamp,_that.tagsSuggestions,_that.inputText);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +202,10 @@ return $default(_that.createMomentDirectEnum,_that.imagePicker,_that.note,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CreateMomentDirectEnum? createMomentDirectEnum,  List<File> imagePicker,  String? note,  DateTime? momentDate,  List<String> tagsIdSelect,  String? toneIdSelected,  bool hideFromWidget,  bool isLockMoment,  bool isLoved,  int timeStamp)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CreateMomentDirectEnum? createMomentDirectEnum,  List<File> imagePicker,  String? note,  DateTime? momentDate,  List<TagEntity> tagsSelected,  String? toneIdSelected,  bool hideFromWidget,  bool isLockMoment,  bool isLoved,  int timeStamp,  Loaded<List<TagEntity>> tagsSuggestions,  String inputText)?  $default,) {final _that = this;
 switch (_that) {
 case _CreateMomentState() when $default != null:
-return $default(_that.createMomentDirectEnum,_that.imagePicker,_that.note,_that.momentDate,_that.tagsIdSelect,_that.toneIdSelected,_that.hideFromWidget,_that.isLockMoment,_that.isLoved,_that.timeStamp);case _:
+return $default(_that.createMomentDirectEnum,_that.imagePicker,_that.note,_that.momentDate,_that.tagsSelected,_that.toneIdSelected,_that.hideFromWidget,_that.isLockMoment,_that.isLoved,_that.timeStamp,_that.tagsSuggestions,_that.inputText);case _:
   return null;
 
 }
@@ -215,7 +217,7 @@ return $default(_that.createMomentDirectEnum,_that.imagePicker,_that.note,_that.
 
 
 class _CreateMomentState implements CreateMomentState {
-  const _CreateMomentState({this.createMomentDirectEnum, final  List<File> imagePicker = const [], this.note, this.momentDate, final  List<String> tagsIdSelect = const [], this.toneIdSelected, this.hideFromWidget = false, this.isLockMoment = false, this.isLoved = false, this.timeStamp = 0}): _imagePicker = imagePicker,_tagsIdSelect = tagsIdSelect;
+  const _CreateMomentState({this.createMomentDirectEnum, final  List<File> imagePicker = const [], this.note, this.momentDate, final  List<TagEntity> tagsSelected = const [], this.toneIdSelected, this.hideFromWidget = false, this.isLockMoment = false, this.isLoved = false, this.timeStamp = 0, this.tagsSuggestions = const Loaded<List<TagEntity>>(), this.inputText = ''}): _imagePicker = imagePicker,_tagsSelected = tagsSelected;
   
 
 @override final  CreateMomentDirectEnum? createMomentDirectEnum;
@@ -228,11 +230,11 @@ class _CreateMomentState implements CreateMomentState {
 
 @override final  String? note;
 @override final  DateTime? momentDate;
- final  List<String> _tagsIdSelect;
-@override@JsonKey() List<String> get tagsIdSelect {
-  if (_tagsIdSelect is EqualUnmodifiableListView) return _tagsIdSelect;
+ final  List<TagEntity> _tagsSelected;
+@override@JsonKey() List<TagEntity> get tagsSelected {
+  if (_tagsSelected is EqualUnmodifiableListView) return _tagsSelected;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_tagsIdSelect);
+  return EqualUnmodifiableListView(_tagsSelected);
 }
 
 @override final  String? toneIdSelected;
@@ -240,6 +242,8 @@ class _CreateMomentState implements CreateMomentState {
 @override@JsonKey() final  bool isLockMoment;
 @override@JsonKey() final  bool isLoved;
 @override@JsonKey() final  int timeStamp;
+@override@JsonKey() final  Loaded<List<TagEntity>> tagsSuggestions;
+@override@JsonKey() final  String inputText;
 
 /// Create a copy of CreateMomentState
 /// with the given fields replaced by the non-null parameter values.
@@ -251,16 +255,16 @@ _$CreateMomentStateCopyWith<_CreateMomentState> get copyWith => __$CreateMomentS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateMomentState&&(identical(other.createMomentDirectEnum, createMomentDirectEnum) || other.createMomentDirectEnum == createMomentDirectEnum)&&const DeepCollectionEquality().equals(other._imagePicker, _imagePicker)&&(identical(other.note, note) || other.note == note)&&(identical(other.momentDate, momentDate) || other.momentDate == momentDate)&&const DeepCollectionEquality().equals(other._tagsIdSelect, _tagsIdSelect)&&(identical(other.toneIdSelected, toneIdSelected) || other.toneIdSelected == toneIdSelected)&&(identical(other.hideFromWidget, hideFromWidget) || other.hideFromWidget == hideFromWidget)&&(identical(other.isLockMoment, isLockMoment) || other.isLockMoment == isLockMoment)&&(identical(other.isLoved, isLoved) || other.isLoved == isLoved)&&(identical(other.timeStamp, timeStamp) || other.timeStamp == timeStamp));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateMomentState&&(identical(other.createMomentDirectEnum, createMomentDirectEnum) || other.createMomentDirectEnum == createMomentDirectEnum)&&const DeepCollectionEquality().equals(other._imagePicker, _imagePicker)&&(identical(other.note, note) || other.note == note)&&(identical(other.momentDate, momentDate) || other.momentDate == momentDate)&&const DeepCollectionEquality().equals(other._tagsSelected, _tagsSelected)&&(identical(other.toneIdSelected, toneIdSelected) || other.toneIdSelected == toneIdSelected)&&(identical(other.hideFromWidget, hideFromWidget) || other.hideFromWidget == hideFromWidget)&&(identical(other.isLockMoment, isLockMoment) || other.isLockMoment == isLockMoment)&&(identical(other.isLoved, isLoved) || other.isLoved == isLoved)&&(identical(other.timeStamp, timeStamp) || other.timeStamp == timeStamp)&&(identical(other.tagsSuggestions, tagsSuggestions) || other.tagsSuggestions == tagsSuggestions)&&(identical(other.inputText, inputText) || other.inputText == inputText));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,createMomentDirectEnum,const DeepCollectionEquality().hash(_imagePicker),note,momentDate,const DeepCollectionEquality().hash(_tagsIdSelect),toneIdSelected,hideFromWidget,isLockMoment,isLoved,timeStamp);
+int get hashCode => Object.hash(runtimeType,createMomentDirectEnum,const DeepCollectionEquality().hash(_imagePicker),note,momentDate,const DeepCollectionEquality().hash(_tagsSelected),toneIdSelected,hideFromWidget,isLockMoment,isLoved,timeStamp,tagsSuggestions,inputText);
 
 @override
 String toString() {
-  return 'CreateMomentState(createMomentDirectEnum: $createMomentDirectEnum, imagePicker: $imagePicker, note: $note, momentDate: $momentDate, tagsIdSelect: $tagsIdSelect, toneIdSelected: $toneIdSelected, hideFromWidget: $hideFromWidget, isLockMoment: $isLockMoment, isLoved: $isLoved, timeStamp: $timeStamp)';
+  return 'CreateMomentState(createMomentDirectEnum: $createMomentDirectEnum, imagePicker: $imagePicker, note: $note, momentDate: $momentDate, tagsSelected: $tagsSelected, toneIdSelected: $toneIdSelected, hideFromWidget: $hideFromWidget, isLockMoment: $isLockMoment, isLoved: $isLoved, timeStamp: $timeStamp, tagsSuggestions: $tagsSuggestions, inputText: $inputText)';
 }
 
 
@@ -271,7 +275,7 @@ abstract mixin class _$CreateMomentStateCopyWith<$Res> implements $CreateMomentS
   factory _$CreateMomentStateCopyWith(_CreateMomentState value, $Res Function(_CreateMomentState) _then) = __$CreateMomentStateCopyWithImpl;
 @override @useResult
 $Res call({
- CreateMomentDirectEnum? createMomentDirectEnum, List<File> imagePicker, String? note, DateTime? momentDate, List<String> tagsIdSelect, String? toneIdSelected, bool hideFromWidget, bool isLockMoment, bool isLoved, int timeStamp
+ CreateMomentDirectEnum? createMomentDirectEnum, List<File> imagePicker, String? note, DateTime? momentDate, List<TagEntity> tagsSelected, String? toneIdSelected, bool hideFromWidget, bool isLockMoment, bool isLoved, int timeStamp, Loaded<List<TagEntity>> tagsSuggestions, String inputText
 });
 
 
@@ -288,19 +292,21 @@ class __$CreateMomentStateCopyWithImpl<$Res>
 
 /// Create a copy of CreateMomentState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? createMomentDirectEnum = freezed,Object? imagePicker = null,Object? note = freezed,Object? momentDate = freezed,Object? tagsIdSelect = null,Object? toneIdSelected = freezed,Object? hideFromWidget = null,Object? isLockMoment = null,Object? isLoved = null,Object? timeStamp = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? createMomentDirectEnum = freezed,Object? imagePicker = null,Object? note = freezed,Object? momentDate = freezed,Object? tagsSelected = null,Object? toneIdSelected = freezed,Object? hideFromWidget = null,Object? isLockMoment = null,Object? isLoved = null,Object? timeStamp = null,Object? tagsSuggestions = null,Object? inputText = null,}) {
   return _then(_CreateMomentState(
 createMomentDirectEnum: freezed == createMomentDirectEnum ? _self.createMomentDirectEnum : createMomentDirectEnum // ignore: cast_nullable_to_non_nullable
 as CreateMomentDirectEnum?,imagePicker: null == imagePicker ? _self._imagePicker : imagePicker // ignore: cast_nullable_to_non_nullable
 as List<File>,note: freezed == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
 as String?,momentDate: freezed == momentDate ? _self.momentDate : momentDate // ignore: cast_nullable_to_non_nullable
-as DateTime?,tagsIdSelect: null == tagsIdSelect ? _self._tagsIdSelect : tagsIdSelect // ignore: cast_nullable_to_non_nullable
-as List<String>,toneIdSelected: freezed == toneIdSelected ? _self.toneIdSelected : toneIdSelected // ignore: cast_nullable_to_non_nullable
+as DateTime?,tagsSelected: null == tagsSelected ? _self._tagsSelected : tagsSelected // ignore: cast_nullable_to_non_nullable
+as List<TagEntity>,toneIdSelected: freezed == toneIdSelected ? _self.toneIdSelected : toneIdSelected // ignore: cast_nullable_to_non_nullable
 as String?,hideFromWidget: null == hideFromWidget ? _self.hideFromWidget : hideFromWidget // ignore: cast_nullable_to_non_nullable
 as bool,isLockMoment: null == isLockMoment ? _self.isLockMoment : isLockMoment // ignore: cast_nullable_to_non_nullable
 as bool,isLoved: null == isLoved ? _self.isLoved : isLoved // ignore: cast_nullable_to_non_nullable
 as bool,timeStamp: null == timeStamp ? _self.timeStamp : timeStamp // ignore: cast_nullable_to_non_nullable
-as int,
+as int,tagsSuggestions: null == tagsSuggestions ? _self.tagsSuggestions : tagsSuggestions // ignore: cast_nullable_to_non_nullable
+as Loaded<List<TagEntity>>,inputText: null == inputText ? _self.inputText : inputText // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
