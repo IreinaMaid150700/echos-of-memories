@@ -1,12 +1,27 @@
-import 'package:music_app/features/timeline/presentation/cubit/timeline_state.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:music_app/core/cubit/base_cubit.dart';
+import 'package:music_app/core/utils/models/loaded.dart';
+import 'package:music_app/features/moment/domain/models/moment_entity.dart';
+import 'package:music_app/features/moment/domain/usecases/get_moments_usecase.dart';
 
-class TimelineCubit {
-  TimelineCubit() : _state = const TimelineState();
+part 'timeline_state.dart';
+part 'timeline_cubit.freezed.dart';
 
-  TimelineState _state;
-  TimelineState get state => _state;
+class TimelineCubit extends BaseCubit<TimelineState> {
+  final GetMomentsUseCase _getMomentsUseCase;
 
-  void emit(TimelineState state) {
-    _state = state;
+  TimelineCubit({required GetMomentsUseCase getMomentsUseCase})
+      : _getMomentsUseCase = getMomentsUseCase,
+        super(const TimelineState());
+
+  Future<void> loadMoments() async {
+    await execute(
+      loadingState: state.copyWith(moments: state.moments.toLoading()),
+      action: () => _getMomentsUseCase(),
+      onSuccess: (moments) =>
+          state.copyWith(moments: state.moments.toSuccess(moments)),
+      onFailure: (f) =>
+          state.copyWith(moments: state.moments.toFailure(f.message)),
+    );
   }
 }

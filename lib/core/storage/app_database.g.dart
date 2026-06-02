@@ -3,6 +3,2428 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
+class $MomentMoodPacksTable extends MomentMoodPacks
+    with TableInfo<$MomentMoodPacksTable, MomentMoodPack> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MomentMoodPacksTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isBuiltInMeta = const VerificationMeta(
+    'isBuiltIn',
+  );
+  @override
+  late final GeneratedColumn<bool> isBuiltIn = GeneratedColumn<bool>(
+    'is_built_in',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_built_in" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _isEnabledMeta = const VerificationMeta(
+    'isEnabled',
+  );
+  @override
+  late final GeneratedColumn<bool> isEnabled = GeneratedColumn<bool>(
+    'is_enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    code,
+    name,
+    description,
+    isBuiltIn,
+    isEnabled,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'moment_mood_packs';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MomentMoodPack> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_built_in')) {
+      context.handle(
+        _isBuiltInMeta,
+        isBuiltIn.isAcceptableOrUnknown(data['is_built_in']!, _isBuiltInMeta),
+      );
+    }
+    if (data.containsKey('is_enabled')) {
+      context.handle(
+        _isEnabledMeta,
+        isEnabled.isAcceptableOrUnknown(data['is_enabled']!, _isEnabledMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MomentMoodPack map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MomentMoodPack(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      isBuiltIn: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_built_in'],
+      )!,
+      isEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_enabled'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $MomentMoodPacksTable createAlias(String alias) {
+    return $MomentMoodPacksTable(attachedDatabase, alias);
+  }
+}
+
+class MomentMoodPack extends DataClass implements Insertable<MomentMoodPack> {
+  final String id;
+  final String code;
+  final String name;
+  final String? description;
+  final bool isBuiltIn;
+  final bool isEnabled;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const MomentMoodPack({
+    required this.id,
+    required this.code,
+    required this.name,
+    this.description,
+    required this.isBuiltIn,
+    required this.isEnabled,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['code'] = Variable<String>(code);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    map['is_built_in'] = Variable<bool>(isBuiltIn);
+    map['is_enabled'] = Variable<bool>(isEnabled);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  MomentMoodPacksCompanion toCompanion(bool nullToAbsent) {
+    return MomentMoodPacksCompanion(
+      id: Value(id),
+      code: Value(code),
+      name: Value(name),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      isBuiltIn: Value(isBuiltIn),
+      isEnabled: Value(isEnabled),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory MomentMoodPack.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MomentMoodPack(
+      id: serializer.fromJson<String>(json['id']),
+      code: serializer.fromJson<String>(json['code']),
+      name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String?>(json['description']),
+      isBuiltIn: serializer.fromJson<bool>(json['isBuiltIn']),
+      isEnabled: serializer.fromJson<bool>(json['isEnabled']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'code': serializer.toJson<String>(code),
+      'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String?>(description),
+      'isBuiltIn': serializer.toJson<bool>(isBuiltIn),
+      'isEnabled': serializer.toJson<bool>(isEnabled),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  MomentMoodPack copyWith({
+    String? id,
+    String? code,
+    String? name,
+    Value<String?> description = const Value.absent(),
+    bool? isBuiltIn,
+    bool? isEnabled,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => MomentMoodPack(
+    id: id ?? this.id,
+    code: code ?? this.code,
+    name: name ?? this.name,
+    description: description.present ? description.value : this.description,
+    isBuiltIn: isBuiltIn ?? this.isBuiltIn,
+    isEnabled: isEnabled ?? this.isEnabled,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  MomentMoodPack copyWithCompanion(MomentMoodPacksCompanion data) {
+    return MomentMoodPack(
+      id: data.id.present ? data.id.value : this.id,
+      code: data.code.present ? data.code.value : this.code,
+      name: data.name.present ? data.name.value : this.name,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      isBuiltIn: data.isBuiltIn.present ? data.isBuiltIn.value : this.isBuiltIn,
+      isEnabled: data.isEnabled.present ? data.isEnabled.value : this.isEnabled,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MomentMoodPack(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('isBuiltIn: $isBuiltIn, ')
+          ..write('isEnabled: $isEnabled, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    code,
+    name,
+    description,
+    isBuiltIn,
+    isEnabled,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MomentMoodPack &&
+          other.id == this.id &&
+          other.code == this.code &&
+          other.name == this.name &&
+          other.description == this.description &&
+          other.isBuiltIn == this.isBuiltIn &&
+          other.isEnabled == this.isEnabled &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class MomentMoodPacksCompanion extends UpdateCompanion<MomentMoodPack> {
+  final Value<String> id;
+  final Value<String> code;
+  final Value<String> name;
+  final Value<String?> description;
+  final Value<bool> isBuiltIn;
+  final Value<bool> isEnabled;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const MomentMoodPacksCompanion({
+    this.id = const Value.absent(),
+    this.code = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.isBuiltIn = const Value.absent(),
+    this.isEnabled = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MomentMoodPacksCompanion.insert({
+    required String id,
+    required String code,
+    required String name,
+    this.description = const Value.absent(),
+    this.isBuiltIn = const Value.absent(),
+    this.isEnabled = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       code = Value(code),
+       name = Value(name),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<MomentMoodPack> custom({
+    Expression<String>? id,
+    Expression<String>? code,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<bool>? isBuiltIn,
+    Expression<bool>? isEnabled,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (code != null) 'code': code,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (isBuiltIn != null) 'is_built_in': isBuiltIn,
+      if (isEnabled != null) 'is_enabled': isEnabled,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MomentMoodPacksCompanion copyWith({
+    Value<String>? id,
+    Value<String>? code,
+    Value<String>? name,
+    Value<String?>? description,
+    Value<bool>? isBuiltIn,
+    Value<bool>? isEnabled,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return MomentMoodPacksCompanion(
+      id: id ?? this.id,
+      code: code ?? this.code,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      isBuiltIn: isBuiltIn ?? this.isBuiltIn,
+      isEnabled: isEnabled ?? this.isEnabled,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (isBuiltIn.present) {
+      map['is_built_in'] = Variable<bool>(isBuiltIn.value);
+    }
+    if (isEnabled.present) {
+      map['is_enabled'] = Variable<bool>(isEnabled.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MomentMoodPacksCompanion(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('isBuiltIn: $isBuiltIn, ')
+          ..write('isEnabled: $isEnabled, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MomentMoodsTable extends MomentMoods
+    with TableInfo<$MomentMoodsTable, MomentMood> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MomentMoodsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _moodPackIdMeta = const VerificationMeta(
+    'moodPackId',
+  );
+  @override
+  late final GeneratedColumn<String> moodPackId = GeneratedColumn<String>(
+    'mood_pack_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES moment_mood_packs (id)',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _emojiMeta = const VerificationMeta('emoji');
+  @override
+  late final GeneratedColumn<String> emoji = GeneratedColumn<String>(
+    'emoji',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _keyMeta = const VerificationMeta('key');
+  @override
+  late final GeneratedColumn<String> key = GeneratedColumn<String>(
+    'key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _colorHexMeta = const VerificationMeta(
+    'colorHex',
+  );
+  @override
+  late final GeneratedColumn<String> colorHex = GeneratedColumn<String>(
+    'color_hex',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isDefaultMeta = const VerificationMeta(
+    'isDefault',
+  );
+  @override
+  late final GeneratedColumn<bool> isDefault = GeneratedColumn<bool>(
+    'is_default',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_default" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _isArchivedMeta = const VerificationMeta(
+    'isArchived',
+  );
+  @override
+  late final GeneratedColumn<bool> isArchived = GeneratedColumn<bool>(
+    'is_archived',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_archived" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    code,
+    moodPackId,
+    name,
+    emoji,
+    key,
+    colorHex,
+    isDefault,
+    isArchived,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'moment_moods';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MomentMood> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeMeta);
+    }
+    if (data.containsKey('mood_pack_id')) {
+      context.handle(
+        _moodPackIdMeta,
+        moodPackId.isAcceptableOrUnknown(
+          data['mood_pack_id']!,
+          _moodPackIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_moodPackIdMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('emoji')) {
+      context.handle(
+        _emojiMeta,
+        emoji.isAcceptableOrUnknown(data['emoji']!, _emojiMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_emojiMeta);
+    }
+    if (data.containsKey('key')) {
+      context.handle(
+        _keyMeta,
+        key.isAcceptableOrUnknown(data['key']!, _keyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_keyMeta);
+    }
+    if (data.containsKey('color_hex')) {
+      context.handle(
+        _colorHexMeta,
+        colorHex.isAcceptableOrUnknown(data['color_hex']!, _colorHexMeta),
+      );
+    }
+    if (data.containsKey('is_default')) {
+      context.handle(
+        _isDefaultMeta,
+        isDefault.isAcceptableOrUnknown(data['is_default']!, _isDefaultMeta),
+      );
+    }
+    if (data.containsKey('is_archived')) {
+      context.handle(
+        _isArchivedMeta,
+        isArchived.isAcceptableOrUnknown(data['is_archived']!, _isArchivedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {moodPackId, key},
+    {moodPackId, code},
+  ];
+  @override
+  MomentMood map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MomentMood(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      )!,
+      moodPackId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}mood_pack_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      emoji: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}emoji'],
+      )!,
+      key: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}key'],
+      )!,
+      colorHex: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}color_hex'],
+      ),
+      isDefault: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_default'],
+      )!,
+      isArchived: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_archived'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $MomentMoodsTable createAlias(String alias) {
+    return $MomentMoodsTable(attachedDatabase, alias);
+  }
+}
+
+class MomentMood extends DataClass implements Insertable<MomentMood> {
+  final String id;
+  final String code;
+  final String moodPackId;
+  final String name;
+  final String emoji;
+  final String key;
+  final String? colorHex;
+  final bool isDefault;
+  final bool isArchived;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const MomentMood({
+    required this.id,
+    required this.code,
+    required this.moodPackId,
+    required this.name,
+    required this.emoji,
+    required this.key,
+    this.colorHex,
+    required this.isDefault,
+    required this.isArchived,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['code'] = Variable<String>(code);
+    map['mood_pack_id'] = Variable<String>(moodPackId);
+    map['name'] = Variable<String>(name);
+    map['emoji'] = Variable<String>(emoji);
+    map['key'] = Variable<String>(key);
+    if (!nullToAbsent || colorHex != null) {
+      map['color_hex'] = Variable<String>(colorHex);
+    }
+    map['is_default'] = Variable<bool>(isDefault);
+    map['is_archived'] = Variable<bool>(isArchived);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  MomentMoodsCompanion toCompanion(bool nullToAbsent) {
+    return MomentMoodsCompanion(
+      id: Value(id),
+      code: Value(code),
+      moodPackId: Value(moodPackId),
+      name: Value(name),
+      emoji: Value(emoji),
+      key: Value(key),
+      colorHex: colorHex == null && nullToAbsent
+          ? const Value.absent()
+          : Value(colorHex),
+      isDefault: Value(isDefault),
+      isArchived: Value(isArchived),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory MomentMood.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MomentMood(
+      id: serializer.fromJson<String>(json['id']),
+      code: serializer.fromJson<String>(json['code']),
+      moodPackId: serializer.fromJson<String>(json['moodPackId']),
+      name: serializer.fromJson<String>(json['name']),
+      emoji: serializer.fromJson<String>(json['emoji']),
+      key: serializer.fromJson<String>(json['key']),
+      colorHex: serializer.fromJson<String?>(json['colorHex']),
+      isDefault: serializer.fromJson<bool>(json['isDefault']),
+      isArchived: serializer.fromJson<bool>(json['isArchived']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'code': serializer.toJson<String>(code),
+      'moodPackId': serializer.toJson<String>(moodPackId),
+      'name': serializer.toJson<String>(name),
+      'emoji': serializer.toJson<String>(emoji),
+      'key': serializer.toJson<String>(key),
+      'colorHex': serializer.toJson<String?>(colorHex),
+      'isDefault': serializer.toJson<bool>(isDefault),
+      'isArchived': serializer.toJson<bool>(isArchived),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  MomentMood copyWith({
+    String? id,
+    String? code,
+    String? moodPackId,
+    String? name,
+    String? emoji,
+    String? key,
+    Value<String?> colorHex = const Value.absent(),
+    bool? isDefault,
+    bool? isArchived,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => MomentMood(
+    id: id ?? this.id,
+    code: code ?? this.code,
+    moodPackId: moodPackId ?? this.moodPackId,
+    name: name ?? this.name,
+    emoji: emoji ?? this.emoji,
+    key: key ?? this.key,
+    colorHex: colorHex.present ? colorHex.value : this.colorHex,
+    isDefault: isDefault ?? this.isDefault,
+    isArchived: isArchived ?? this.isArchived,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  MomentMood copyWithCompanion(MomentMoodsCompanion data) {
+    return MomentMood(
+      id: data.id.present ? data.id.value : this.id,
+      code: data.code.present ? data.code.value : this.code,
+      moodPackId: data.moodPackId.present
+          ? data.moodPackId.value
+          : this.moodPackId,
+      name: data.name.present ? data.name.value : this.name,
+      emoji: data.emoji.present ? data.emoji.value : this.emoji,
+      key: data.key.present ? data.key.value : this.key,
+      colorHex: data.colorHex.present ? data.colorHex.value : this.colorHex,
+      isDefault: data.isDefault.present ? data.isDefault.value : this.isDefault,
+      isArchived: data.isArchived.present
+          ? data.isArchived.value
+          : this.isArchived,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MomentMood(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('moodPackId: $moodPackId, ')
+          ..write('name: $name, ')
+          ..write('emoji: $emoji, ')
+          ..write('key: $key, ')
+          ..write('colorHex: $colorHex, ')
+          ..write('isDefault: $isDefault, ')
+          ..write('isArchived: $isArchived, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    code,
+    moodPackId,
+    name,
+    emoji,
+    key,
+    colorHex,
+    isDefault,
+    isArchived,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MomentMood &&
+          other.id == this.id &&
+          other.code == this.code &&
+          other.moodPackId == this.moodPackId &&
+          other.name == this.name &&
+          other.emoji == this.emoji &&
+          other.key == this.key &&
+          other.colorHex == this.colorHex &&
+          other.isDefault == this.isDefault &&
+          other.isArchived == this.isArchived &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class MomentMoodsCompanion extends UpdateCompanion<MomentMood> {
+  final Value<String> id;
+  final Value<String> code;
+  final Value<String> moodPackId;
+  final Value<String> name;
+  final Value<String> emoji;
+  final Value<String> key;
+  final Value<String?> colorHex;
+  final Value<bool> isDefault;
+  final Value<bool> isArchived;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const MomentMoodsCompanion({
+    this.id = const Value.absent(),
+    this.code = const Value.absent(),
+    this.moodPackId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.emoji = const Value.absent(),
+    this.key = const Value.absent(),
+    this.colorHex = const Value.absent(),
+    this.isDefault = const Value.absent(),
+    this.isArchived = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MomentMoodsCompanion.insert({
+    required String id,
+    required String code,
+    required String moodPackId,
+    required String name,
+    required String emoji,
+    required String key,
+    this.colorHex = const Value.absent(),
+    this.isDefault = const Value.absent(),
+    this.isArchived = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       code = Value(code),
+       moodPackId = Value(moodPackId),
+       name = Value(name),
+       emoji = Value(emoji),
+       key = Value(key),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<MomentMood> custom({
+    Expression<String>? id,
+    Expression<String>? code,
+    Expression<String>? moodPackId,
+    Expression<String>? name,
+    Expression<String>? emoji,
+    Expression<String>? key,
+    Expression<String>? colorHex,
+    Expression<bool>? isDefault,
+    Expression<bool>? isArchived,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (code != null) 'code': code,
+      if (moodPackId != null) 'mood_pack_id': moodPackId,
+      if (name != null) 'name': name,
+      if (emoji != null) 'emoji': emoji,
+      if (key != null) 'key': key,
+      if (colorHex != null) 'color_hex': colorHex,
+      if (isDefault != null) 'is_default': isDefault,
+      if (isArchived != null) 'is_archived': isArchived,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MomentMoodsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? code,
+    Value<String>? moodPackId,
+    Value<String>? name,
+    Value<String>? emoji,
+    Value<String>? key,
+    Value<String?>? colorHex,
+    Value<bool>? isDefault,
+    Value<bool>? isArchived,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return MomentMoodsCompanion(
+      id: id ?? this.id,
+      code: code ?? this.code,
+      moodPackId: moodPackId ?? this.moodPackId,
+      name: name ?? this.name,
+      emoji: emoji ?? this.emoji,
+      key: key ?? this.key,
+      colorHex: colorHex ?? this.colorHex,
+      isDefault: isDefault ?? this.isDefault,
+      isArchived: isArchived ?? this.isArchived,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (moodPackId.present) {
+      map['mood_pack_id'] = Variable<String>(moodPackId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (emoji.present) {
+      map['emoji'] = Variable<String>(emoji.value);
+    }
+    if (key.present) {
+      map['key'] = Variable<String>(key.value);
+    }
+    if (colorHex.present) {
+      map['color_hex'] = Variable<String>(colorHex.value);
+    }
+    if (isDefault.present) {
+      map['is_default'] = Variable<bool>(isDefault.value);
+    }
+    if (isArchived.present) {
+      map['is_archived'] = Variable<bool>(isArchived.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MomentMoodsCompanion(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('moodPackId: $moodPackId, ')
+          ..write('name: $name, ')
+          ..write('emoji: $emoji, ')
+          ..write('key: $key, ')
+          ..write('colorHex: $colorHex, ')
+          ..write('isDefault: $isDefault, ')
+          ..write('isArchived: $isArchived, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MomentTonePacksTable extends MomentTonePacks
+    with TableInfo<$MomentTonePacksTable, MomentTonePack> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MomentTonePacksTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isBuiltInMeta = const VerificationMeta(
+    'isBuiltIn',
+  );
+  @override
+  late final GeneratedColumn<bool> isBuiltIn = GeneratedColumn<bool>(
+    'is_built_in',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_built_in" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _isEnabledMeta = const VerificationMeta(
+    'isEnabled',
+  );
+  @override
+  late final GeneratedColumn<bool> isEnabled = GeneratedColumn<bool>(
+    'is_enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    code,
+    name,
+    description,
+    isBuiltIn,
+    isEnabled,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'moment_tone_packs';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MomentTonePack> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_built_in')) {
+      context.handle(
+        _isBuiltInMeta,
+        isBuiltIn.isAcceptableOrUnknown(data['is_built_in']!, _isBuiltInMeta),
+      );
+    }
+    if (data.containsKey('is_enabled')) {
+      context.handle(
+        _isEnabledMeta,
+        isEnabled.isAcceptableOrUnknown(data['is_enabled']!, _isEnabledMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MomentTonePack map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MomentTonePack(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      isBuiltIn: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_built_in'],
+      )!,
+      isEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_enabled'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $MomentTonePacksTable createAlias(String alias) {
+    return $MomentTonePacksTable(attachedDatabase, alias);
+  }
+}
+
+class MomentTonePack extends DataClass implements Insertable<MomentTonePack> {
+  final String id;
+  final String code;
+  final String name;
+  final String? description;
+  final bool isBuiltIn;
+  final bool isEnabled;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const MomentTonePack({
+    required this.id,
+    required this.code,
+    required this.name,
+    this.description,
+    required this.isBuiltIn,
+    required this.isEnabled,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['code'] = Variable<String>(code);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    map['is_built_in'] = Variable<bool>(isBuiltIn);
+    map['is_enabled'] = Variable<bool>(isEnabled);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  MomentTonePacksCompanion toCompanion(bool nullToAbsent) {
+    return MomentTonePacksCompanion(
+      id: Value(id),
+      code: Value(code),
+      name: Value(name),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      isBuiltIn: Value(isBuiltIn),
+      isEnabled: Value(isEnabled),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory MomentTonePack.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MomentTonePack(
+      id: serializer.fromJson<String>(json['id']),
+      code: serializer.fromJson<String>(json['code']),
+      name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String?>(json['description']),
+      isBuiltIn: serializer.fromJson<bool>(json['isBuiltIn']),
+      isEnabled: serializer.fromJson<bool>(json['isEnabled']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'code': serializer.toJson<String>(code),
+      'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String?>(description),
+      'isBuiltIn': serializer.toJson<bool>(isBuiltIn),
+      'isEnabled': serializer.toJson<bool>(isEnabled),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  MomentTonePack copyWith({
+    String? id,
+    String? code,
+    String? name,
+    Value<String?> description = const Value.absent(),
+    bool? isBuiltIn,
+    bool? isEnabled,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => MomentTonePack(
+    id: id ?? this.id,
+    code: code ?? this.code,
+    name: name ?? this.name,
+    description: description.present ? description.value : this.description,
+    isBuiltIn: isBuiltIn ?? this.isBuiltIn,
+    isEnabled: isEnabled ?? this.isEnabled,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  MomentTonePack copyWithCompanion(MomentTonePacksCompanion data) {
+    return MomentTonePack(
+      id: data.id.present ? data.id.value : this.id,
+      code: data.code.present ? data.code.value : this.code,
+      name: data.name.present ? data.name.value : this.name,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      isBuiltIn: data.isBuiltIn.present ? data.isBuiltIn.value : this.isBuiltIn,
+      isEnabled: data.isEnabled.present ? data.isEnabled.value : this.isEnabled,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MomentTonePack(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('isBuiltIn: $isBuiltIn, ')
+          ..write('isEnabled: $isEnabled, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    code,
+    name,
+    description,
+    isBuiltIn,
+    isEnabled,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MomentTonePack &&
+          other.id == this.id &&
+          other.code == this.code &&
+          other.name == this.name &&
+          other.description == this.description &&
+          other.isBuiltIn == this.isBuiltIn &&
+          other.isEnabled == this.isEnabled &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class MomentTonePacksCompanion extends UpdateCompanion<MomentTonePack> {
+  final Value<String> id;
+  final Value<String> code;
+  final Value<String> name;
+  final Value<String?> description;
+  final Value<bool> isBuiltIn;
+  final Value<bool> isEnabled;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const MomentTonePacksCompanion({
+    this.id = const Value.absent(),
+    this.code = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.isBuiltIn = const Value.absent(),
+    this.isEnabled = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MomentTonePacksCompanion.insert({
+    required String id,
+    required String code,
+    required String name,
+    this.description = const Value.absent(),
+    this.isBuiltIn = const Value.absent(),
+    this.isEnabled = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       code = Value(code),
+       name = Value(name),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<MomentTonePack> custom({
+    Expression<String>? id,
+    Expression<String>? code,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<bool>? isBuiltIn,
+    Expression<bool>? isEnabled,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (code != null) 'code': code,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (isBuiltIn != null) 'is_built_in': isBuiltIn,
+      if (isEnabled != null) 'is_enabled': isEnabled,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MomentTonePacksCompanion copyWith({
+    Value<String>? id,
+    Value<String>? code,
+    Value<String>? name,
+    Value<String?>? description,
+    Value<bool>? isBuiltIn,
+    Value<bool>? isEnabled,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return MomentTonePacksCompanion(
+      id: id ?? this.id,
+      code: code ?? this.code,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      isBuiltIn: isBuiltIn ?? this.isBuiltIn,
+      isEnabled: isEnabled ?? this.isEnabled,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (isBuiltIn.present) {
+      map['is_built_in'] = Variable<bool>(isBuiltIn.value);
+    }
+    if (isEnabled.present) {
+      map['is_enabled'] = Variable<bool>(isEnabled.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MomentTonePacksCompanion(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('isBuiltIn: $isBuiltIn, ')
+          ..write('isEnabled: $isEnabled, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MomentTonesTable extends MomentTones
+    with TableInfo<$MomentTonesTable, MomentTone> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MomentTonesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tonePackIdMeta = const VerificationMeta(
+    'tonePackId',
+  );
+  @override
+  late final GeneratedColumn<String> tonePackId = GeneratedColumn<String>(
+    'tone_pack_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES moment_tone_packs (id)',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _keyMeta = const VerificationMeta('key');
+  @override
+  late final GeneratedColumn<String> key = GeneratedColumn<String>(
+    'key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lightColorHexMeta = const VerificationMeta(
+    'lightColorHex',
+  );
+  @override
+  late final GeneratedColumn<String> lightColorHex = GeneratedColumn<String>(
+    'light_color_hex',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _darkColorHexMeta = const VerificationMeta(
+    'darkColorHex',
+  );
+  @override
+  late final GeneratedColumn<String> darkColorHex = GeneratedColumn<String>(
+    'dark_color_hex',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _isDefaultMeta = const VerificationMeta(
+    'isDefault',
+  );
+  @override
+  late final GeneratedColumn<bool> isDefault = GeneratedColumn<bool>(
+    'is_default',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_default" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _isArchivedMeta = const VerificationMeta(
+    'isArchived',
+  );
+  @override
+  late final GeneratedColumn<bool> isArchived = GeneratedColumn<bool>(
+    'is_archived',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_archived" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    code,
+    tonePackId,
+    name,
+    key,
+    lightColorHex,
+    darkColorHex,
+    sortOrder,
+    isDefault,
+    isArchived,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'moment_tones';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MomentTone> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_codeMeta);
+    }
+    if (data.containsKey('tone_pack_id')) {
+      context.handle(
+        _tonePackIdMeta,
+        tonePackId.isAcceptableOrUnknown(
+          data['tone_pack_id']!,
+          _tonePackIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_tonePackIdMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('key')) {
+      context.handle(
+        _keyMeta,
+        key.isAcceptableOrUnknown(data['key']!, _keyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_keyMeta);
+    }
+    if (data.containsKey('light_color_hex')) {
+      context.handle(
+        _lightColorHexMeta,
+        lightColorHex.isAcceptableOrUnknown(
+          data['light_color_hex']!,
+          _lightColorHexMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_lightColorHexMeta);
+    }
+    if (data.containsKey('dark_color_hex')) {
+      context.handle(
+        _darkColorHexMeta,
+        darkColorHex.isAcceptableOrUnknown(
+          data['dark_color_hex']!,
+          _darkColorHexMeta,
+        ),
+      );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    }
+    if (data.containsKey('is_default')) {
+      context.handle(
+        _isDefaultMeta,
+        isDefault.isAcceptableOrUnknown(data['is_default']!, _isDefaultMeta),
+      );
+    }
+    if (data.containsKey('is_archived')) {
+      context.handle(
+        _isArchivedMeta,
+        isArchived.isAcceptableOrUnknown(data['is_archived']!, _isArchivedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {tonePackId, key},
+    {tonePackId, code},
+  ];
+  @override
+  MomentTone map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MomentTone(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      )!,
+      tonePackId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tone_pack_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      key: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}key'],
+      )!,
+      lightColorHex: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}light_color_hex'],
+      )!,
+      darkColorHex: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}dark_color_hex'],
+      ),
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      isDefault: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_default'],
+      )!,
+      isArchived: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_archived'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $MomentTonesTable createAlias(String alias) {
+    return $MomentTonesTable(attachedDatabase, alias);
+  }
+}
+
+class MomentTone extends DataClass implements Insertable<MomentTone> {
+  final String id;
+  final String code;
+  final String tonePackId;
+  final String name;
+  final String key;
+  final String lightColorHex;
+  final String? darkColorHex;
+  final int sortOrder;
+  final bool isDefault;
+  final bool isArchived;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const MomentTone({
+    required this.id,
+    required this.code,
+    required this.tonePackId,
+    required this.name,
+    required this.key,
+    required this.lightColorHex,
+    this.darkColorHex,
+    required this.sortOrder,
+    required this.isDefault,
+    required this.isArchived,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['code'] = Variable<String>(code);
+    map['tone_pack_id'] = Variable<String>(tonePackId);
+    map['name'] = Variable<String>(name);
+    map['key'] = Variable<String>(key);
+    map['light_color_hex'] = Variable<String>(lightColorHex);
+    if (!nullToAbsent || darkColorHex != null) {
+      map['dark_color_hex'] = Variable<String>(darkColorHex);
+    }
+    map['sort_order'] = Variable<int>(sortOrder);
+    map['is_default'] = Variable<bool>(isDefault);
+    map['is_archived'] = Variable<bool>(isArchived);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  MomentTonesCompanion toCompanion(bool nullToAbsent) {
+    return MomentTonesCompanion(
+      id: Value(id),
+      code: Value(code),
+      tonePackId: Value(tonePackId),
+      name: Value(name),
+      key: Value(key),
+      lightColorHex: Value(lightColorHex),
+      darkColorHex: darkColorHex == null && nullToAbsent
+          ? const Value.absent()
+          : Value(darkColorHex),
+      sortOrder: Value(sortOrder),
+      isDefault: Value(isDefault),
+      isArchived: Value(isArchived),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory MomentTone.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MomentTone(
+      id: serializer.fromJson<String>(json['id']),
+      code: serializer.fromJson<String>(json['code']),
+      tonePackId: serializer.fromJson<String>(json['tonePackId']),
+      name: serializer.fromJson<String>(json['name']),
+      key: serializer.fromJson<String>(json['key']),
+      lightColorHex: serializer.fromJson<String>(json['lightColorHex']),
+      darkColorHex: serializer.fromJson<String?>(json['darkColorHex']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      isDefault: serializer.fromJson<bool>(json['isDefault']),
+      isArchived: serializer.fromJson<bool>(json['isArchived']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'code': serializer.toJson<String>(code),
+      'tonePackId': serializer.toJson<String>(tonePackId),
+      'name': serializer.toJson<String>(name),
+      'key': serializer.toJson<String>(key),
+      'lightColorHex': serializer.toJson<String>(lightColorHex),
+      'darkColorHex': serializer.toJson<String?>(darkColorHex),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'isDefault': serializer.toJson<bool>(isDefault),
+      'isArchived': serializer.toJson<bool>(isArchived),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  MomentTone copyWith({
+    String? id,
+    String? code,
+    String? tonePackId,
+    String? name,
+    String? key,
+    String? lightColorHex,
+    Value<String?> darkColorHex = const Value.absent(),
+    int? sortOrder,
+    bool? isDefault,
+    bool? isArchived,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => MomentTone(
+    id: id ?? this.id,
+    code: code ?? this.code,
+    tonePackId: tonePackId ?? this.tonePackId,
+    name: name ?? this.name,
+    key: key ?? this.key,
+    lightColorHex: lightColorHex ?? this.lightColorHex,
+    darkColorHex: darkColorHex.present ? darkColorHex.value : this.darkColorHex,
+    sortOrder: sortOrder ?? this.sortOrder,
+    isDefault: isDefault ?? this.isDefault,
+    isArchived: isArchived ?? this.isArchived,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  MomentTone copyWithCompanion(MomentTonesCompanion data) {
+    return MomentTone(
+      id: data.id.present ? data.id.value : this.id,
+      code: data.code.present ? data.code.value : this.code,
+      tonePackId: data.tonePackId.present
+          ? data.tonePackId.value
+          : this.tonePackId,
+      name: data.name.present ? data.name.value : this.name,
+      key: data.key.present ? data.key.value : this.key,
+      lightColorHex: data.lightColorHex.present
+          ? data.lightColorHex.value
+          : this.lightColorHex,
+      darkColorHex: data.darkColorHex.present
+          ? data.darkColorHex.value
+          : this.darkColorHex,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      isDefault: data.isDefault.present ? data.isDefault.value : this.isDefault,
+      isArchived: data.isArchived.present
+          ? data.isArchived.value
+          : this.isArchived,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MomentTone(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('tonePackId: $tonePackId, ')
+          ..write('name: $name, ')
+          ..write('key: $key, ')
+          ..write('lightColorHex: $lightColorHex, ')
+          ..write('darkColorHex: $darkColorHex, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('isDefault: $isDefault, ')
+          ..write('isArchived: $isArchived, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    code,
+    tonePackId,
+    name,
+    key,
+    lightColorHex,
+    darkColorHex,
+    sortOrder,
+    isDefault,
+    isArchived,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MomentTone &&
+          other.id == this.id &&
+          other.code == this.code &&
+          other.tonePackId == this.tonePackId &&
+          other.name == this.name &&
+          other.key == this.key &&
+          other.lightColorHex == this.lightColorHex &&
+          other.darkColorHex == this.darkColorHex &&
+          other.sortOrder == this.sortOrder &&
+          other.isDefault == this.isDefault &&
+          other.isArchived == this.isArchived &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class MomentTonesCompanion extends UpdateCompanion<MomentTone> {
+  final Value<String> id;
+  final Value<String> code;
+  final Value<String> tonePackId;
+  final Value<String> name;
+  final Value<String> key;
+  final Value<String> lightColorHex;
+  final Value<String?> darkColorHex;
+  final Value<int> sortOrder;
+  final Value<bool> isDefault;
+  final Value<bool> isArchived;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const MomentTonesCompanion({
+    this.id = const Value.absent(),
+    this.code = const Value.absent(),
+    this.tonePackId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.key = const Value.absent(),
+    this.lightColorHex = const Value.absent(),
+    this.darkColorHex = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.isDefault = const Value.absent(),
+    this.isArchived = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MomentTonesCompanion.insert({
+    required String id,
+    required String code,
+    required String tonePackId,
+    required String name,
+    required String key,
+    required String lightColorHex,
+    this.darkColorHex = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.isDefault = const Value.absent(),
+    this.isArchived = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       code = Value(code),
+       tonePackId = Value(tonePackId),
+       name = Value(name),
+       key = Value(key),
+       lightColorHex = Value(lightColorHex),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<MomentTone> custom({
+    Expression<String>? id,
+    Expression<String>? code,
+    Expression<String>? tonePackId,
+    Expression<String>? name,
+    Expression<String>? key,
+    Expression<String>? lightColorHex,
+    Expression<String>? darkColorHex,
+    Expression<int>? sortOrder,
+    Expression<bool>? isDefault,
+    Expression<bool>? isArchived,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (code != null) 'code': code,
+      if (tonePackId != null) 'tone_pack_id': tonePackId,
+      if (name != null) 'name': name,
+      if (key != null) 'key': key,
+      if (lightColorHex != null) 'light_color_hex': lightColorHex,
+      if (darkColorHex != null) 'dark_color_hex': darkColorHex,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (isDefault != null) 'is_default': isDefault,
+      if (isArchived != null) 'is_archived': isArchived,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MomentTonesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? code,
+    Value<String>? tonePackId,
+    Value<String>? name,
+    Value<String>? key,
+    Value<String>? lightColorHex,
+    Value<String?>? darkColorHex,
+    Value<int>? sortOrder,
+    Value<bool>? isDefault,
+    Value<bool>? isArchived,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return MomentTonesCompanion(
+      id: id ?? this.id,
+      code: code ?? this.code,
+      tonePackId: tonePackId ?? this.tonePackId,
+      name: name ?? this.name,
+      key: key ?? this.key,
+      lightColorHex: lightColorHex ?? this.lightColorHex,
+      darkColorHex: darkColorHex ?? this.darkColorHex,
+      sortOrder: sortOrder ?? this.sortOrder,
+      isDefault: isDefault ?? this.isDefault,
+      isArchived: isArchived ?? this.isArchived,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (tonePackId.present) {
+      map['tone_pack_id'] = Variable<String>(tonePackId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (key.present) {
+      map['key'] = Variable<String>(key.value);
+    }
+    if (lightColorHex.present) {
+      map['light_color_hex'] = Variable<String>(lightColorHex.value);
+    }
+    if (darkColorHex.present) {
+      map['dark_color_hex'] = Variable<String>(darkColorHex.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (isDefault.present) {
+      map['is_default'] = Variable<bool>(isDefault.value);
+    }
+    if (isArchived.present) {
+      map['is_archived'] = Variable<bool>(isArchived.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MomentTonesCompanion(')
+          ..write('id: $id, ')
+          ..write('code: $code, ')
+          ..write('tonePackId: $tonePackId, ')
+          ..write('name: $name, ')
+          ..write('key: $key, ')
+          ..write('lightColorHex: $lightColorHex, ')
+          ..write('darkColorHex: $darkColorHex, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('isDefault: $isDefault, ')
+          ..write('isArchived: $isArchived, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $MomentsTable extends Moments with TableInfo<$MomentsTable, Moment> {
   @override
   final GeneratedDatabase attachedDatabase;
@@ -54,6 +2476,9 @@ class $MomentsTable extends Moments with TableInfo<$MomentsTable, Moment> {
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES moment_moods (id) ON DELETE SET NULL',
+    ),
   );
   static const VerificationMeta _momentDateMeta = const VerificationMeta(
     'momentDate',
@@ -268,6 +2693,9 @@ class $MomentsTable extends Moments with TableInfo<$MomentsTable, Moment> {
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES moment_tones (id) ON DELETE SET NULL',
+    ),
   );
   @override
   List<GeneratedColumn> get $columns => [
@@ -1290,7 +3718,7 @@ class $MomentAssetsTable extends MomentAssets
     type: DriftSqlType.string,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES moments (id)',
+      'REFERENCES moments (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _typeMeta = const VerificationMeta('type');
@@ -2282,1183 +4710,6 @@ class MomentAssetsCompanion extends UpdateCompanion<MomentAsset> {
   }
 }
 
-class $MomentMoodPacksTable extends MomentMoodPacks
-    with TableInfo<$MomentMoodPacksTable, MomentMoodPack> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $MomentMoodPacksTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _codeMeta = const VerificationMeta('code');
-  @override
-  late final GeneratedColumn<String> code = GeneratedColumn<String>(
-    'code',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-    'name',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _descriptionMeta = const VerificationMeta(
-    'description',
-  );
-  @override
-  late final GeneratedColumn<String> description = GeneratedColumn<String>(
-    'description',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _isBuiltInMeta = const VerificationMeta(
-    'isBuiltIn',
-  );
-  @override
-  late final GeneratedColumn<bool> isBuiltIn = GeneratedColumn<bool>(
-    'is_built_in',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_built_in" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
-  static const VerificationMeta _isEnabledMeta = const VerificationMeta(
-    'isEnabled',
-  );
-  @override
-  late final GeneratedColumn<bool> isEnabled = GeneratedColumn<bool>(
-    'is_enabled',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_enabled" IN (0, 1))',
-    ),
-    defaultValue: const Constant(true),
-  );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
-    'updatedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-    'updated_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    code,
-    name,
-    description,
-    isBuiltIn,
-    isEnabled,
-    createdAt,
-    updatedAt,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'moment_mood_packs';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<MomentMoodPack> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    if (data.containsKey('code')) {
-      context.handle(
-        _codeMeta,
-        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_codeMeta);
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-        _nameMeta,
-        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('description')) {
-      context.handle(
-        _descriptionMeta,
-        description.isAcceptableOrUnknown(
-          data['description']!,
-          _descriptionMeta,
-        ),
-      );
-    }
-    if (data.containsKey('is_built_in')) {
-      context.handle(
-        _isBuiltInMeta,
-        isBuiltIn.isAcceptableOrUnknown(data['is_built_in']!, _isBuiltInMeta),
-      );
-    }
-    if (data.containsKey('is_enabled')) {
-      context.handle(
-        _isEnabledMeta,
-        isEnabled.isAcceptableOrUnknown(data['is_enabled']!, _isEnabledMeta),
-      );
-    }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_createdAtMeta);
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_updatedAtMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  MomentMoodPack map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return MomentMoodPack(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}id'],
-      )!,
-      code: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}code'],
-      )!,
-      name: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}name'],
-      )!,
-      description: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}description'],
-      ),
-      isBuiltIn: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_built_in'],
-      )!,
-      isEnabled: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_enabled'],
-      )!,
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
-    );
-  }
-
-  @override
-  $MomentMoodPacksTable createAlias(String alias) {
-    return $MomentMoodPacksTable(attachedDatabase, alias);
-  }
-}
-
-class MomentMoodPack extends DataClass implements Insertable<MomentMoodPack> {
-  final String id;
-  final String code;
-  final String name;
-  final String? description;
-  final bool isBuiltIn;
-  final bool isEnabled;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  const MomentMoodPack({
-    required this.id,
-    required this.code,
-    required this.name,
-    this.description,
-    required this.isBuiltIn,
-    required this.isEnabled,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    map['code'] = Variable<String>(code);
-    map['name'] = Variable<String>(name);
-    if (!nullToAbsent || description != null) {
-      map['description'] = Variable<String>(description);
-    }
-    map['is_built_in'] = Variable<bool>(isBuiltIn);
-    map['is_enabled'] = Variable<bool>(isEnabled);
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    return map;
-  }
-
-  MomentMoodPacksCompanion toCompanion(bool nullToAbsent) {
-    return MomentMoodPacksCompanion(
-      id: Value(id),
-      code: Value(code),
-      name: Value(name),
-      description: description == null && nullToAbsent
-          ? const Value.absent()
-          : Value(description),
-      isBuiltIn: Value(isBuiltIn),
-      isEnabled: Value(isEnabled),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-    );
-  }
-
-  factory MomentMoodPack.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return MomentMoodPack(
-      id: serializer.fromJson<String>(json['id']),
-      code: serializer.fromJson<String>(json['code']),
-      name: serializer.fromJson<String>(json['name']),
-      description: serializer.fromJson<String?>(json['description']),
-      isBuiltIn: serializer.fromJson<bool>(json['isBuiltIn']),
-      isEnabled: serializer.fromJson<bool>(json['isEnabled']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'code': serializer.toJson<String>(code),
-      'name': serializer.toJson<String>(name),
-      'description': serializer.toJson<String?>(description),
-      'isBuiltIn': serializer.toJson<bool>(isBuiltIn),
-      'isEnabled': serializer.toJson<bool>(isEnabled),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
-    };
-  }
-
-  MomentMoodPack copyWith({
-    String? id,
-    String? code,
-    String? name,
-    Value<String?> description = const Value.absent(),
-    bool? isBuiltIn,
-    bool? isEnabled,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) => MomentMoodPack(
-    id: id ?? this.id,
-    code: code ?? this.code,
-    name: name ?? this.name,
-    description: description.present ? description.value : this.description,
-    isBuiltIn: isBuiltIn ?? this.isBuiltIn,
-    isEnabled: isEnabled ?? this.isEnabled,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-  );
-  MomentMoodPack copyWithCompanion(MomentMoodPacksCompanion data) {
-    return MomentMoodPack(
-      id: data.id.present ? data.id.value : this.id,
-      code: data.code.present ? data.code.value : this.code,
-      name: data.name.present ? data.name.value : this.name,
-      description: data.description.present
-          ? data.description.value
-          : this.description,
-      isBuiltIn: data.isBuiltIn.present ? data.isBuiltIn.value : this.isBuiltIn,
-      isEnabled: data.isEnabled.present ? data.isEnabled.value : this.isEnabled,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MomentMoodPack(')
-          ..write('id: $id, ')
-          ..write('code: $code, ')
-          ..write('name: $name, ')
-          ..write('description: $description, ')
-          ..write('isBuiltIn: $isBuiltIn, ')
-          ..write('isEnabled: $isEnabled, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    id,
-    code,
-    name,
-    description,
-    isBuiltIn,
-    isEnabled,
-    createdAt,
-    updatedAt,
-  );
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is MomentMoodPack &&
-          other.id == this.id &&
-          other.code == this.code &&
-          other.name == this.name &&
-          other.description == this.description &&
-          other.isBuiltIn == this.isBuiltIn &&
-          other.isEnabled == this.isEnabled &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt);
-}
-
-class MomentMoodPacksCompanion extends UpdateCompanion<MomentMoodPack> {
-  final Value<String> id;
-  final Value<String> code;
-  final Value<String> name;
-  final Value<String?> description;
-  final Value<bool> isBuiltIn;
-  final Value<bool> isEnabled;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
-  final Value<int> rowid;
-  const MomentMoodPacksCompanion({
-    this.id = const Value.absent(),
-    this.code = const Value.absent(),
-    this.name = const Value.absent(),
-    this.description = const Value.absent(),
-    this.isBuiltIn = const Value.absent(),
-    this.isEnabled = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  MomentMoodPacksCompanion.insert({
-    required String id,
-    required String code,
-    required String name,
-    this.description = const Value.absent(),
-    this.isBuiltIn = const Value.absent(),
-    this.isEnabled = const Value.absent(),
-    required DateTime createdAt,
-    required DateTime updatedAt,
-    this.rowid = const Value.absent(),
-  }) : id = Value(id),
-       code = Value(code),
-       name = Value(name),
-       createdAt = Value(createdAt),
-       updatedAt = Value(updatedAt);
-  static Insertable<MomentMoodPack> custom({
-    Expression<String>? id,
-    Expression<String>? code,
-    Expression<String>? name,
-    Expression<String>? description,
-    Expression<bool>? isBuiltIn,
-    Expression<bool>? isEnabled,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (code != null) 'code': code,
-      if (name != null) 'name': name,
-      if (description != null) 'description': description,
-      if (isBuiltIn != null) 'is_built_in': isBuiltIn,
-      if (isEnabled != null) 'is_enabled': isEnabled,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  MomentMoodPacksCompanion copyWith({
-    Value<String>? id,
-    Value<String>? code,
-    Value<String>? name,
-    Value<String?>? description,
-    Value<bool>? isBuiltIn,
-    Value<bool>? isEnabled,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
-    Value<int>? rowid,
-  }) {
-    return MomentMoodPacksCompanion(
-      id: id ?? this.id,
-      code: code ?? this.code,
-      name: name ?? this.name,
-      description: description ?? this.description,
-      isBuiltIn: isBuiltIn ?? this.isBuiltIn,
-      isEnabled: isEnabled ?? this.isEnabled,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
-    }
-    if (code.present) {
-      map['code'] = Variable<String>(code.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (description.present) {
-      map['description'] = Variable<String>(description.value);
-    }
-    if (isBuiltIn.present) {
-      map['is_built_in'] = Variable<bool>(isBuiltIn.value);
-    }
-    if (isEnabled.present) {
-      map['is_enabled'] = Variable<bool>(isEnabled.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MomentMoodPacksCompanion(')
-          ..write('id: $id, ')
-          ..write('code: $code, ')
-          ..write('name: $name, ')
-          ..write('description: $description, ')
-          ..write('isBuiltIn: $isBuiltIn, ')
-          ..write('isEnabled: $isEnabled, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $MomentMoodsTable extends MomentMoods
-    with TableInfo<$MomentMoodsTable, MomentMood> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $MomentMoodsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _codeMeta = const VerificationMeta('code');
-  @override
-  late final GeneratedColumn<String> code = GeneratedColumn<String>(
-    'code',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _moodPackIdMeta = const VerificationMeta(
-    'moodPackId',
-  );
-  @override
-  late final GeneratedColumn<String> moodPackId = GeneratedColumn<String>(
-    'mood_pack_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES moment_mood_packs (id)',
-    ),
-  );
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-    'name',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _emojiMeta = const VerificationMeta('emoji');
-  @override
-  late final GeneratedColumn<String> emoji = GeneratedColumn<String>(
-    'emoji',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _keyMeta = const VerificationMeta('key');
-  @override
-  late final GeneratedColumn<String> key = GeneratedColumn<String>(
-    'key',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _colorHexMeta = const VerificationMeta(
-    'colorHex',
-  );
-  @override
-  late final GeneratedColumn<String> colorHex = GeneratedColumn<String>(
-    'color_hex',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _isDefaultMeta = const VerificationMeta(
-    'isDefault',
-  );
-  @override
-  late final GeneratedColumn<bool> isDefault = GeneratedColumn<bool>(
-    'is_default',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_default" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
-  static const VerificationMeta _isArchivedMeta = const VerificationMeta(
-    'isArchived',
-  );
-  @override
-  late final GeneratedColumn<bool> isArchived = GeneratedColumn<bool>(
-    'is_archived',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_archived" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
-    'updatedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-    'updated_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    code,
-    moodPackId,
-    name,
-    emoji,
-    key,
-    colorHex,
-    isDefault,
-    isArchived,
-    createdAt,
-    updatedAt,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'moment_moods';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<MomentMood> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    if (data.containsKey('code')) {
-      context.handle(
-        _codeMeta,
-        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_codeMeta);
-    }
-    if (data.containsKey('mood_pack_id')) {
-      context.handle(
-        _moodPackIdMeta,
-        moodPackId.isAcceptableOrUnknown(
-          data['mood_pack_id']!,
-          _moodPackIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_moodPackIdMeta);
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-        _nameMeta,
-        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('emoji')) {
-      context.handle(
-        _emojiMeta,
-        emoji.isAcceptableOrUnknown(data['emoji']!, _emojiMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_emojiMeta);
-    }
-    if (data.containsKey('key')) {
-      context.handle(
-        _keyMeta,
-        key.isAcceptableOrUnknown(data['key']!, _keyMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_keyMeta);
-    }
-    if (data.containsKey('color_hex')) {
-      context.handle(
-        _colorHexMeta,
-        colorHex.isAcceptableOrUnknown(data['color_hex']!, _colorHexMeta),
-      );
-    }
-    if (data.containsKey('is_default')) {
-      context.handle(
-        _isDefaultMeta,
-        isDefault.isAcceptableOrUnknown(data['is_default']!, _isDefaultMeta),
-      );
-    }
-    if (data.containsKey('is_archived')) {
-      context.handle(
-        _isArchivedMeta,
-        isArchived.isAcceptableOrUnknown(data['is_archived']!, _isArchivedMeta),
-      );
-    }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_createdAtMeta);
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_updatedAtMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  MomentMood map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return MomentMood(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}id'],
-      )!,
-      code: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}code'],
-      )!,
-      moodPackId: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}mood_pack_id'],
-      )!,
-      name: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}name'],
-      )!,
-      emoji: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}emoji'],
-      )!,
-      key: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}key'],
-      )!,
-      colorHex: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}color_hex'],
-      ),
-      isDefault: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_default'],
-      )!,
-      isArchived: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_archived'],
-      )!,
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
-    );
-  }
-
-  @override
-  $MomentMoodsTable createAlias(String alias) {
-    return $MomentMoodsTable(attachedDatabase, alias);
-  }
-}
-
-class MomentMood extends DataClass implements Insertable<MomentMood> {
-  final String id;
-  final String code;
-  final String moodPackId;
-  final String name;
-  final String emoji;
-  final String key;
-  final String? colorHex;
-  final bool isDefault;
-  final bool isArchived;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  const MomentMood({
-    required this.id,
-    required this.code,
-    required this.moodPackId,
-    required this.name,
-    required this.emoji,
-    required this.key,
-    this.colorHex,
-    required this.isDefault,
-    required this.isArchived,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    map['code'] = Variable<String>(code);
-    map['mood_pack_id'] = Variable<String>(moodPackId);
-    map['name'] = Variable<String>(name);
-    map['emoji'] = Variable<String>(emoji);
-    map['key'] = Variable<String>(key);
-    if (!nullToAbsent || colorHex != null) {
-      map['color_hex'] = Variable<String>(colorHex);
-    }
-    map['is_default'] = Variable<bool>(isDefault);
-    map['is_archived'] = Variable<bool>(isArchived);
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    return map;
-  }
-
-  MomentMoodsCompanion toCompanion(bool nullToAbsent) {
-    return MomentMoodsCompanion(
-      id: Value(id),
-      code: Value(code),
-      moodPackId: Value(moodPackId),
-      name: Value(name),
-      emoji: Value(emoji),
-      key: Value(key),
-      colorHex: colorHex == null && nullToAbsent
-          ? const Value.absent()
-          : Value(colorHex),
-      isDefault: Value(isDefault),
-      isArchived: Value(isArchived),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-    );
-  }
-
-  factory MomentMood.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return MomentMood(
-      id: serializer.fromJson<String>(json['id']),
-      code: serializer.fromJson<String>(json['code']),
-      moodPackId: serializer.fromJson<String>(json['moodPackId']),
-      name: serializer.fromJson<String>(json['name']),
-      emoji: serializer.fromJson<String>(json['emoji']),
-      key: serializer.fromJson<String>(json['key']),
-      colorHex: serializer.fromJson<String?>(json['colorHex']),
-      isDefault: serializer.fromJson<bool>(json['isDefault']),
-      isArchived: serializer.fromJson<bool>(json['isArchived']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'code': serializer.toJson<String>(code),
-      'moodPackId': serializer.toJson<String>(moodPackId),
-      'name': serializer.toJson<String>(name),
-      'emoji': serializer.toJson<String>(emoji),
-      'key': serializer.toJson<String>(key),
-      'colorHex': serializer.toJson<String?>(colorHex),
-      'isDefault': serializer.toJson<bool>(isDefault),
-      'isArchived': serializer.toJson<bool>(isArchived),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
-    };
-  }
-
-  MomentMood copyWith({
-    String? id,
-    String? code,
-    String? moodPackId,
-    String? name,
-    String? emoji,
-    String? key,
-    Value<String?> colorHex = const Value.absent(),
-    bool? isDefault,
-    bool? isArchived,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) => MomentMood(
-    id: id ?? this.id,
-    code: code ?? this.code,
-    moodPackId: moodPackId ?? this.moodPackId,
-    name: name ?? this.name,
-    emoji: emoji ?? this.emoji,
-    key: key ?? this.key,
-    colorHex: colorHex.present ? colorHex.value : this.colorHex,
-    isDefault: isDefault ?? this.isDefault,
-    isArchived: isArchived ?? this.isArchived,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-  );
-  MomentMood copyWithCompanion(MomentMoodsCompanion data) {
-    return MomentMood(
-      id: data.id.present ? data.id.value : this.id,
-      code: data.code.present ? data.code.value : this.code,
-      moodPackId: data.moodPackId.present
-          ? data.moodPackId.value
-          : this.moodPackId,
-      name: data.name.present ? data.name.value : this.name,
-      emoji: data.emoji.present ? data.emoji.value : this.emoji,
-      key: data.key.present ? data.key.value : this.key,
-      colorHex: data.colorHex.present ? data.colorHex.value : this.colorHex,
-      isDefault: data.isDefault.present ? data.isDefault.value : this.isDefault,
-      isArchived: data.isArchived.present
-          ? data.isArchived.value
-          : this.isArchived,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MomentMood(')
-          ..write('id: $id, ')
-          ..write('code: $code, ')
-          ..write('moodPackId: $moodPackId, ')
-          ..write('name: $name, ')
-          ..write('emoji: $emoji, ')
-          ..write('key: $key, ')
-          ..write('colorHex: $colorHex, ')
-          ..write('isDefault: $isDefault, ')
-          ..write('isArchived: $isArchived, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    id,
-    code,
-    moodPackId,
-    name,
-    emoji,
-    key,
-    colorHex,
-    isDefault,
-    isArchived,
-    createdAt,
-    updatedAt,
-  );
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is MomentMood &&
-          other.id == this.id &&
-          other.code == this.code &&
-          other.moodPackId == this.moodPackId &&
-          other.name == this.name &&
-          other.emoji == this.emoji &&
-          other.key == this.key &&
-          other.colorHex == this.colorHex &&
-          other.isDefault == this.isDefault &&
-          other.isArchived == this.isArchived &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt);
-}
-
-class MomentMoodsCompanion extends UpdateCompanion<MomentMood> {
-  final Value<String> id;
-  final Value<String> code;
-  final Value<String> moodPackId;
-  final Value<String> name;
-  final Value<String> emoji;
-  final Value<String> key;
-  final Value<String?> colorHex;
-  final Value<bool> isDefault;
-  final Value<bool> isArchived;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
-  final Value<int> rowid;
-  const MomentMoodsCompanion({
-    this.id = const Value.absent(),
-    this.code = const Value.absent(),
-    this.moodPackId = const Value.absent(),
-    this.name = const Value.absent(),
-    this.emoji = const Value.absent(),
-    this.key = const Value.absent(),
-    this.colorHex = const Value.absent(),
-    this.isDefault = const Value.absent(),
-    this.isArchived = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  MomentMoodsCompanion.insert({
-    required String id,
-    required String code,
-    required String moodPackId,
-    required String name,
-    required String emoji,
-    required String key,
-    this.colorHex = const Value.absent(),
-    this.isDefault = const Value.absent(),
-    this.isArchived = const Value.absent(),
-    required DateTime createdAt,
-    required DateTime updatedAt,
-    this.rowid = const Value.absent(),
-  }) : id = Value(id),
-       code = Value(code),
-       moodPackId = Value(moodPackId),
-       name = Value(name),
-       emoji = Value(emoji),
-       key = Value(key),
-       createdAt = Value(createdAt),
-       updatedAt = Value(updatedAt);
-  static Insertable<MomentMood> custom({
-    Expression<String>? id,
-    Expression<String>? code,
-    Expression<String>? moodPackId,
-    Expression<String>? name,
-    Expression<String>? emoji,
-    Expression<String>? key,
-    Expression<String>? colorHex,
-    Expression<bool>? isDefault,
-    Expression<bool>? isArchived,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (code != null) 'code': code,
-      if (moodPackId != null) 'mood_pack_id': moodPackId,
-      if (name != null) 'name': name,
-      if (emoji != null) 'emoji': emoji,
-      if (key != null) 'key': key,
-      if (colorHex != null) 'color_hex': colorHex,
-      if (isDefault != null) 'is_default': isDefault,
-      if (isArchived != null) 'is_archived': isArchived,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  MomentMoodsCompanion copyWith({
-    Value<String>? id,
-    Value<String>? code,
-    Value<String>? moodPackId,
-    Value<String>? name,
-    Value<String>? emoji,
-    Value<String>? key,
-    Value<String?>? colorHex,
-    Value<bool>? isDefault,
-    Value<bool>? isArchived,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
-    Value<int>? rowid,
-  }) {
-    return MomentMoodsCompanion(
-      id: id ?? this.id,
-      code: code ?? this.code,
-      moodPackId: moodPackId ?? this.moodPackId,
-      name: name ?? this.name,
-      emoji: emoji ?? this.emoji,
-      key: key ?? this.key,
-      colorHex: colorHex ?? this.colorHex,
-      isDefault: isDefault ?? this.isDefault,
-      isArchived: isArchived ?? this.isArchived,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
-    }
-    if (code.present) {
-      map['code'] = Variable<String>(code.value);
-    }
-    if (moodPackId.present) {
-      map['mood_pack_id'] = Variable<String>(moodPackId.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (emoji.present) {
-      map['emoji'] = Variable<String>(emoji.value);
-    }
-    if (key.present) {
-      map['key'] = Variable<String>(key.value);
-    }
-    if (colorHex.present) {
-      map['color_hex'] = Variable<String>(colorHex.value);
-    }
-    if (isDefault.present) {
-      map['is_default'] = Variable<bool>(isDefault.value);
-    }
-    if (isArchived.present) {
-      map['is_archived'] = Variable<bool>(isArchived.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MomentMoodsCompanion(')
-          ..write('id: $id, ')
-          ..write('code: $code, ')
-          ..write('moodPackId: $moodPackId, ')
-          ..write('name: $name, ')
-          ..write('emoji: $emoji, ')
-          ..write('key: $key, ')
-          ..write('colorHex: $colorHex, ')
-          ..write('isDefault: $isDefault, ')
-          ..write('isArchived: $isArchived, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $MomentTagsTable extends MomentTags
     with TableInfo<$MomentTagsTable, MomentTag> {
   @override
@@ -4042,7 +5293,7 @@ class $MomentTagLinksTable extends MomentTagLinks
     type: DriftSqlType.string,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES moments (id)',
+      'REFERENCES moments (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _tagIdMeta = const VerificationMeta('tagId');
@@ -4054,7 +5305,7 @@ class $MomentTagLinksTable extends MomentTagLinks
     type: DriftSqlType.string,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES moment_tags (id)',
+      'REFERENCES moment_tags (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
@@ -4886,7 +6137,7 @@ class $MomentCollectionItemsTable extends MomentCollectionItems
     type: DriftSqlType.string,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES moment_collections (id)',
+      'REFERENCES moment_collections (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _momentIdMeta = const VerificationMeta(
@@ -4900,7 +6151,7 @@ class $MomentCollectionItemsTable extends MomentCollectionItems
     type: DriftSqlType.string,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES moments (id)',
+      'REFERENCES moments (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _sortOrderMeta = const VerificationMeta(
@@ -5234,6 +6485,9 @@ class $MomentWidgetConfigsTable extends MomentWidgetConfigs
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES moments (id) ON DELETE SET NULL',
+    ),
   );
   static const VerificationMeta _excludeSensitiveMeta = const VerificationMeta(
     'excludeSensitive',
@@ -5698,1238 +6952,6 @@ class MomentWidgetConfigsCompanion extends UpdateCompanion<MomentWidgetConfig> {
   }
 }
 
-class $MomentTonePacksTable extends MomentTonePacks
-    with TableInfo<$MomentTonePacksTable, MomentTonePack> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $MomentTonePacksTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _codeMeta = const VerificationMeta('code');
-  @override
-  late final GeneratedColumn<String> code = GeneratedColumn<String>(
-    'code',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-    'name',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _descriptionMeta = const VerificationMeta(
-    'description',
-  );
-  @override
-  late final GeneratedColumn<String> description = GeneratedColumn<String>(
-    'description',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _isBuiltInMeta = const VerificationMeta(
-    'isBuiltIn',
-  );
-  @override
-  late final GeneratedColumn<bool> isBuiltIn = GeneratedColumn<bool>(
-    'is_built_in',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_built_in" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
-  static const VerificationMeta _isEnabledMeta = const VerificationMeta(
-    'isEnabled',
-  );
-  @override
-  late final GeneratedColumn<bool> isEnabled = GeneratedColumn<bool>(
-    'is_enabled',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_enabled" IN (0, 1))',
-    ),
-    defaultValue: const Constant(true),
-  );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
-    'updatedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-    'updated_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    code,
-    name,
-    description,
-    isBuiltIn,
-    isEnabled,
-    createdAt,
-    updatedAt,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'moment_tone_packs';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<MomentTonePack> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    if (data.containsKey('code')) {
-      context.handle(
-        _codeMeta,
-        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_codeMeta);
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-        _nameMeta,
-        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('description')) {
-      context.handle(
-        _descriptionMeta,
-        description.isAcceptableOrUnknown(
-          data['description']!,
-          _descriptionMeta,
-        ),
-      );
-    }
-    if (data.containsKey('is_built_in')) {
-      context.handle(
-        _isBuiltInMeta,
-        isBuiltIn.isAcceptableOrUnknown(data['is_built_in']!, _isBuiltInMeta),
-      );
-    }
-    if (data.containsKey('is_enabled')) {
-      context.handle(
-        _isEnabledMeta,
-        isEnabled.isAcceptableOrUnknown(data['is_enabled']!, _isEnabledMeta),
-      );
-    }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_createdAtMeta);
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_updatedAtMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  MomentTonePack map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return MomentTonePack(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}id'],
-      )!,
-      code: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}code'],
-      )!,
-      name: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}name'],
-      )!,
-      description: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}description'],
-      ),
-      isBuiltIn: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_built_in'],
-      )!,
-      isEnabled: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_enabled'],
-      )!,
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
-    );
-  }
-
-  @override
-  $MomentTonePacksTable createAlias(String alias) {
-    return $MomentTonePacksTable(attachedDatabase, alias);
-  }
-}
-
-class MomentTonePack extends DataClass implements Insertable<MomentTonePack> {
-  final String id;
-  final String code;
-  final String name;
-  final String? description;
-  final bool isBuiltIn;
-  final bool isEnabled;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  const MomentTonePack({
-    required this.id,
-    required this.code,
-    required this.name,
-    this.description,
-    required this.isBuiltIn,
-    required this.isEnabled,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    map['code'] = Variable<String>(code);
-    map['name'] = Variable<String>(name);
-    if (!nullToAbsent || description != null) {
-      map['description'] = Variable<String>(description);
-    }
-    map['is_built_in'] = Variable<bool>(isBuiltIn);
-    map['is_enabled'] = Variable<bool>(isEnabled);
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    return map;
-  }
-
-  MomentTonePacksCompanion toCompanion(bool nullToAbsent) {
-    return MomentTonePacksCompanion(
-      id: Value(id),
-      code: Value(code),
-      name: Value(name),
-      description: description == null && nullToAbsent
-          ? const Value.absent()
-          : Value(description),
-      isBuiltIn: Value(isBuiltIn),
-      isEnabled: Value(isEnabled),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-    );
-  }
-
-  factory MomentTonePack.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return MomentTonePack(
-      id: serializer.fromJson<String>(json['id']),
-      code: serializer.fromJson<String>(json['code']),
-      name: serializer.fromJson<String>(json['name']),
-      description: serializer.fromJson<String?>(json['description']),
-      isBuiltIn: serializer.fromJson<bool>(json['isBuiltIn']),
-      isEnabled: serializer.fromJson<bool>(json['isEnabled']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'code': serializer.toJson<String>(code),
-      'name': serializer.toJson<String>(name),
-      'description': serializer.toJson<String?>(description),
-      'isBuiltIn': serializer.toJson<bool>(isBuiltIn),
-      'isEnabled': serializer.toJson<bool>(isEnabled),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
-    };
-  }
-
-  MomentTonePack copyWith({
-    String? id,
-    String? code,
-    String? name,
-    Value<String?> description = const Value.absent(),
-    bool? isBuiltIn,
-    bool? isEnabled,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) => MomentTonePack(
-    id: id ?? this.id,
-    code: code ?? this.code,
-    name: name ?? this.name,
-    description: description.present ? description.value : this.description,
-    isBuiltIn: isBuiltIn ?? this.isBuiltIn,
-    isEnabled: isEnabled ?? this.isEnabled,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-  );
-  MomentTonePack copyWithCompanion(MomentTonePacksCompanion data) {
-    return MomentTonePack(
-      id: data.id.present ? data.id.value : this.id,
-      code: data.code.present ? data.code.value : this.code,
-      name: data.name.present ? data.name.value : this.name,
-      description: data.description.present
-          ? data.description.value
-          : this.description,
-      isBuiltIn: data.isBuiltIn.present ? data.isBuiltIn.value : this.isBuiltIn,
-      isEnabled: data.isEnabled.present ? data.isEnabled.value : this.isEnabled,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MomentTonePack(')
-          ..write('id: $id, ')
-          ..write('code: $code, ')
-          ..write('name: $name, ')
-          ..write('description: $description, ')
-          ..write('isBuiltIn: $isBuiltIn, ')
-          ..write('isEnabled: $isEnabled, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    id,
-    code,
-    name,
-    description,
-    isBuiltIn,
-    isEnabled,
-    createdAt,
-    updatedAt,
-  );
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is MomentTonePack &&
-          other.id == this.id &&
-          other.code == this.code &&
-          other.name == this.name &&
-          other.description == this.description &&
-          other.isBuiltIn == this.isBuiltIn &&
-          other.isEnabled == this.isEnabled &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt);
-}
-
-class MomentTonePacksCompanion extends UpdateCompanion<MomentTonePack> {
-  final Value<String> id;
-  final Value<String> code;
-  final Value<String> name;
-  final Value<String?> description;
-  final Value<bool> isBuiltIn;
-  final Value<bool> isEnabled;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
-  final Value<int> rowid;
-  const MomentTonePacksCompanion({
-    this.id = const Value.absent(),
-    this.code = const Value.absent(),
-    this.name = const Value.absent(),
-    this.description = const Value.absent(),
-    this.isBuiltIn = const Value.absent(),
-    this.isEnabled = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  MomentTonePacksCompanion.insert({
-    required String id,
-    required String code,
-    required String name,
-    this.description = const Value.absent(),
-    this.isBuiltIn = const Value.absent(),
-    this.isEnabled = const Value.absent(),
-    required DateTime createdAt,
-    required DateTime updatedAt,
-    this.rowid = const Value.absent(),
-  }) : id = Value(id),
-       code = Value(code),
-       name = Value(name),
-       createdAt = Value(createdAt),
-       updatedAt = Value(updatedAt);
-  static Insertable<MomentTonePack> custom({
-    Expression<String>? id,
-    Expression<String>? code,
-    Expression<String>? name,
-    Expression<String>? description,
-    Expression<bool>? isBuiltIn,
-    Expression<bool>? isEnabled,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (code != null) 'code': code,
-      if (name != null) 'name': name,
-      if (description != null) 'description': description,
-      if (isBuiltIn != null) 'is_built_in': isBuiltIn,
-      if (isEnabled != null) 'is_enabled': isEnabled,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  MomentTonePacksCompanion copyWith({
-    Value<String>? id,
-    Value<String>? code,
-    Value<String>? name,
-    Value<String?>? description,
-    Value<bool>? isBuiltIn,
-    Value<bool>? isEnabled,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
-    Value<int>? rowid,
-  }) {
-    return MomentTonePacksCompanion(
-      id: id ?? this.id,
-      code: code ?? this.code,
-      name: name ?? this.name,
-      description: description ?? this.description,
-      isBuiltIn: isBuiltIn ?? this.isBuiltIn,
-      isEnabled: isEnabled ?? this.isEnabled,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
-    }
-    if (code.present) {
-      map['code'] = Variable<String>(code.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (description.present) {
-      map['description'] = Variable<String>(description.value);
-    }
-    if (isBuiltIn.present) {
-      map['is_built_in'] = Variable<bool>(isBuiltIn.value);
-    }
-    if (isEnabled.present) {
-      map['is_enabled'] = Variable<bool>(isEnabled.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MomentTonePacksCompanion(')
-          ..write('id: $id, ')
-          ..write('code: $code, ')
-          ..write('name: $name, ')
-          ..write('description: $description, ')
-          ..write('isBuiltIn: $isBuiltIn, ')
-          ..write('isEnabled: $isEnabled, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $MomentTonesTable extends MomentTones
-    with TableInfo<$MomentTonesTable, MomentTone> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $MomentTonesTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _codeMeta = const VerificationMeta('code');
-  @override
-  late final GeneratedColumn<String> code = GeneratedColumn<String>(
-    'code',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _tonePackIdMeta = const VerificationMeta(
-    'tonePackId',
-  );
-  @override
-  late final GeneratedColumn<String> tonePackId = GeneratedColumn<String>(
-    'tone_pack_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-    'name',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _keyMeta = const VerificationMeta('key');
-  @override
-  late final GeneratedColumn<String> key = GeneratedColumn<String>(
-    'key',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _lightColorHexMeta = const VerificationMeta(
-    'lightColorHex',
-  );
-  @override
-  late final GeneratedColumn<String> lightColorHex = GeneratedColumn<String>(
-    'light_color_hex',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _darkColorHexMeta = const VerificationMeta(
-    'darkColorHex',
-  );
-  @override
-  late final GeneratedColumn<String> darkColorHex = GeneratedColumn<String>(
-    'dark_color_hex',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
-    'sortOrder',
-  );
-  @override
-  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
-    'sort_order',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultValue: const Constant(0),
-  );
-  static const VerificationMeta _isDefaultMeta = const VerificationMeta(
-    'isDefault',
-  );
-  @override
-  late final GeneratedColumn<bool> isDefault = GeneratedColumn<bool>(
-    'is_default',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_default" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
-  static const VerificationMeta _isArchivedMeta = const VerificationMeta(
-    'isArchived',
-  );
-  @override
-  late final GeneratedColumn<bool> isArchived = GeneratedColumn<bool>(
-    'is_archived',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_archived" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
-    'updatedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-    'updated_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    code,
-    tonePackId,
-    name,
-    key,
-    lightColorHex,
-    darkColorHex,
-    sortOrder,
-    isDefault,
-    isArchived,
-    createdAt,
-    updatedAt,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'moment_tones';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<MomentTone> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    if (data.containsKey('code')) {
-      context.handle(
-        _codeMeta,
-        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_codeMeta);
-    }
-    if (data.containsKey('tone_pack_id')) {
-      context.handle(
-        _tonePackIdMeta,
-        tonePackId.isAcceptableOrUnknown(
-          data['tone_pack_id']!,
-          _tonePackIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_tonePackIdMeta);
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-        _nameMeta,
-        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('key')) {
-      context.handle(
-        _keyMeta,
-        key.isAcceptableOrUnknown(data['key']!, _keyMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_keyMeta);
-    }
-    if (data.containsKey('light_color_hex')) {
-      context.handle(
-        _lightColorHexMeta,
-        lightColorHex.isAcceptableOrUnknown(
-          data['light_color_hex']!,
-          _lightColorHexMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_lightColorHexMeta);
-    }
-    if (data.containsKey('dark_color_hex')) {
-      context.handle(
-        _darkColorHexMeta,
-        darkColorHex.isAcceptableOrUnknown(
-          data['dark_color_hex']!,
-          _darkColorHexMeta,
-        ),
-      );
-    }
-    if (data.containsKey('sort_order')) {
-      context.handle(
-        _sortOrderMeta,
-        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
-      );
-    }
-    if (data.containsKey('is_default')) {
-      context.handle(
-        _isDefaultMeta,
-        isDefault.isAcceptableOrUnknown(data['is_default']!, _isDefaultMeta),
-      );
-    }
-    if (data.containsKey('is_archived')) {
-      context.handle(
-        _isArchivedMeta,
-        isArchived.isAcceptableOrUnknown(data['is_archived']!, _isArchivedMeta),
-      );
-    }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_createdAtMeta);
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_updatedAtMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  MomentTone map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return MomentTone(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}id'],
-      )!,
-      code: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}code'],
-      )!,
-      tonePackId: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}tone_pack_id'],
-      )!,
-      name: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}name'],
-      )!,
-      key: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}key'],
-      )!,
-      lightColorHex: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}light_color_hex'],
-      )!,
-      darkColorHex: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}dark_color_hex'],
-      ),
-      sortOrder: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}sort_order'],
-      )!,
-      isDefault: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_default'],
-      )!,
-      isArchived: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_archived'],
-      )!,
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
-    );
-  }
-
-  @override
-  $MomentTonesTable createAlias(String alias) {
-    return $MomentTonesTable(attachedDatabase, alias);
-  }
-}
-
-class MomentTone extends DataClass implements Insertable<MomentTone> {
-  final String id;
-  final String code;
-  final String tonePackId;
-  final String name;
-  final String key;
-  final String lightColorHex;
-  final String? darkColorHex;
-  final int sortOrder;
-  final bool isDefault;
-  final bool isArchived;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  const MomentTone({
-    required this.id,
-    required this.code,
-    required this.tonePackId,
-    required this.name,
-    required this.key,
-    required this.lightColorHex,
-    this.darkColorHex,
-    required this.sortOrder,
-    required this.isDefault,
-    required this.isArchived,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    map['code'] = Variable<String>(code);
-    map['tone_pack_id'] = Variable<String>(tonePackId);
-    map['name'] = Variable<String>(name);
-    map['key'] = Variable<String>(key);
-    map['light_color_hex'] = Variable<String>(lightColorHex);
-    if (!nullToAbsent || darkColorHex != null) {
-      map['dark_color_hex'] = Variable<String>(darkColorHex);
-    }
-    map['sort_order'] = Variable<int>(sortOrder);
-    map['is_default'] = Variable<bool>(isDefault);
-    map['is_archived'] = Variable<bool>(isArchived);
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    return map;
-  }
-
-  MomentTonesCompanion toCompanion(bool nullToAbsent) {
-    return MomentTonesCompanion(
-      id: Value(id),
-      code: Value(code),
-      tonePackId: Value(tonePackId),
-      name: Value(name),
-      key: Value(key),
-      lightColorHex: Value(lightColorHex),
-      darkColorHex: darkColorHex == null && nullToAbsent
-          ? const Value.absent()
-          : Value(darkColorHex),
-      sortOrder: Value(sortOrder),
-      isDefault: Value(isDefault),
-      isArchived: Value(isArchived),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-    );
-  }
-
-  factory MomentTone.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return MomentTone(
-      id: serializer.fromJson<String>(json['id']),
-      code: serializer.fromJson<String>(json['code']),
-      tonePackId: serializer.fromJson<String>(json['tonePackId']),
-      name: serializer.fromJson<String>(json['name']),
-      key: serializer.fromJson<String>(json['key']),
-      lightColorHex: serializer.fromJson<String>(json['lightColorHex']),
-      darkColorHex: serializer.fromJson<String?>(json['darkColorHex']),
-      sortOrder: serializer.fromJson<int>(json['sortOrder']),
-      isDefault: serializer.fromJson<bool>(json['isDefault']),
-      isArchived: serializer.fromJson<bool>(json['isArchived']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'code': serializer.toJson<String>(code),
-      'tonePackId': serializer.toJson<String>(tonePackId),
-      'name': serializer.toJson<String>(name),
-      'key': serializer.toJson<String>(key),
-      'lightColorHex': serializer.toJson<String>(lightColorHex),
-      'darkColorHex': serializer.toJson<String?>(darkColorHex),
-      'sortOrder': serializer.toJson<int>(sortOrder),
-      'isDefault': serializer.toJson<bool>(isDefault),
-      'isArchived': serializer.toJson<bool>(isArchived),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
-    };
-  }
-
-  MomentTone copyWith({
-    String? id,
-    String? code,
-    String? tonePackId,
-    String? name,
-    String? key,
-    String? lightColorHex,
-    Value<String?> darkColorHex = const Value.absent(),
-    int? sortOrder,
-    bool? isDefault,
-    bool? isArchived,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) => MomentTone(
-    id: id ?? this.id,
-    code: code ?? this.code,
-    tonePackId: tonePackId ?? this.tonePackId,
-    name: name ?? this.name,
-    key: key ?? this.key,
-    lightColorHex: lightColorHex ?? this.lightColorHex,
-    darkColorHex: darkColorHex.present ? darkColorHex.value : this.darkColorHex,
-    sortOrder: sortOrder ?? this.sortOrder,
-    isDefault: isDefault ?? this.isDefault,
-    isArchived: isArchived ?? this.isArchived,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-  );
-  MomentTone copyWithCompanion(MomentTonesCompanion data) {
-    return MomentTone(
-      id: data.id.present ? data.id.value : this.id,
-      code: data.code.present ? data.code.value : this.code,
-      tonePackId: data.tonePackId.present
-          ? data.tonePackId.value
-          : this.tonePackId,
-      name: data.name.present ? data.name.value : this.name,
-      key: data.key.present ? data.key.value : this.key,
-      lightColorHex: data.lightColorHex.present
-          ? data.lightColorHex.value
-          : this.lightColorHex,
-      darkColorHex: data.darkColorHex.present
-          ? data.darkColorHex.value
-          : this.darkColorHex,
-      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
-      isDefault: data.isDefault.present ? data.isDefault.value : this.isDefault,
-      isArchived: data.isArchived.present
-          ? data.isArchived.value
-          : this.isArchived,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MomentTone(')
-          ..write('id: $id, ')
-          ..write('code: $code, ')
-          ..write('tonePackId: $tonePackId, ')
-          ..write('name: $name, ')
-          ..write('key: $key, ')
-          ..write('lightColorHex: $lightColorHex, ')
-          ..write('darkColorHex: $darkColorHex, ')
-          ..write('sortOrder: $sortOrder, ')
-          ..write('isDefault: $isDefault, ')
-          ..write('isArchived: $isArchived, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    id,
-    code,
-    tonePackId,
-    name,
-    key,
-    lightColorHex,
-    darkColorHex,
-    sortOrder,
-    isDefault,
-    isArchived,
-    createdAt,
-    updatedAt,
-  );
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is MomentTone &&
-          other.id == this.id &&
-          other.code == this.code &&
-          other.tonePackId == this.tonePackId &&
-          other.name == this.name &&
-          other.key == this.key &&
-          other.lightColorHex == this.lightColorHex &&
-          other.darkColorHex == this.darkColorHex &&
-          other.sortOrder == this.sortOrder &&
-          other.isDefault == this.isDefault &&
-          other.isArchived == this.isArchived &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt);
-}
-
-class MomentTonesCompanion extends UpdateCompanion<MomentTone> {
-  final Value<String> id;
-  final Value<String> code;
-  final Value<String> tonePackId;
-  final Value<String> name;
-  final Value<String> key;
-  final Value<String> lightColorHex;
-  final Value<String?> darkColorHex;
-  final Value<int> sortOrder;
-  final Value<bool> isDefault;
-  final Value<bool> isArchived;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
-  final Value<int> rowid;
-  const MomentTonesCompanion({
-    this.id = const Value.absent(),
-    this.code = const Value.absent(),
-    this.tonePackId = const Value.absent(),
-    this.name = const Value.absent(),
-    this.key = const Value.absent(),
-    this.lightColorHex = const Value.absent(),
-    this.darkColorHex = const Value.absent(),
-    this.sortOrder = const Value.absent(),
-    this.isDefault = const Value.absent(),
-    this.isArchived = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  MomentTonesCompanion.insert({
-    required String id,
-    required String code,
-    required String tonePackId,
-    required String name,
-    required String key,
-    required String lightColorHex,
-    this.darkColorHex = const Value.absent(),
-    this.sortOrder = const Value.absent(),
-    this.isDefault = const Value.absent(),
-    this.isArchived = const Value.absent(),
-    required DateTime createdAt,
-    required DateTime updatedAt,
-    this.rowid = const Value.absent(),
-  }) : id = Value(id),
-       code = Value(code),
-       tonePackId = Value(tonePackId),
-       name = Value(name),
-       key = Value(key),
-       lightColorHex = Value(lightColorHex),
-       createdAt = Value(createdAt),
-       updatedAt = Value(updatedAt);
-  static Insertable<MomentTone> custom({
-    Expression<String>? id,
-    Expression<String>? code,
-    Expression<String>? tonePackId,
-    Expression<String>? name,
-    Expression<String>? key,
-    Expression<String>? lightColorHex,
-    Expression<String>? darkColorHex,
-    Expression<int>? sortOrder,
-    Expression<bool>? isDefault,
-    Expression<bool>? isArchived,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (code != null) 'code': code,
-      if (tonePackId != null) 'tone_pack_id': tonePackId,
-      if (name != null) 'name': name,
-      if (key != null) 'key': key,
-      if (lightColorHex != null) 'light_color_hex': lightColorHex,
-      if (darkColorHex != null) 'dark_color_hex': darkColorHex,
-      if (sortOrder != null) 'sort_order': sortOrder,
-      if (isDefault != null) 'is_default': isDefault,
-      if (isArchived != null) 'is_archived': isArchived,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  MomentTonesCompanion copyWith({
-    Value<String>? id,
-    Value<String>? code,
-    Value<String>? tonePackId,
-    Value<String>? name,
-    Value<String>? key,
-    Value<String>? lightColorHex,
-    Value<String?>? darkColorHex,
-    Value<int>? sortOrder,
-    Value<bool>? isDefault,
-    Value<bool>? isArchived,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
-    Value<int>? rowid,
-  }) {
-    return MomentTonesCompanion(
-      id: id ?? this.id,
-      code: code ?? this.code,
-      tonePackId: tonePackId ?? this.tonePackId,
-      name: name ?? this.name,
-      key: key ?? this.key,
-      lightColorHex: lightColorHex ?? this.lightColorHex,
-      darkColorHex: darkColorHex ?? this.darkColorHex,
-      sortOrder: sortOrder ?? this.sortOrder,
-      isDefault: isDefault ?? this.isDefault,
-      isArchived: isArchived ?? this.isArchived,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
-    }
-    if (code.present) {
-      map['code'] = Variable<String>(code.value);
-    }
-    if (tonePackId.present) {
-      map['tone_pack_id'] = Variable<String>(tonePackId.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (key.present) {
-      map['key'] = Variable<String>(key.value);
-    }
-    if (lightColorHex.present) {
-      map['light_color_hex'] = Variable<String>(lightColorHex.value);
-    }
-    if (darkColorHex.present) {
-      map['dark_color_hex'] = Variable<String>(darkColorHex.value);
-    }
-    if (sortOrder.present) {
-      map['sort_order'] = Variable<int>(sortOrder.value);
-    }
-    if (isDefault.present) {
-      map['is_default'] = Variable<bool>(isDefault.value);
-    }
-    if (isArchived.present) {
-      map['is_archived'] = Variable<bool>(isArchived.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MomentTonesCompanion(')
-          ..write('id: $id, ')
-          ..write('code: $code, ')
-          ..write('tonePackId: $tonePackId, ')
-          ..write('name: $name, ')
-          ..write('key: $key, ')
-          ..write('lightColorHex: $lightColorHex, ')
-          ..write('darkColorHex: $darkColorHex, ')
-          ..write('sortOrder: $sortOrder, ')
-          ..write('isDefault: $isDefault, ')
-          ..write('isArchived: $isArchived, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $AppSettingsTable extends AppSettings
     with TableInfo<$AppSettingsTable, AppSetting> {
   @override
@@ -7195,12 +7217,16 @@ class AppSettingsCompanion extends UpdateCompanion<AppSetting> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
-  late final $MomentsTable moments = $MomentsTable(this);
-  late final $MomentAssetsTable momentAssets = $MomentAssetsTable(this);
   late final $MomentMoodPacksTable momentMoodPacks = $MomentMoodPacksTable(
     this,
   );
   late final $MomentMoodsTable momentMoods = $MomentMoodsTable(this);
+  late final $MomentTonePacksTable momentTonePacks = $MomentTonePacksTable(
+    this,
+  );
+  late final $MomentTonesTable momentTones = $MomentTonesTable(this);
+  late final $MomentsTable moments = $MomentsTable(this);
+  late final $MomentAssetsTable momentAssets = $MomentAssetsTable(this);
   late final $MomentTagsTable momentTags = $MomentTagsTable(this);
   late final $MomentTagLinksTable momentTagLinks = $MomentTagLinksTable(this);
   late final $MomentCollectionsTable momentCollections =
@@ -7209,31 +7235,1897 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $MomentCollectionItemsTable(this);
   late final $MomentWidgetConfigsTable momentWidgetConfigs =
       $MomentWidgetConfigsTable(this);
-  late final $MomentTonePacksTable momentTonePacks = $MomentTonePacksTable(
-    this,
-  );
-  late final $MomentTonesTable momentTones = $MomentTonesTable(this);
   late final $AppSettingsTable appSettings = $AppSettingsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
-    moments,
-    momentAssets,
     momentMoodPacks,
     momentMoods,
+    momentTonePacks,
+    momentTones,
+    moments,
+    momentAssets,
     momentTags,
     momentTagLinks,
     momentCollections,
     momentCollectionItems,
     momentWidgetConfigs,
-    momentTonePacks,
-    momentTones,
     appSettings,
   ];
+  @override
+  StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'moment_moods',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('moments', kind: UpdateKind.update)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'moment_tones',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('moments', kind: UpdateKind.update)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'moments',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('moment_assets', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'moments',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('moment_tag_links', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'moment_tags',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('moment_tag_links', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'moment_collections',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('moment_collection_items', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'moments',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('moment_collection_items', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'moments',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('moment_widget_configs', kind: UpdateKind.update)],
+    ),
+  ]);
 }
 
+typedef $$MomentMoodPacksTableCreateCompanionBuilder =
+    MomentMoodPacksCompanion Function({
+      required String id,
+      required String code,
+      required String name,
+      Value<String?> description,
+      Value<bool> isBuiltIn,
+      Value<bool> isEnabled,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$MomentMoodPacksTableUpdateCompanionBuilder =
+    MomentMoodPacksCompanion Function({
+      Value<String> id,
+      Value<String> code,
+      Value<String> name,
+      Value<String?> description,
+      Value<bool> isBuiltIn,
+      Value<bool> isEnabled,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+final class $$MomentMoodPacksTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $MomentMoodPacksTable, MomentMoodPack> {
+  $$MomentMoodPacksTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<$MomentMoodsTable, List<MomentMood>>
+  _momentMoodsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.momentMoods,
+    aliasName: $_aliasNameGenerator(
+      db.momentMoodPacks.id,
+      db.momentMoods.moodPackId,
+    ),
+  );
+
+  $$MomentMoodsTableProcessedTableManager get momentMoodsRefs {
+    final manager = $$MomentMoodsTableTableManager(
+      $_db,
+      $_db.momentMoods,
+    ).filter((f) => f.moodPackId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_momentMoodsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$MomentMoodPacksTableFilterComposer
+    extends Composer<_$AppDatabase, $MomentMoodPacksTable> {
+  $$MomentMoodPacksTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isBuiltIn => $composableBuilder(
+    column: $table.isBuiltIn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isEnabled => $composableBuilder(
+    column: $table.isEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> momentMoodsRefs(
+    Expression<bool> Function($$MomentMoodsTableFilterComposer f) f,
+  ) {
+    final $$MomentMoodsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.momentMoods,
+      getReferencedColumn: (t) => t.moodPackId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentMoodsTableFilterComposer(
+            $db: $db,
+            $table: $db.momentMoods,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$MomentMoodPacksTableOrderingComposer
+    extends Composer<_$AppDatabase, $MomentMoodPacksTable> {
+  $$MomentMoodPacksTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isBuiltIn => $composableBuilder(
+    column: $table.isBuiltIn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isEnabled => $composableBuilder(
+    column: $table.isEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MomentMoodPacksTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MomentMoodPacksTable> {
+  $$MomentMoodPacksTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isBuiltIn =>
+      $composableBuilder(column: $table.isBuiltIn, builder: (column) => column);
+
+  GeneratedColumn<bool> get isEnabled =>
+      $composableBuilder(column: $table.isEnabled, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  Expression<T> momentMoodsRefs<T extends Object>(
+    Expression<T> Function($$MomentMoodsTableAnnotationComposer a) f,
+  ) {
+    final $$MomentMoodsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.momentMoods,
+      getReferencedColumn: (t) => t.moodPackId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentMoodsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.momentMoods,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$MomentMoodPacksTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MomentMoodPacksTable,
+          MomentMoodPack,
+          $$MomentMoodPacksTableFilterComposer,
+          $$MomentMoodPacksTableOrderingComposer,
+          $$MomentMoodPacksTableAnnotationComposer,
+          $$MomentMoodPacksTableCreateCompanionBuilder,
+          $$MomentMoodPacksTableUpdateCompanionBuilder,
+          (MomentMoodPack, $$MomentMoodPacksTableReferences),
+          MomentMoodPack,
+          PrefetchHooks Function({bool momentMoodsRefs})
+        > {
+  $$MomentMoodPacksTableTableManager(
+    _$AppDatabase db,
+    $MomentMoodPacksTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MomentMoodPacksTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MomentMoodPacksTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MomentMoodPacksTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> code = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<bool> isBuiltIn = const Value.absent(),
+                Value<bool> isEnabled = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MomentMoodPacksCompanion(
+                id: id,
+                code: code,
+                name: name,
+                description: description,
+                isBuiltIn: isBuiltIn,
+                isEnabled: isEnabled,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String code,
+                required String name,
+                Value<String?> description = const Value.absent(),
+                Value<bool> isBuiltIn = const Value.absent(),
+                Value<bool> isEnabled = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => MomentMoodPacksCompanion.insert(
+                id: id,
+                code: code,
+                name: name,
+                description: description,
+                isBuiltIn: isBuiltIn,
+                isEnabled: isEnabled,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$MomentMoodPacksTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({momentMoodsRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (momentMoodsRefs) db.momentMoods],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (momentMoodsRefs)
+                    await $_getPrefetchedData<
+                      MomentMoodPack,
+                      $MomentMoodPacksTable,
+                      MomentMood
+                    >(
+                      currentTable: table,
+                      referencedTable: $$MomentMoodPacksTableReferences
+                          ._momentMoodsRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$MomentMoodPacksTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).momentMoodsRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.moodPackId == item.id),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$MomentMoodPacksTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MomentMoodPacksTable,
+      MomentMoodPack,
+      $$MomentMoodPacksTableFilterComposer,
+      $$MomentMoodPacksTableOrderingComposer,
+      $$MomentMoodPacksTableAnnotationComposer,
+      $$MomentMoodPacksTableCreateCompanionBuilder,
+      $$MomentMoodPacksTableUpdateCompanionBuilder,
+      (MomentMoodPack, $$MomentMoodPacksTableReferences),
+      MomentMoodPack,
+      PrefetchHooks Function({bool momentMoodsRefs})
+    >;
+typedef $$MomentMoodsTableCreateCompanionBuilder =
+    MomentMoodsCompanion Function({
+      required String id,
+      required String code,
+      required String moodPackId,
+      required String name,
+      required String emoji,
+      required String key,
+      Value<String?> colorHex,
+      Value<bool> isDefault,
+      Value<bool> isArchived,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$MomentMoodsTableUpdateCompanionBuilder =
+    MomentMoodsCompanion Function({
+      Value<String> id,
+      Value<String> code,
+      Value<String> moodPackId,
+      Value<String> name,
+      Value<String> emoji,
+      Value<String> key,
+      Value<String?> colorHex,
+      Value<bool> isDefault,
+      Value<bool> isArchived,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+final class $$MomentMoodsTableReferences
+    extends BaseReferences<_$AppDatabase, $MomentMoodsTable, MomentMood> {
+  $$MomentMoodsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $MomentMoodPacksTable _moodPackIdTable(_$AppDatabase db) =>
+      db.momentMoodPacks.createAlias(
+        $_aliasNameGenerator(db.momentMoods.moodPackId, db.momentMoodPacks.id),
+      );
+
+  $$MomentMoodPacksTableProcessedTableManager get moodPackId {
+    final $_column = $_itemColumn<String>('mood_pack_id')!;
+
+    final manager = $$MomentMoodPacksTableTableManager(
+      $_db,
+      $_db.momentMoodPacks,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_moodPackIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$MomentsTable, List<Moment>> _momentsRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.moments,
+    aliasName: $_aliasNameGenerator(db.momentMoods.id, db.moments.moodId),
+  );
+
+  $$MomentsTableProcessedTableManager get momentsRefs {
+    final manager = $$MomentsTableTableManager(
+      $_db,
+      $_db.moments,
+    ).filter((f) => f.moodId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_momentsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$MomentMoodsTableFilterComposer
+    extends Composer<_$AppDatabase, $MomentMoodsTable> {
+  $$MomentMoodsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get emoji => $composableBuilder(
+    column: $table.emoji,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get key => $composableBuilder(
+    column: $table.key,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get colorHex => $composableBuilder(
+    column: $table.colorHex,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDefault => $composableBuilder(
+    column: $table.isDefault,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isArchived => $composableBuilder(
+    column: $table.isArchived,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$MomentMoodPacksTableFilterComposer get moodPackId {
+    final $$MomentMoodPacksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.moodPackId,
+      referencedTable: $db.momentMoodPacks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentMoodPacksTableFilterComposer(
+            $db: $db,
+            $table: $db.momentMoodPacks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> momentsRefs(
+    Expression<bool> Function($$MomentsTableFilterComposer f) f,
+  ) {
+    final $$MomentsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.moments,
+      getReferencedColumn: (t) => t.moodId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentsTableFilterComposer(
+            $db: $db,
+            $table: $db.moments,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$MomentMoodsTableOrderingComposer
+    extends Composer<_$AppDatabase, $MomentMoodsTable> {
+  $$MomentMoodsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get emoji => $composableBuilder(
+    column: $table.emoji,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get key => $composableBuilder(
+    column: $table.key,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get colorHex => $composableBuilder(
+    column: $table.colorHex,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDefault => $composableBuilder(
+    column: $table.isDefault,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isArchived => $composableBuilder(
+    column: $table.isArchived,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$MomentMoodPacksTableOrderingComposer get moodPackId {
+    final $$MomentMoodPacksTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.moodPackId,
+      referencedTable: $db.momentMoodPacks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentMoodPacksTableOrderingComposer(
+            $db: $db,
+            $table: $db.momentMoodPacks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MomentMoodsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MomentMoodsTable> {
+  $$MomentMoodsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get emoji =>
+      $composableBuilder(column: $table.emoji, builder: (column) => column);
+
+  GeneratedColumn<String> get key =>
+      $composableBuilder(column: $table.key, builder: (column) => column);
+
+  GeneratedColumn<String> get colorHex =>
+      $composableBuilder(column: $table.colorHex, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDefault =>
+      $composableBuilder(column: $table.isDefault, builder: (column) => column);
+
+  GeneratedColumn<bool> get isArchived => $composableBuilder(
+    column: $table.isArchived,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$MomentMoodPacksTableAnnotationComposer get moodPackId {
+    final $$MomentMoodPacksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.moodPackId,
+      referencedTable: $db.momentMoodPacks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentMoodPacksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.momentMoodPacks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> momentsRefs<T extends Object>(
+    Expression<T> Function($$MomentsTableAnnotationComposer a) f,
+  ) {
+    final $$MomentsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.moments,
+      getReferencedColumn: (t) => t.moodId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.moments,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$MomentMoodsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MomentMoodsTable,
+          MomentMood,
+          $$MomentMoodsTableFilterComposer,
+          $$MomentMoodsTableOrderingComposer,
+          $$MomentMoodsTableAnnotationComposer,
+          $$MomentMoodsTableCreateCompanionBuilder,
+          $$MomentMoodsTableUpdateCompanionBuilder,
+          (MomentMood, $$MomentMoodsTableReferences),
+          MomentMood,
+          PrefetchHooks Function({bool moodPackId, bool momentsRefs})
+        > {
+  $$MomentMoodsTableTableManager(_$AppDatabase db, $MomentMoodsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MomentMoodsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MomentMoodsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MomentMoodsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> code = const Value.absent(),
+                Value<String> moodPackId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> emoji = const Value.absent(),
+                Value<String> key = const Value.absent(),
+                Value<String?> colorHex = const Value.absent(),
+                Value<bool> isDefault = const Value.absent(),
+                Value<bool> isArchived = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MomentMoodsCompanion(
+                id: id,
+                code: code,
+                moodPackId: moodPackId,
+                name: name,
+                emoji: emoji,
+                key: key,
+                colorHex: colorHex,
+                isDefault: isDefault,
+                isArchived: isArchived,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String code,
+                required String moodPackId,
+                required String name,
+                required String emoji,
+                required String key,
+                Value<String?> colorHex = const Value.absent(),
+                Value<bool> isDefault = const Value.absent(),
+                Value<bool> isArchived = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => MomentMoodsCompanion.insert(
+                id: id,
+                code: code,
+                moodPackId: moodPackId,
+                name: name,
+                emoji: emoji,
+                key: key,
+                colorHex: colorHex,
+                isDefault: isDefault,
+                isArchived: isArchived,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$MomentMoodsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({moodPackId = false, momentsRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (momentsRefs) db.moments],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (moodPackId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.moodPackId,
+                                referencedTable: $$MomentMoodsTableReferences
+                                    ._moodPackIdTable(db),
+                                referencedColumn: $$MomentMoodsTableReferences
+                                    ._moodPackIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (momentsRefs)
+                    await $_getPrefetchedData<
+                      MomentMood,
+                      $MomentMoodsTable,
+                      Moment
+                    >(
+                      currentTable: table,
+                      referencedTable: $$MomentMoodsTableReferences
+                          ._momentsRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$MomentMoodsTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).momentsRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.moodId == item.id),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$MomentMoodsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MomentMoodsTable,
+      MomentMood,
+      $$MomentMoodsTableFilterComposer,
+      $$MomentMoodsTableOrderingComposer,
+      $$MomentMoodsTableAnnotationComposer,
+      $$MomentMoodsTableCreateCompanionBuilder,
+      $$MomentMoodsTableUpdateCompanionBuilder,
+      (MomentMood, $$MomentMoodsTableReferences),
+      MomentMood,
+      PrefetchHooks Function({bool moodPackId, bool momentsRefs})
+    >;
+typedef $$MomentTonePacksTableCreateCompanionBuilder =
+    MomentTonePacksCompanion Function({
+      required String id,
+      required String code,
+      required String name,
+      Value<String?> description,
+      Value<bool> isBuiltIn,
+      Value<bool> isEnabled,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$MomentTonePacksTableUpdateCompanionBuilder =
+    MomentTonePacksCompanion Function({
+      Value<String> id,
+      Value<String> code,
+      Value<String> name,
+      Value<String?> description,
+      Value<bool> isBuiltIn,
+      Value<bool> isEnabled,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+final class $$MomentTonePacksTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $MomentTonePacksTable, MomentTonePack> {
+  $$MomentTonePacksTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<$MomentTonesTable, List<MomentTone>>
+  _momentTonesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.momentTones,
+    aliasName: $_aliasNameGenerator(
+      db.momentTonePacks.id,
+      db.momentTones.tonePackId,
+    ),
+  );
+
+  $$MomentTonesTableProcessedTableManager get momentTonesRefs {
+    final manager = $$MomentTonesTableTableManager(
+      $_db,
+      $_db.momentTones,
+    ).filter((f) => f.tonePackId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_momentTonesRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$MomentTonePacksTableFilterComposer
+    extends Composer<_$AppDatabase, $MomentTonePacksTable> {
+  $$MomentTonePacksTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isBuiltIn => $composableBuilder(
+    column: $table.isBuiltIn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isEnabled => $composableBuilder(
+    column: $table.isEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> momentTonesRefs(
+    Expression<bool> Function($$MomentTonesTableFilterComposer f) f,
+  ) {
+    final $$MomentTonesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.momentTones,
+      getReferencedColumn: (t) => t.tonePackId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentTonesTableFilterComposer(
+            $db: $db,
+            $table: $db.momentTones,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$MomentTonePacksTableOrderingComposer
+    extends Composer<_$AppDatabase, $MomentTonePacksTable> {
+  $$MomentTonePacksTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isBuiltIn => $composableBuilder(
+    column: $table.isBuiltIn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isEnabled => $composableBuilder(
+    column: $table.isEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MomentTonePacksTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MomentTonePacksTable> {
+  $$MomentTonePacksTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isBuiltIn =>
+      $composableBuilder(column: $table.isBuiltIn, builder: (column) => column);
+
+  GeneratedColumn<bool> get isEnabled =>
+      $composableBuilder(column: $table.isEnabled, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  Expression<T> momentTonesRefs<T extends Object>(
+    Expression<T> Function($$MomentTonesTableAnnotationComposer a) f,
+  ) {
+    final $$MomentTonesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.momentTones,
+      getReferencedColumn: (t) => t.tonePackId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentTonesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.momentTones,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$MomentTonePacksTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MomentTonePacksTable,
+          MomentTonePack,
+          $$MomentTonePacksTableFilterComposer,
+          $$MomentTonePacksTableOrderingComposer,
+          $$MomentTonePacksTableAnnotationComposer,
+          $$MomentTonePacksTableCreateCompanionBuilder,
+          $$MomentTonePacksTableUpdateCompanionBuilder,
+          (MomentTonePack, $$MomentTonePacksTableReferences),
+          MomentTonePack,
+          PrefetchHooks Function({bool momentTonesRefs})
+        > {
+  $$MomentTonePacksTableTableManager(
+    _$AppDatabase db,
+    $MomentTonePacksTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MomentTonePacksTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MomentTonePacksTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MomentTonePacksTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> code = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<bool> isBuiltIn = const Value.absent(),
+                Value<bool> isEnabled = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MomentTonePacksCompanion(
+                id: id,
+                code: code,
+                name: name,
+                description: description,
+                isBuiltIn: isBuiltIn,
+                isEnabled: isEnabled,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String code,
+                required String name,
+                Value<String?> description = const Value.absent(),
+                Value<bool> isBuiltIn = const Value.absent(),
+                Value<bool> isEnabled = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => MomentTonePacksCompanion.insert(
+                id: id,
+                code: code,
+                name: name,
+                description: description,
+                isBuiltIn: isBuiltIn,
+                isEnabled: isEnabled,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$MomentTonePacksTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({momentTonesRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (momentTonesRefs) db.momentTones],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (momentTonesRefs)
+                    await $_getPrefetchedData<
+                      MomentTonePack,
+                      $MomentTonePacksTable,
+                      MomentTone
+                    >(
+                      currentTable: table,
+                      referencedTable: $$MomentTonePacksTableReferences
+                          ._momentTonesRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$MomentTonePacksTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).momentTonesRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.tonePackId == item.id),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$MomentTonePacksTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MomentTonePacksTable,
+      MomentTonePack,
+      $$MomentTonePacksTableFilterComposer,
+      $$MomentTonePacksTableOrderingComposer,
+      $$MomentTonePacksTableAnnotationComposer,
+      $$MomentTonePacksTableCreateCompanionBuilder,
+      $$MomentTonePacksTableUpdateCompanionBuilder,
+      (MomentTonePack, $$MomentTonePacksTableReferences),
+      MomentTonePack,
+      PrefetchHooks Function({bool momentTonesRefs})
+    >;
+typedef $$MomentTonesTableCreateCompanionBuilder =
+    MomentTonesCompanion Function({
+      required String id,
+      required String code,
+      required String tonePackId,
+      required String name,
+      required String key,
+      required String lightColorHex,
+      Value<String?> darkColorHex,
+      Value<int> sortOrder,
+      Value<bool> isDefault,
+      Value<bool> isArchived,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$MomentTonesTableUpdateCompanionBuilder =
+    MomentTonesCompanion Function({
+      Value<String> id,
+      Value<String> code,
+      Value<String> tonePackId,
+      Value<String> name,
+      Value<String> key,
+      Value<String> lightColorHex,
+      Value<String?> darkColorHex,
+      Value<int> sortOrder,
+      Value<bool> isDefault,
+      Value<bool> isArchived,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+final class $$MomentTonesTableReferences
+    extends BaseReferences<_$AppDatabase, $MomentTonesTable, MomentTone> {
+  $$MomentTonesTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $MomentTonePacksTable _tonePackIdTable(_$AppDatabase db) =>
+      db.momentTonePacks.createAlias(
+        $_aliasNameGenerator(db.momentTones.tonePackId, db.momentTonePacks.id),
+      );
+
+  $$MomentTonePacksTableProcessedTableManager get tonePackId {
+    final $_column = $_itemColumn<String>('tone_pack_id')!;
+
+    final manager = $$MomentTonePacksTableTableManager(
+      $_db,
+      $_db.momentTonePacks,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_tonePackIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$MomentsTable, List<Moment>> _momentsRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.moments,
+    aliasName: $_aliasNameGenerator(db.momentTones.id, db.moments.toneId),
+  );
+
+  $$MomentsTableProcessedTableManager get momentsRefs {
+    final manager = $$MomentsTableTableManager(
+      $_db,
+      $_db.moments,
+    ).filter((f) => f.toneId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_momentsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$MomentTonesTableFilterComposer
+    extends Composer<_$AppDatabase, $MomentTonesTable> {
+  $$MomentTonesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get key => $composableBuilder(
+    column: $table.key,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lightColorHex => $composableBuilder(
+    column: $table.lightColorHex,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get darkColorHex => $composableBuilder(
+    column: $table.darkColorHex,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDefault => $composableBuilder(
+    column: $table.isDefault,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isArchived => $composableBuilder(
+    column: $table.isArchived,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$MomentTonePacksTableFilterComposer get tonePackId {
+    final $$MomentTonePacksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tonePackId,
+      referencedTable: $db.momentTonePacks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentTonePacksTableFilterComposer(
+            $db: $db,
+            $table: $db.momentTonePacks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> momentsRefs(
+    Expression<bool> Function($$MomentsTableFilterComposer f) f,
+  ) {
+    final $$MomentsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.moments,
+      getReferencedColumn: (t) => t.toneId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentsTableFilterComposer(
+            $db: $db,
+            $table: $db.moments,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$MomentTonesTableOrderingComposer
+    extends Composer<_$AppDatabase, $MomentTonesTable> {
+  $$MomentTonesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get key => $composableBuilder(
+    column: $table.key,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get lightColorHex => $composableBuilder(
+    column: $table.lightColorHex,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get darkColorHex => $composableBuilder(
+    column: $table.darkColorHex,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDefault => $composableBuilder(
+    column: $table.isDefault,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isArchived => $composableBuilder(
+    column: $table.isArchived,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$MomentTonePacksTableOrderingComposer get tonePackId {
+    final $$MomentTonePacksTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tonePackId,
+      referencedTable: $db.momentTonePacks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentTonePacksTableOrderingComposer(
+            $db: $db,
+            $table: $db.momentTonePacks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MomentTonesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MomentTonesTable> {
+  $$MomentTonesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get key =>
+      $composableBuilder(column: $table.key, builder: (column) => column);
+
+  GeneratedColumn<String> get lightColorHex => $composableBuilder(
+    column: $table.lightColorHex,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get darkColorHex => $composableBuilder(
+    column: $table.darkColorHex,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDefault =>
+      $composableBuilder(column: $table.isDefault, builder: (column) => column);
+
+  GeneratedColumn<bool> get isArchived => $composableBuilder(
+    column: $table.isArchived,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$MomentTonePacksTableAnnotationComposer get tonePackId {
+    final $$MomentTonePacksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tonePackId,
+      referencedTable: $db.momentTonePacks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentTonePacksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.momentTonePacks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> momentsRefs<T extends Object>(
+    Expression<T> Function($$MomentsTableAnnotationComposer a) f,
+  ) {
+    final $$MomentsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.moments,
+      getReferencedColumn: (t) => t.toneId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.moments,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$MomentTonesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MomentTonesTable,
+          MomentTone,
+          $$MomentTonesTableFilterComposer,
+          $$MomentTonesTableOrderingComposer,
+          $$MomentTonesTableAnnotationComposer,
+          $$MomentTonesTableCreateCompanionBuilder,
+          $$MomentTonesTableUpdateCompanionBuilder,
+          (MomentTone, $$MomentTonesTableReferences),
+          MomentTone,
+          PrefetchHooks Function({bool tonePackId, bool momentsRefs})
+        > {
+  $$MomentTonesTableTableManager(_$AppDatabase db, $MomentTonesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MomentTonesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MomentTonesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MomentTonesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> code = const Value.absent(),
+                Value<String> tonePackId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> key = const Value.absent(),
+                Value<String> lightColorHex = const Value.absent(),
+                Value<String?> darkColorHex = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<bool> isDefault = const Value.absent(),
+                Value<bool> isArchived = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MomentTonesCompanion(
+                id: id,
+                code: code,
+                tonePackId: tonePackId,
+                name: name,
+                key: key,
+                lightColorHex: lightColorHex,
+                darkColorHex: darkColorHex,
+                sortOrder: sortOrder,
+                isDefault: isDefault,
+                isArchived: isArchived,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String code,
+                required String tonePackId,
+                required String name,
+                required String key,
+                required String lightColorHex,
+                Value<String?> darkColorHex = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<bool> isDefault = const Value.absent(),
+                Value<bool> isArchived = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => MomentTonesCompanion.insert(
+                id: id,
+                code: code,
+                tonePackId: tonePackId,
+                name: name,
+                key: key,
+                lightColorHex: lightColorHex,
+                darkColorHex: darkColorHex,
+                sortOrder: sortOrder,
+                isDefault: isDefault,
+                isArchived: isArchived,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$MomentTonesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({tonePackId = false, momentsRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (momentsRefs) db.moments],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (tonePackId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.tonePackId,
+                                referencedTable: $$MomentTonesTableReferences
+                                    ._tonePackIdTable(db),
+                                referencedColumn: $$MomentTonesTableReferences
+                                    ._tonePackIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (momentsRefs)
+                    await $_getPrefetchedData<
+                      MomentTone,
+                      $MomentTonesTable,
+                      Moment
+                    >(
+                      currentTable: table,
+                      referencedTable: $$MomentTonesTableReferences
+                          ._momentsRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$MomentTonesTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).momentsRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.toneId == item.id),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$MomentTonesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MomentTonesTable,
+      MomentTone,
+      $$MomentTonesTableFilterComposer,
+      $$MomentTonesTableOrderingComposer,
+      $$MomentTonesTableAnnotationComposer,
+      $$MomentTonesTableCreateCompanionBuilder,
+      $$MomentTonesTableUpdateCompanionBuilder,
+      (MomentTone, $$MomentTonesTableReferences),
+      MomentTone,
+      PrefetchHooks Function({bool tonePackId, bool momentsRefs})
+    >;
 typedef $$MomentsTableCreateCompanionBuilder =
     MomentsCompanion Function({
       required String id,
@@ -7292,6 +9184,40 @@ typedef $$MomentsTableUpdateCompanionBuilder =
 final class $$MomentsTableReferences
     extends BaseReferences<_$AppDatabase, $MomentsTable, Moment> {
   $$MomentsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $MomentMoodsTable _moodIdTable(_$AppDatabase db) => db.momentMoods
+      .createAlias($_aliasNameGenerator(db.moments.moodId, db.momentMoods.id));
+
+  $$MomentMoodsTableProcessedTableManager? get moodId {
+    final $_column = $_itemColumn<String>('mood_id');
+    if ($_column == null) return null;
+    final manager = $$MomentMoodsTableTableManager(
+      $_db,
+      $_db.momentMoods,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_moodIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $MomentTonesTable _toneIdTable(_$AppDatabase db) => db.momentTones
+      .createAlias($_aliasNameGenerator(db.moments.toneId, db.momentTones.id));
+
+  $$MomentTonesTableProcessedTableManager? get toneId {
+    final $_column = $_itemColumn<String>('tone_id');
+    if ($_column == null) return null;
+    final manager = $$MomentTonesTableTableManager(
+      $_db,
+      $_db.momentTones,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_toneIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
 
   static MultiTypedResultKey<$MomentAssetsTable, List<MomentAsset>>
   _momentAssetsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
@@ -7356,6 +9282,33 @@ final class $$MomentsTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<
+    $MomentWidgetConfigsTable,
+    List<MomentWidgetConfig>
+  >
+  _momentWidgetConfigsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.momentWidgetConfigs,
+        aliasName: $_aliasNameGenerator(
+          db.moments.id,
+          db.momentWidgetConfigs.fixedMomentId,
+        ),
+      );
+
+  $$MomentWidgetConfigsTableProcessedTableManager get momentWidgetConfigsRefs {
+    final manager = $$MomentWidgetConfigsTableTableManager(
+      $_db,
+      $_db.momentWidgetConfigs,
+    ).filter((f) => f.fixedMomentId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _momentWidgetConfigsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$MomentsTableFilterComposer
@@ -7384,11 +9337,6 @@ class $$MomentsTableFilterComposer
 
   ColumnFilters<String> get coverAssetId => $composableBuilder(
     column: $table.coverAssetId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get moodId => $composableBuilder(
-    column: $table.moodId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -7477,10 +9425,51 @@ class $$MomentsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get toneId => $composableBuilder(
-    column: $table.toneId,
-    builder: (column) => ColumnFilters(column),
-  );
+  $$MomentMoodsTableFilterComposer get moodId {
+    final $$MomentMoodsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.moodId,
+      referencedTable: $db.momentMoods,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentMoodsTableFilterComposer(
+            $db: $db,
+            $table: $db.momentMoods,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$MomentTonesTableFilterComposer get toneId {
+    final $$MomentTonesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.toneId,
+      referencedTable: $db.momentTones,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentTonesTableFilterComposer(
+            $db: $db,
+            $table: $db.momentTones,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 
   Expression<bool> momentAssetsRefs(
     Expression<bool> Function($$MomentAssetsTableFilterComposer f) f,
@@ -7557,6 +9546,31 @@ class $$MomentsTableFilterComposer
         );
     return f(composer);
   }
+
+  Expression<bool> momentWidgetConfigsRefs(
+    Expression<bool> Function($$MomentWidgetConfigsTableFilterComposer f) f,
+  ) {
+    final $$MomentWidgetConfigsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.momentWidgetConfigs,
+      getReferencedColumn: (t) => t.fixedMomentId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentWidgetConfigsTableFilterComposer(
+            $db: $db,
+            $table: $db.momentWidgetConfigs,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$MomentsTableOrderingComposer
@@ -7585,11 +9599,6 @@ class $$MomentsTableOrderingComposer
 
   ColumnOrderings<String> get coverAssetId => $composableBuilder(
     column: $table.coverAssetId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get moodId => $composableBuilder(
-    column: $table.moodId,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -7678,10 +9687,51 @@ class $$MomentsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get toneId => $composableBuilder(
-    column: $table.toneId,
-    builder: (column) => ColumnOrderings(column),
-  );
+  $$MomentMoodsTableOrderingComposer get moodId {
+    final $$MomentMoodsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.moodId,
+      referencedTable: $db.momentMoods,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentMoodsTableOrderingComposer(
+            $db: $db,
+            $table: $db.momentMoods,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$MomentTonesTableOrderingComposer get toneId {
+    final $$MomentTonesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.toneId,
+      referencedTable: $db.momentTones,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentTonesTableOrderingComposer(
+            $db: $db,
+            $table: $db.momentTones,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$MomentsTableAnnotationComposer
@@ -7706,9 +9756,6 @@ class $$MomentsTableAnnotationComposer
     column: $table.coverAssetId,
     builder: (column) => column,
   );
-
-  GeneratedColumn<String> get moodId =>
-      $composableBuilder(column: $table.moodId, builder: (column) => column);
 
   GeneratedColumn<DateTime> get momentDate => $composableBuilder(
     column: $table.momentDate,
@@ -7773,8 +9820,51 @@ class $$MomentsTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get toneId =>
-      $composableBuilder(column: $table.toneId, builder: (column) => column);
+  $$MomentMoodsTableAnnotationComposer get moodId {
+    final $$MomentMoodsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.moodId,
+      referencedTable: $db.momentMoods,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentMoodsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.momentMoods,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$MomentTonesTableAnnotationComposer get toneId {
+    final $$MomentTonesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.toneId,
+      referencedTable: $db.momentTones,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentTonesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.momentTones,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 
   Expression<T> momentAssetsRefs<T extends Object>(
     Expression<T> Function($$MomentAssetsTableAnnotationComposer a) f,
@@ -7851,6 +9941,32 @@ class $$MomentsTableAnnotationComposer
         );
     return f(composer);
   }
+
+  Expression<T> momentWidgetConfigsRefs<T extends Object>(
+    Expression<T> Function($$MomentWidgetConfigsTableAnnotationComposer a) f,
+  ) {
+    final $$MomentWidgetConfigsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.momentWidgetConfigs,
+          getReferencedColumn: (t) => t.fixedMomentId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MomentWidgetConfigsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.momentWidgetConfigs,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$MomentsTableTableManager
@@ -7867,9 +9983,12 @@ class $$MomentsTableTableManager
           (Moment, $$MomentsTableReferences),
           Moment,
           PrefetchHooks Function({
+            bool moodId,
+            bool toneId,
             bool momentAssetsRefs,
             bool momentTagLinksRefs,
             bool momentCollectionItemsRefs,
+            bool momentWidgetConfigsRefs,
           })
         > {
   $$MomentsTableTableManager(_$AppDatabase db, $MomentsTable table)
@@ -7997,9 +10116,12 @@ class $$MomentsTableTableManager
               .toList(),
           prefetchHooksCallback:
               ({
+                moodId = false,
+                toneId = false,
                 momentAssetsRefs = false,
                 momentTagLinksRefs = false,
                 momentCollectionItemsRefs = false,
+                momentWidgetConfigsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -8007,8 +10129,53 @@ class $$MomentsTableTableManager
                     if (momentAssetsRefs) db.momentAssets,
                     if (momentTagLinksRefs) db.momentTagLinks,
                     if (momentCollectionItemsRefs) db.momentCollectionItems,
+                    if (momentWidgetConfigsRefs) db.momentWidgetConfigs,
                   ],
-                  addJoins: null,
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (moodId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.moodId,
+                                    referencedTable: $$MomentsTableReferences
+                                        ._moodIdTable(db),
+                                    referencedColumn: $$MomentsTableReferences
+                                        ._moodIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
+                        if (toneId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.toneId,
+                                    referencedTable: $$MomentsTableReferences
+                                        ._toneIdTable(db),
+                                    referencedColumn: $$MomentsTableReferences
+                                        ._toneIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
                   getPrefetchedDataCallback: (items) async {
                     return [
                       if (momentAssetsRefs)
@@ -8074,6 +10241,27 @@ class $$MomentsTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (momentWidgetConfigsRefs)
+                        await $_getPrefetchedData<
+                          Moment,
+                          $MomentsTable,
+                          MomentWidgetConfig
+                        >(
+                          currentTable: table,
+                          referencedTable: $$MomentsTableReferences
+                              ._momentWidgetConfigsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$MomentsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).momentWidgetConfigsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.fixedMomentId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -8095,9 +10283,12 @@ typedef $$MomentsTableProcessedTableManager =
       (Moment, $$MomentsTableReferences),
       Moment,
       PrefetchHooks Function({
+        bool moodId,
+        bool toneId,
         bool momentAssetsRefs,
         bool momentTagLinksRefs,
         bool momentCollectionItemsRefs,
+        bool momentWidgetConfigsRefs,
       })
     >;
 typedef $$MomentAssetsTableCreateCompanionBuilder =
@@ -8675,811 +10866,6 @@ typedef $$MomentAssetsTableProcessedTableManager =
       (MomentAsset, $$MomentAssetsTableReferences),
       MomentAsset,
       PrefetchHooks Function({bool momentId})
-    >;
-typedef $$MomentMoodPacksTableCreateCompanionBuilder =
-    MomentMoodPacksCompanion Function({
-      required String id,
-      required String code,
-      required String name,
-      Value<String?> description,
-      Value<bool> isBuiltIn,
-      Value<bool> isEnabled,
-      required DateTime createdAt,
-      required DateTime updatedAt,
-      Value<int> rowid,
-    });
-typedef $$MomentMoodPacksTableUpdateCompanionBuilder =
-    MomentMoodPacksCompanion Function({
-      Value<String> id,
-      Value<String> code,
-      Value<String> name,
-      Value<String?> description,
-      Value<bool> isBuiltIn,
-      Value<bool> isEnabled,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<int> rowid,
-    });
-
-final class $$MomentMoodPacksTableReferences
-    extends
-        BaseReferences<_$AppDatabase, $MomentMoodPacksTable, MomentMoodPack> {
-  $$MomentMoodPacksTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static MultiTypedResultKey<$MomentMoodsTable, List<MomentMood>>
-  _momentMoodsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
-    db.momentMoods,
-    aliasName: $_aliasNameGenerator(
-      db.momentMoodPacks.id,
-      db.momentMoods.moodPackId,
-    ),
-  );
-
-  $$MomentMoodsTableProcessedTableManager get momentMoodsRefs {
-    final manager = $$MomentMoodsTableTableManager(
-      $_db,
-      $_db.momentMoods,
-    ).filter((f) => f.moodPackId.id.sqlEquals($_itemColumn<String>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(_momentMoodsRefsTable($_db));
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-}
-
-class $$MomentMoodPacksTableFilterComposer
-    extends Composer<_$AppDatabase, $MomentMoodPacksTable> {
-  $$MomentMoodPacksTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get code => $composableBuilder(
-    column: $table.code,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get description => $composableBuilder(
-    column: $table.description,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get isBuiltIn => $composableBuilder(
-    column: $table.isBuiltIn,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get isEnabled => $composableBuilder(
-    column: $table.isEnabled,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  Expression<bool> momentMoodsRefs(
-    Expression<bool> Function($$MomentMoodsTableFilterComposer f) f,
-  ) {
-    final $$MomentMoodsTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.momentMoods,
-      getReferencedColumn: (t) => t.moodPackId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$MomentMoodsTableFilterComposer(
-            $db: $db,
-            $table: $db.momentMoods,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-}
-
-class $$MomentMoodPacksTableOrderingComposer
-    extends Composer<_$AppDatabase, $MomentMoodPacksTable> {
-  $$MomentMoodPacksTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get code => $composableBuilder(
-    column: $table.code,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get description => $composableBuilder(
-    column: $table.description,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isBuiltIn => $composableBuilder(
-    column: $table.isBuiltIn,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isEnabled => $composableBuilder(
-    column: $table.isEnabled,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$MomentMoodPacksTableAnnotationComposer
-    extends Composer<_$AppDatabase, $MomentMoodPacksTable> {
-  $$MomentMoodPacksTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get code =>
-      $composableBuilder(column: $table.code, builder: (column) => column);
-
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
-
-  GeneratedColumn<String> get description => $composableBuilder(
-    column: $table.description,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<bool> get isBuiltIn =>
-      $composableBuilder(column: $table.isBuiltIn, builder: (column) => column);
-
-  GeneratedColumn<bool> get isEnabled =>
-      $composableBuilder(column: $table.isEnabled, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-
-  Expression<T> momentMoodsRefs<T extends Object>(
-    Expression<T> Function($$MomentMoodsTableAnnotationComposer a) f,
-  ) {
-    final $$MomentMoodsTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.momentMoods,
-      getReferencedColumn: (t) => t.moodPackId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$MomentMoodsTableAnnotationComposer(
-            $db: $db,
-            $table: $db.momentMoods,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-}
-
-class $$MomentMoodPacksTableTableManager
-    extends
-        RootTableManager<
-          _$AppDatabase,
-          $MomentMoodPacksTable,
-          MomentMoodPack,
-          $$MomentMoodPacksTableFilterComposer,
-          $$MomentMoodPacksTableOrderingComposer,
-          $$MomentMoodPacksTableAnnotationComposer,
-          $$MomentMoodPacksTableCreateCompanionBuilder,
-          $$MomentMoodPacksTableUpdateCompanionBuilder,
-          (MomentMoodPack, $$MomentMoodPacksTableReferences),
-          MomentMoodPack,
-          PrefetchHooks Function({bool momentMoodsRefs})
-        > {
-  $$MomentMoodPacksTableTableManager(
-    _$AppDatabase db,
-    $MomentMoodPacksTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$MomentMoodPacksTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$MomentMoodPacksTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$MomentMoodPacksTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> id = const Value.absent(),
-                Value<String> code = const Value.absent(),
-                Value<String> name = const Value.absent(),
-                Value<String?> description = const Value.absent(),
-                Value<bool> isBuiltIn = const Value.absent(),
-                Value<bool> isEnabled = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => MomentMoodPacksCompanion(
-                id: id,
-                code: code,
-                name: name,
-                description: description,
-                isBuiltIn: isBuiltIn,
-                isEnabled: isEnabled,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String id,
-                required String code,
-                required String name,
-                Value<String?> description = const Value.absent(),
-                Value<bool> isBuiltIn = const Value.absent(),
-                Value<bool> isEnabled = const Value.absent(),
-                required DateTime createdAt,
-                required DateTime updatedAt,
-                Value<int> rowid = const Value.absent(),
-              }) => MomentMoodPacksCompanion.insert(
-                id: id,
-                code: code,
-                name: name,
-                description: description,
-                isBuiltIn: isBuiltIn,
-                isEnabled: isEnabled,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$MomentMoodPacksTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({momentMoodsRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (momentMoodsRefs) db.momentMoods],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (momentMoodsRefs)
-                    await $_getPrefetchedData<
-                      MomentMoodPack,
-                      $MomentMoodPacksTable,
-                      MomentMood
-                    >(
-                      currentTable: table,
-                      referencedTable: $$MomentMoodPacksTableReferences
-                          ._momentMoodsRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$MomentMoodPacksTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).momentMoodsRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where((e) => e.moodPackId == item.id),
-                      typedResults: items,
-                    ),
-                ];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$MomentMoodPacksTableProcessedTableManager =
-    ProcessedTableManager<
-      _$AppDatabase,
-      $MomentMoodPacksTable,
-      MomentMoodPack,
-      $$MomentMoodPacksTableFilterComposer,
-      $$MomentMoodPacksTableOrderingComposer,
-      $$MomentMoodPacksTableAnnotationComposer,
-      $$MomentMoodPacksTableCreateCompanionBuilder,
-      $$MomentMoodPacksTableUpdateCompanionBuilder,
-      (MomentMoodPack, $$MomentMoodPacksTableReferences),
-      MomentMoodPack,
-      PrefetchHooks Function({bool momentMoodsRefs})
-    >;
-typedef $$MomentMoodsTableCreateCompanionBuilder =
-    MomentMoodsCompanion Function({
-      required String id,
-      required String code,
-      required String moodPackId,
-      required String name,
-      required String emoji,
-      required String key,
-      Value<String?> colorHex,
-      Value<bool> isDefault,
-      Value<bool> isArchived,
-      required DateTime createdAt,
-      required DateTime updatedAt,
-      Value<int> rowid,
-    });
-typedef $$MomentMoodsTableUpdateCompanionBuilder =
-    MomentMoodsCompanion Function({
-      Value<String> id,
-      Value<String> code,
-      Value<String> moodPackId,
-      Value<String> name,
-      Value<String> emoji,
-      Value<String> key,
-      Value<String?> colorHex,
-      Value<bool> isDefault,
-      Value<bool> isArchived,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<int> rowid,
-    });
-
-final class $$MomentMoodsTableReferences
-    extends BaseReferences<_$AppDatabase, $MomentMoodsTable, MomentMood> {
-  $$MomentMoodsTableReferences(super.$_db, super.$_table, super.$_typedResult);
-
-  static $MomentMoodPacksTable _moodPackIdTable(_$AppDatabase db) =>
-      db.momentMoodPacks.createAlias(
-        $_aliasNameGenerator(db.momentMoods.moodPackId, db.momentMoodPacks.id),
-      );
-
-  $$MomentMoodPacksTableProcessedTableManager get moodPackId {
-    final $_column = $_itemColumn<String>('mood_pack_id')!;
-
-    final manager = $$MomentMoodPacksTableTableManager(
-      $_db,
-      $_db.momentMoodPacks,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_moodPackIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$MomentMoodsTableFilterComposer
-    extends Composer<_$AppDatabase, $MomentMoodsTable> {
-  $$MomentMoodsTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get code => $composableBuilder(
-    column: $table.code,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get emoji => $composableBuilder(
-    column: $table.emoji,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get key => $composableBuilder(
-    column: $table.key,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get colorHex => $composableBuilder(
-    column: $table.colorHex,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get isDefault => $composableBuilder(
-    column: $table.isDefault,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get isArchived => $composableBuilder(
-    column: $table.isArchived,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$MomentMoodPacksTableFilterComposer get moodPackId {
-    final $$MomentMoodPacksTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.moodPackId,
-      referencedTable: $db.momentMoodPacks,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$MomentMoodPacksTableFilterComposer(
-            $db: $db,
-            $table: $db.momentMoodPacks,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$MomentMoodsTableOrderingComposer
-    extends Composer<_$AppDatabase, $MomentMoodsTable> {
-  $$MomentMoodsTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get code => $composableBuilder(
-    column: $table.code,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get emoji => $composableBuilder(
-    column: $table.emoji,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get key => $composableBuilder(
-    column: $table.key,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get colorHex => $composableBuilder(
-    column: $table.colorHex,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isDefault => $composableBuilder(
-    column: $table.isDefault,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isArchived => $composableBuilder(
-    column: $table.isArchived,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$MomentMoodPacksTableOrderingComposer get moodPackId {
-    final $$MomentMoodPacksTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.moodPackId,
-      referencedTable: $db.momentMoodPacks,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$MomentMoodPacksTableOrderingComposer(
-            $db: $db,
-            $table: $db.momentMoodPacks,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$MomentMoodsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $MomentMoodsTable> {
-  $$MomentMoodsTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get code =>
-      $composableBuilder(column: $table.code, builder: (column) => column);
-
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
-
-  GeneratedColumn<String> get emoji =>
-      $composableBuilder(column: $table.emoji, builder: (column) => column);
-
-  GeneratedColumn<String> get key =>
-      $composableBuilder(column: $table.key, builder: (column) => column);
-
-  GeneratedColumn<String> get colorHex =>
-      $composableBuilder(column: $table.colorHex, builder: (column) => column);
-
-  GeneratedColumn<bool> get isDefault =>
-      $composableBuilder(column: $table.isDefault, builder: (column) => column);
-
-  GeneratedColumn<bool> get isArchived => $composableBuilder(
-    column: $table.isArchived,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-
-  $$MomentMoodPacksTableAnnotationComposer get moodPackId {
-    final $$MomentMoodPacksTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.moodPackId,
-      referencedTable: $db.momentMoodPacks,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$MomentMoodPacksTableAnnotationComposer(
-            $db: $db,
-            $table: $db.momentMoodPacks,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$MomentMoodsTableTableManager
-    extends
-        RootTableManager<
-          _$AppDatabase,
-          $MomentMoodsTable,
-          MomentMood,
-          $$MomentMoodsTableFilterComposer,
-          $$MomentMoodsTableOrderingComposer,
-          $$MomentMoodsTableAnnotationComposer,
-          $$MomentMoodsTableCreateCompanionBuilder,
-          $$MomentMoodsTableUpdateCompanionBuilder,
-          (MomentMood, $$MomentMoodsTableReferences),
-          MomentMood,
-          PrefetchHooks Function({bool moodPackId})
-        > {
-  $$MomentMoodsTableTableManager(_$AppDatabase db, $MomentMoodsTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$MomentMoodsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$MomentMoodsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$MomentMoodsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> id = const Value.absent(),
-                Value<String> code = const Value.absent(),
-                Value<String> moodPackId = const Value.absent(),
-                Value<String> name = const Value.absent(),
-                Value<String> emoji = const Value.absent(),
-                Value<String> key = const Value.absent(),
-                Value<String?> colorHex = const Value.absent(),
-                Value<bool> isDefault = const Value.absent(),
-                Value<bool> isArchived = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => MomentMoodsCompanion(
-                id: id,
-                code: code,
-                moodPackId: moodPackId,
-                name: name,
-                emoji: emoji,
-                key: key,
-                colorHex: colorHex,
-                isDefault: isDefault,
-                isArchived: isArchived,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String id,
-                required String code,
-                required String moodPackId,
-                required String name,
-                required String emoji,
-                required String key,
-                Value<String?> colorHex = const Value.absent(),
-                Value<bool> isDefault = const Value.absent(),
-                Value<bool> isArchived = const Value.absent(),
-                required DateTime createdAt,
-                required DateTime updatedAt,
-                Value<int> rowid = const Value.absent(),
-              }) => MomentMoodsCompanion.insert(
-                id: id,
-                code: code,
-                moodPackId: moodPackId,
-                name: name,
-                emoji: emoji,
-                key: key,
-                colorHex: colorHex,
-                isDefault: isDefault,
-                isArchived: isArchived,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$MomentMoodsTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({moodPackId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (moodPackId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.moodPackId,
-                                referencedTable: $$MomentMoodsTableReferences
-                                    ._moodPackIdTable(db),
-                                referencedColumn: $$MomentMoodsTableReferences
-                                    ._moodPackIdTable(db)
-                                    .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$MomentMoodsTableProcessedTableManager =
-    ProcessedTableManager<
-      _$AppDatabase,
-      $MomentMoodsTable,
-      MomentMood,
-      $$MomentMoodsTableFilterComposer,
-      $$MomentMoodsTableOrderingComposer,
-      $$MomentMoodsTableAnnotationComposer,
-      $$MomentMoodsTableCreateCompanionBuilder,
-      $$MomentMoodsTableUpdateCompanionBuilder,
-      (MomentMood, $$MomentMoodsTableReferences),
-      MomentMood,
-      PrefetchHooks Function({bool moodPackId})
     >;
 typedef $$MomentTagsTableCreateCompanionBuilder =
     MomentTagsCompanion Function({
@@ -11091,6 +12477,42 @@ typedef $$MomentWidgetConfigsTableUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
+final class $$MomentWidgetConfigsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $MomentWidgetConfigsTable,
+          MomentWidgetConfig
+        > {
+  $$MomentWidgetConfigsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $MomentsTable _fixedMomentIdTable(_$AppDatabase db) =>
+      db.moments.createAlias(
+        $_aliasNameGenerator(
+          db.momentWidgetConfigs.fixedMomentId,
+          db.moments.id,
+        ),
+      );
+
+  $$MomentsTableProcessedTableManager? get fixedMomentId {
+    final $_column = $_itemColumn<String>('fixed_moment_id');
+    if ($_column == null) return null;
+    final manager = $$MomentsTableTableManager(
+      $_db,
+      $_db.moments,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_fixedMomentIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
 class $$MomentWidgetConfigsTableFilterComposer
     extends Composer<_$AppDatabase, $MomentWidgetConfigsTable> {
   $$MomentWidgetConfigsTableFilterComposer({
@@ -11107,11 +12529,6 @@ class $$MomentWidgetConfigsTableFilterComposer
 
   ColumnFilters<String> get mode => $composableBuilder(
     column: $table.mode,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get fixedMomentId => $composableBuilder(
-    column: $table.fixedMomentId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -11134,6 +12551,29 @@ class $$MomentWidgetConfigsTableFilterComposer
     column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
+
+  $$MomentsTableFilterComposer get fixedMomentId {
+    final $$MomentsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fixedMomentId,
+      referencedTable: $db.moments,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentsTableFilterComposer(
+            $db: $db,
+            $table: $db.moments,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$MomentWidgetConfigsTableOrderingComposer
@@ -11152,11 +12592,6 @@ class $$MomentWidgetConfigsTableOrderingComposer
 
   ColumnOrderings<String> get mode => $composableBuilder(
     column: $table.mode,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get fixedMomentId => $composableBuilder(
-    column: $table.fixedMomentId,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -11179,6 +12614,29 @@ class $$MomentWidgetConfigsTableOrderingComposer
     column: $table.updatedAt,
     builder: (column) => ColumnOrderings(column),
   );
+
+  $$MomentsTableOrderingComposer get fixedMomentId {
+    final $$MomentsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fixedMomentId,
+      referencedTable: $db.moments,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentsTableOrderingComposer(
+            $db: $db,
+            $table: $db.moments,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$MomentWidgetConfigsTableAnnotationComposer
@@ -11195,11 +12653,6 @@ class $$MomentWidgetConfigsTableAnnotationComposer
 
   GeneratedColumn<String> get mode =>
       $composableBuilder(column: $table.mode, builder: (column) => column);
-
-  GeneratedColumn<String> get fixedMomentId => $composableBuilder(
-    column: $table.fixedMomentId,
-    builder: (column) => column,
-  );
 
   GeneratedColumn<bool> get excludeSensitive => $composableBuilder(
     column: $table.excludeSensitive,
@@ -11218,6 +12671,29 @@ class $$MomentWidgetConfigsTableAnnotationComposer
 
   GeneratedColumn<DateTime> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$MomentsTableAnnotationComposer get fixedMomentId {
+    final $$MomentsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.fixedMomentId,
+      referencedTable: $db.moments,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MomentsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.moments,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$MomentWidgetConfigsTableTableManager
@@ -11231,16 +12707,9 @@ class $$MomentWidgetConfigsTableTableManager
           $$MomentWidgetConfigsTableAnnotationComposer,
           $$MomentWidgetConfigsTableCreateCompanionBuilder,
           $$MomentWidgetConfigsTableUpdateCompanionBuilder,
-          (
-            MomentWidgetConfig,
-            BaseReferences<
-              _$AppDatabase,
-              $MomentWidgetConfigsTable,
-              MomentWidgetConfig
-            >,
-          ),
+          (MomentWidgetConfig, $$MomentWidgetConfigsTableReferences),
           MomentWidgetConfig,
-          PrefetchHooks Function()
+          PrefetchHooks Function({bool fixedMomentId})
         > {
   $$MomentWidgetConfigsTableTableManager(
     _$AppDatabase db,
@@ -11302,9 +12771,56 @@ class $$MomentWidgetConfigsTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$MomentWidgetConfigsTableReferences(db, table, e),
+                ),
+              )
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({fixedMomentId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (fixedMomentId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.fixedMomentId,
+                                referencedTable:
+                                    $$MomentWidgetConfigsTableReferences
+                                        ._fixedMomentIdTable(db),
+                                referencedColumn:
+                                    $$MomentWidgetConfigsTableReferences
+                                        ._fixedMomentIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ),
       );
 }
@@ -11319,622 +12835,9 @@ typedef $$MomentWidgetConfigsTableProcessedTableManager =
       $$MomentWidgetConfigsTableAnnotationComposer,
       $$MomentWidgetConfigsTableCreateCompanionBuilder,
       $$MomentWidgetConfigsTableUpdateCompanionBuilder,
-      (
-        MomentWidgetConfig,
-        BaseReferences<
-          _$AppDatabase,
-          $MomentWidgetConfigsTable,
-          MomentWidgetConfig
-        >,
-      ),
+      (MomentWidgetConfig, $$MomentWidgetConfigsTableReferences),
       MomentWidgetConfig,
-      PrefetchHooks Function()
-    >;
-typedef $$MomentTonePacksTableCreateCompanionBuilder =
-    MomentTonePacksCompanion Function({
-      required String id,
-      required String code,
-      required String name,
-      Value<String?> description,
-      Value<bool> isBuiltIn,
-      Value<bool> isEnabled,
-      required DateTime createdAt,
-      required DateTime updatedAt,
-      Value<int> rowid,
-    });
-typedef $$MomentTonePacksTableUpdateCompanionBuilder =
-    MomentTonePacksCompanion Function({
-      Value<String> id,
-      Value<String> code,
-      Value<String> name,
-      Value<String?> description,
-      Value<bool> isBuiltIn,
-      Value<bool> isEnabled,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<int> rowid,
-    });
-
-class $$MomentTonePacksTableFilterComposer
-    extends Composer<_$AppDatabase, $MomentTonePacksTable> {
-  $$MomentTonePacksTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get code => $composableBuilder(
-    column: $table.code,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get description => $composableBuilder(
-    column: $table.description,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get isBuiltIn => $composableBuilder(
-    column: $table.isBuiltIn,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get isEnabled => $composableBuilder(
-    column: $table.isEnabled,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $$MomentTonePacksTableOrderingComposer
-    extends Composer<_$AppDatabase, $MomentTonePacksTable> {
-  $$MomentTonePacksTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get code => $composableBuilder(
-    column: $table.code,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get description => $composableBuilder(
-    column: $table.description,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isBuiltIn => $composableBuilder(
-    column: $table.isBuiltIn,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isEnabled => $composableBuilder(
-    column: $table.isEnabled,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$MomentTonePacksTableAnnotationComposer
-    extends Composer<_$AppDatabase, $MomentTonePacksTable> {
-  $$MomentTonePacksTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get code =>
-      $composableBuilder(column: $table.code, builder: (column) => column);
-
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
-
-  GeneratedColumn<String> get description => $composableBuilder(
-    column: $table.description,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<bool> get isBuiltIn =>
-      $composableBuilder(column: $table.isBuiltIn, builder: (column) => column);
-
-  GeneratedColumn<bool> get isEnabled =>
-      $composableBuilder(column: $table.isEnabled, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-}
-
-class $$MomentTonePacksTableTableManager
-    extends
-        RootTableManager<
-          _$AppDatabase,
-          $MomentTonePacksTable,
-          MomentTonePack,
-          $$MomentTonePacksTableFilterComposer,
-          $$MomentTonePacksTableOrderingComposer,
-          $$MomentTonePacksTableAnnotationComposer,
-          $$MomentTonePacksTableCreateCompanionBuilder,
-          $$MomentTonePacksTableUpdateCompanionBuilder,
-          (
-            MomentTonePack,
-            BaseReferences<
-              _$AppDatabase,
-              $MomentTonePacksTable,
-              MomentTonePack
-            >,
-          ),
-          MomentTonePack,
-          PrefetchHooks Function()
-        > {
-  $$MomentTonePacksTableTableManager(
-    _$AppDatabase db,
-    $MomentTonePacksTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$MomentTonePacksTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$MomentTonePacksTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$MomentTonePacksTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> id = const Value.absent(),
-                Value<String> code = const Value.absent(),
-                Value<String> name = const Value.absent(),
-                Value<String?> description = const Value.absent(),
-                Value<bool> isBuiltIn = const Value.absent(),
-                Value<bool> isEnabled = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => MomentTonePacksCompanion(
-                id: id,
-                code: code,
-                name: name,
-                description: description,
-                isBuiltIn: isBuiltIn,
-                isEnabled: isEnabled,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String id,
-                required String code,
-                required String name,
-                Value<String?> description = const Value.absent(),
-                Value<bool> isBuiltIn = const Value.absent(),
-                Value<bool> isEnabled = const Value.absent(),
-                required DateTime createdAt,
-                required DateTime updatedAt,
-                Value<int> rowid = const Value.absent(),
-              }) => MomentTonePacksCompanion.insert(
-                id: id,
-                code: code,
-                name: name,
-                description: description,
-                isBuiltIn: isBuiltIn,
-                isEnabled: isEnabled,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $$MomentTonePacksTableProcessedTableManager =
-    ProcessedTableManager<
-      _$AppDatabase,
-      $MomentTonePacksTable,
-      MomentTonePack,
-      $$MomentTonePacksTableFilterComposer,
-      $$MomentTonePacksTableOrderingComposer,
-      $$MomentTonePacksTableAnnotationComposer,
-      $$MomentTonePacksTableCreateCompanionBuilder,
-      $$MomentTonePacksTableUpdateCompanionBuilder,
-      (
-        MomentTonePack,
-        BaseReferences<_$AppDatabase, $MomentTonePacksTable, MomentTonePack>,
-      ),
-      MomentTonePack,
-      PrefetchHooks Function()
-    >;
-typedef $$MomentTonesTableCreateCompanionBuilder =
-    MomentTonesCompanion Function({
-      required String id,
-      required String code,
-      required String tonePackId,
-      required String name,
-      required String key,
-      required String lightColorHex,
-      Value<String?> darkColorHex,
-      Value<int> sortOrder,
-      Value<bool> isDefault,
-      Value<bool> isArchived,
-      required DateTime createdAt,
-      required DateTime updatedAt,
-      Value<int> rowid,
-    });
-typedef $$MomentTonesTableUpdateCompanionBuilder =
-    MomentTonesCompanion Function({
-      Value<String> id,
-      Value<String> code,
-      Value<String> tonePackId,
-      Value<String> name,
-      Value<String> key,
-      Value<String> lightColorHex,
-      Value<String?> darkColorHex,
-      Value<int> sortOrder,
-      Value<bool> isDefault,
-      Value<bool> isArchived,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<int> rowid,
-    });
-
-class $$MomentTonesTableFilterComposer
-    extends Composer<_$AppDatabase, $MomentTonesTable> {
-  $$MomentTonesTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get code => $composableBuilder(
-    column: $table.code,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get tonePackId => $composableBuilder(
-    column: $table.tonePackId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get key => $composableBuilder(
-    column: $table.key,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get lightColorHex => $composableBuilder(
-    column: $table.lightColorHex,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get darkColorHex => $composableBuilder(
-    column: $table.darkColorHex,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get sortOrder => $composableBuilder(
-    column: $table.sortOrder,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get isDefault => $composableBuilder(
-    column: $table.isDefault,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get isArchived => $composableBuilder(
-    column: $table.isArchived,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $$MomentTonesTableOrderingComposer
-    extends Composer<_$AppDatabase, $MomentTonesTable> {
-  $$MomentTonesTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get code => $composableBuilder(
-    column: $table.code,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get tonePackId => $composableBuilder(
-    column: $table.tonePackId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get key => $composableBuilder(
-    column: $table.key,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get lightColorHex => $composableBuilder(
-    column: $table.lightColorHex,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get darkColorHex => $composableBuilder(
-    column: $table.darkColorHex,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get sortOrder => $composableBuilder(
-    column: $table.sortOrder,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isDefault => $composableBuilder(
-    column: $table.isDefault,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isArchived => $composableBuilder(
-    column: $table.isArchived,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$MomentTonesTableAnnotationComposer
-    extends Composer<_$AppDatabase, $MomentTonesTable> {
-  $$MomentTonesTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get code =>
-      $composableBuilder(column: $table.code, builder: (column) => column);
-
-  GeneratedColumn<String> get tonePackId => $composableBuilder(
-    column: $table.tonePackId,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
-
-  GeneratedColumn<String> get key =>
-      $composableBuilder(column: $table.key, builder: (column) => column);
-
-  GeneratedColumn<String> get lightColorHex => $composableBuilder(
-    column: $table.lightColorHex,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get darkColorHex => $composableBuilder(
-    column: $table.darkColorHex,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<int> get sortOrder =>
-      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
-
-  GeneratedColumn<bool> get isDefault =>
-      $composableBuilder(column: $table.isDefault, builder: (column) => column);
-
-  GeneratedColumn<bool> get isArchived => $composableBuilder(
-    column: $table.isArchived,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-}
-
-class $$MomentTonesTableTableManager
-    extends
-        RootTableManager<
-          _$AppDatabase,
-          $MomentTonesTable,
-          MomentTone,
-          $$MomentTonesTableFilterComposer,
-          $$MomentTonesTableOrderingComposer,
-          $$MomentTonesTableAnnotationComposer,
-          $$MomentTonesTableCreateCompanionBuilder,
-          $$MomentTonesTableUpdateCompanionBuilder,
-          (
-            MomentTone,
-            BaseReferences<_$AppDatabase, $MomentTonesTable, MomentTone>,
-          ),
-          MomentTone,
-          PrefetchHooks Function()
-        > {
-  $$MomentTonesTableTableManager(_$AppDatabase db, $MomentTonesTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$MomentTonesTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$MomentTonesTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$MomentTonesTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> id = const Value.absent(),
-                Value<String> code = const Value.absent(),
-                Value<String> tonePackId = const Value.absent(),
-                Value<String> name = const Value.absent(),
-                Value<String> key = const Value.absent(),
-                Value<String> lightColorHex = const Value.absent(),
-                Value<String?> darkColorHex = const Value.absent(),
-                Value<int> sortOrder = const Value.absent(),
-                Value<bool> isDefault = const Value.absent(),
-                Value<bool> isArchived = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => MomentTonesCompanion(
-                id: id,
-                code: code,
-                tonePackId: tonePackId,
-                name: name,
-                key: key,
-                lightColorHex: lightColorHex,
-                darkColorHex: darkColorHex,
-                sortOrder: sortOrder,
-                isDefault: isDefault,
-                isArchived: isArchived,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String id,
-                required String code,
-                required String tonePackId,
-                required String name,
-                required String key,
-                required String lightColorHex,
-                Value<String?> darkColorHex = const Value.absent(),
-                Value<int> sortOrder = const Value.absent(),
-                Value<bool> isDefault = const Value.absent(),
-                Value<bool> isArchived = const Value.absent(),
-                required DateTime createdAt,
-                required DateTime updatedAt,
-                Value<int> rowid = const Value.absent(),
-              }) => MomentTonesCompanion.insert(
-                id: id,
-                code: code,
-                tonePackId: tonePackId,
-                name: name,
-                key: key,
-                lightColorHex: lightColorHex,
-                darkColorHex: darkColorHex,
-                sortOrder: sortOrder,
-                isDefault: isDefault,
-                isArchived: isArchived,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $$MomentTonesTableProcessedTableManager =
-    ProcessedTableManager<
-      _$AppDatabase,
-      $MomentTonesTable,
-      MomentTone,
-      $$MomentTonesTableFilterComposer,
-      $$MomentTonesTableOrderingComposer,
-      $$MomentTonesTableAnnotationComposer,
-      $$MomentTonesTableCreateCompanionBuilder,
-      $$MomentTonesTableUpdateCompanionBuilder,
-      (
-        MomentTone,
-        BaseReferences<_$AppDatabase, $MomentTonesTable, MomentTone>,
-      ),
-      MomentTone,
-      PrefetchHooks Function()
+      PrefetchHooks Function({bool fixedMomentId})
     >;
 typedef $$AppSettingsTableCreateCompanionBuilder =
     AppSettingsCompanion Function({
@@ -12102,14 +13005,18 @@ typedef $$AppSettingsTableProcessedTableManager =
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
-  $$MomentsTableTableManager get moments =>
-      $$MomentsTableTableManager(_db, _db.moments);
-  $$MomentAssetsTableTableManager get momentAssets =>
-      $$MomentAssetsTableTableManager(_db, _db.momentAssets);
   $$MomentMoodPacksTableTableManager get momentMoodPacks =>
       $$MomentMoodPacksTableTableManager(_db, _db.momentMoodPacks);
   $$MomentMoodsTableTableManager get momentMoods =>
       $$MomentMoodsTableTableManager(_db, _db.momentMoods);
+  $$MomentTonePacksTableTableManager get momentTonePacks =>
+      $$MomentTonePacksTableTableManager(_db, _db.momentTonePacks);
+  $$MomentTonesTableTableManager get momentTones =>
+      $$MomentTonesTableTableManager(_db, _db.momentTones);
+  $$MomentsTableTableManager get moments =>
+      $$MomentsTableTableManager(_db, _db.moments);
+  $$MomentAssetsTableTableManager get momentAssets =>
+      $$MomentAssetsTableTableManager(_db, _db.momentAssets);
   $$MomentTagsTableTableManager get momentTags =>
       $$MomentTagsTableTableManager(_db, _db.momentTags);
   $$MomentTagLinksTableTableManager get momentTagLinks =>
@@ -12120,10 +13027,6 @@ class $AppDatabaseManager {
       $$MomentCollectionItemsTableTableManager(_db, _db.momentCollectionItems);
   $$MomentWidgetConfigsTableTableManager get momentWidgetConfigs =>
       $$MomentWidgetConfigsTableTableManager(_db, _db.momentWidgetConfigs);
-  $$MomentTonePacksTableTableManager get momentTonePacks =>
-      $$MomentTonePacksTableTableManager(_db, _db.momentTonePacks);
-  $$MomentTonesTableTableManager get momentTones =>
-      $$MomentTonesTableTableManager(_db, _db.momentTones);
   $$AppSettingsTableTableManager get appSettings =>
       $$AppSettingsTableTableManager(_db, _db.appSettings);
 }

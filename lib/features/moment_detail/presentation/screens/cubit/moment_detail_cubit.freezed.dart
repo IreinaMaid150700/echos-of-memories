@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MomentDetailState {
 
- bool get showDeleteConfirm; bool get isEnableFavourite; bool get isEnablePinOnTop; bool get isHideFromWidget;
+ bool get showDeleteConfirm; bool get isEnablePinOnTop; bool get isHideFromWidget; Loaded<MomentEntity> get moment; Loaded<Unit> get deleteAction;
 /// Create a copy of MomentDetailState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $MomentDetailStateCopyWith<MomentDetailState> get copyWith => _$MomentDetailStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MomentDetailState&&(identical(other.showDeleteConfirm, showDeleteConfirm) || other.showDeleteConfirm == showDeleteConfirm)&&(identical(other.isEnableFavourite, isEnableFavourite) || other.isEnableFavourite == isEnableFavourite)&&(identical(other.isEnablePinOnTop, isEnablePinOnTop) || other.isEnablePinOnTop == isEnablePinOnTop)&&(identical(other.isHideFromWidget, isHideFromWidget) || other.isHideFromWidget == isHideFromWidget));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MomentDetailState&&(identical(other.showDeleteConfirm, showDeleteConfirm) || other.showDeleteConfirm == showDeleteConfirm)&&(identical(other.isEnablePinOnTop, isEnablePinOnTop) || other.isEnablePinOnTop == isEnablePinOnTop)&&(identical(other.isHideFromWidget, isHideFromWidget) || other.isHideFromWidget == isHideFromWidget)&&(identical(other.moment, moment) || other.moment == moment)&&(identical(other.deleteAction, deleteAction) || other.deleteAction == deleteAction));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,showDeleteConfirm,isEnableFavourite,isEnablePinOnTop,isHideFromWidget);
+int get hashCode => Object.hash(runtimeType,showDeleteConfirm,isEnablePinOnTop,isHideFromWidget,moment,deleteAction);
 
 @override
 String toString() {
-  return 'MomentDetailState(showDeleteConfirm: $showDeleteConfirm, isEnableFavourite: $isEnableFavourite, isEnablePinOnTop: $isEnablePinOnTop, isHideFromWidget: $isHideFromWidget)';
+  return 'MomentDetailState(showDeleteConfirm: $showDeleteConfirm, isEnablePinOnTop: $isEnablePinOnTop, isHideFromWidget: $isHideFromWidget, moment: $moment, deleteAction: $deleteAction)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $MomentDetailStateCopyWith<$Res>  {
   factory $MomentDetailStateCopyWith(MomentDetailState value, $Res Function(MomentDetailState) _then) = _$MomentDetailStateCopyWithImpl;
 @useResult
 $Res call({
- bool showDeleteConfirm, bool isEnableFavourite, bool isEnablePinOnTop, bool isHideFromWidget
+ bool showDeleteConfirm, bool isEnablePinOnTop, bool isHideFromWidget, Loaded<MomentEntity> moment, Loaded<Unit> deleteAction
 });
 
 
@@ -62,13 +62,14 @@ class _$MomentDetailStateCopyWithImpl<$Res>
 
 /// Create a copy of MomentDetailState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? showDeleteConfirm = null,Object? isEnableFavourite = null,Object? isEnablePinOnTop = null,Object? isHideFromWidget = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? showDeleteConfirm = null,Object? isEnablePinOnTop = null,Object? isHideFromWidget = null,Object? moment = null,Object? deleteAction = null,}) {
   return _then(_self.copyWith(
 showDeleteConfirm: null == showDeleteConfirm ? _self.showDeleteConfirm : showDeleteConfirm // ignore: cast_nullable_to_non_nullable
-as bool,isEnableFavourite: null == isEnableFavourite ? _self.isEnableFavourite : isEnableFavourite // ignore: cast_nullable_to_non_nullable
 as bool,isEnablePinOnTop: null == isEnablePinOnTop ? _self.isEnablePinOnTop : isEnablePinOnTop // ignore: cast_nullable_to_non_nullable
 as bool,isHideFromWidget: null == isHideFromWidget ? _self.isHideFromWidget : isHideFromWidget // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,moment: null == moment ? _self.moment : moment // ignore: cast_nullable_to_non_nullable
+as Loaded<MomentEntity>,deleteAction: null == deleteAction ? _self.deleteAction : deleteAction // ignore: cast_nullable_to_non_nullable
+as Loaded<Unit>,
   ));
 }
 
@@ -153,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool showDeleteConfirm,  bool isEnableFavourite,  bool isEnablePinOnTop,  bool isHideFromWidget)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool showDeleteConfirm,  bool isEnablePinOnTop,  bool isHideFromWidget,  Loaded<MomentEntity> moment,  Loaded<Unit> deleteAction)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MomentDetailState() when $default != null:
-return $default(_that.showDeleteConfirm,_that.isEnableFavourite,_that.isEnablePinOnTop,_that.isHideFromWidget);case _:
+return $default(_that.showDeleteConfirm,_that.isEnablePinOnTop,_that.isHideFromWidget,_that.moment,_that.deleteAction);case _:
   return orElse();
 
 }
@@ -174,10 +175,10 @@ return $default(_that.showDeleteConfirm,_that.isEnableFavourite,_that.isEnablePi
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool showDeleteConfirm,  bool isEnableFavourite,  bool isEnablePinOnTop,  bool isHideFromWidget)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool showDeleteConfirm,  bool isEnablePinOnTop,  bool isHideFromWidget,  Loaded<MomentEntity> moment,  Loaded<Unit> deleteAction)  $default,) {final _that = this;
 switch (_that) {
 case _MomentDetailState():
-return $default(_that.showDeleteConfirm,_that.isEnableFavourite,_that.isEnablePinOnTop,_that.isHideFromWidget);case _:
+return $default(_that.showDeleteConfirm,_that.isEnablePinOnTop,_that.isHideFromWidget,_that.moment,_that.deleteAction);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -194,10 +195,10 @@ return $default(_that.showDeleteConfirm,_that.isEnableFavourite,_that.isEnablePi
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool showDeleteConfirm,  bool isEnableFavourite,  bool isEnablePinOnTop,  bool isHideFromWidget)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool showDeleteConfirm,  bool isEnablePinOnTop,  bool isHideFromWidget,  Loaded<MomentEntity> moment,  Loaded<Unit> deleteAction)?  $default,) {final _that = this;
 switch (_that) {
 case _MomentDetailState() when $default != null:
-return $default(_that.showDeleteConfirm,_that.isEnableFavourite,_that.isEnablePinOnTop,_that.isHideFromWidget);case _:
+return $default(_that.showDeleteConfirm,_that.isEnablePinOnTop,_that.isHideFromWidget,_that.moment,_that.deleteAction);case _:
   return null;
 
 }
@@ -209,13 +210,14 @@ return $default(_that.showDeleteConfirm,_that.isEnableFavourite,_that.isEnablePi
 
 
 class _MomentDetailState implements MomentDetailState {
-  const _MomentDetailState({this.showDeleteConfirm = false, this.isEnableFavourite = false, this.isEnablePinOnTop = false, this.isHideFromWidget = false});
+  const _MomentDetailState({this.showDeleteConfirm = false, this.isEnablePinOnTop = false, this.isHideFromWidget = false, this.moment = const Loaded<MomentEntity>(), this.deleteAction = const Loaded<Unit>()});
   
 
 @override@JsonKey() final  bool showDeleteConfirm;
-@override@JsonKey() final  bool isEnableFavourite;
 @override@JsonKey() final  bool isEnablePinOnTop;
 @override@JsonKey() final  bool isHideFromWidget;
+@override@JsonKey() final  Loaded<MomentEntity> moment;
+@override@JsonKey() final  Loaded<Unit> deleteAction;
 
 /// Create a copy of MomentDetailState
 /// with the given fields replaced by the non-null parameter values.
@@ -227,16 +229,16 @@ _$MomentDetailStateCopyWith<_MomentDetailState> get copyWith => __$MomentDetailS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MomentDetailState&&(identical(other.showDeleteConfirm, showDeleteConfirm) || other.showDeleteConfirm == showDeleteConfirm)&&(identical(other.isEnableFavourite, isEnableFavourite) || other.isEnableFavourite == isEnableFavourite)&&(identical(other.isEnablePinOnTop, isEnablePinOnTop) || other.isEnablePinOnTop == isEnablePinOnTop)&&(identical(other.isHideFromWidget, isHideFromWidget) || other.isHideFromWidget == isHideFromWidget));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MomentDetailState&&(identical(other.showDeleteConfirm, showDeleteConfirm) || other.showDeleteConfirm == showDeleteConfirm)&&(identical(other.isEnablePinOnTop, isEnablePinOnTop) || other.isEnablePinOnTop == isEnablePinOnTop)&&(identical(other.isHideFromWidget, isHideFromWidget) || other.isHideFromWidget == isHideFromWidget)&&(identical(other.moment, moment) || other.moment == moment)&&(identical(other.deleteAction, deleteAction) || other.deleteAction == deleteAction));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,showDeleteConfirm,isEnableFavourite,isEnablePinOnTop,isHideFromWidget);
+int get hashCode => Object.hash(runtimeType,showDeleteConfirm,isEnablePinOnTop,isHideFromWidget,moment,deleteAction);
 
 @override
 String toString() {
-  return 'MomentDetailState(showDeleteConfirm: $showDeleteConfirm, isEnableFavourite: $isEnableFavourite, isEnablePinOnTop: $isEnablePinOnTop, isHideFromWidget: $isHideFromWidget)';
+  return 'MomentDetailState(showDeleteConfirm: $showDeleteConfirm, isEnablePinOnTop: $isEnablePinOnTop, isHideFromWidget: $isHideFromWidget, moment: $moment, deleteAction: $deleteAction)';
 }
 
 
@@ -247,7 +249,7 @@ abstract mixin class _$MomentDetailStateCopyWith<$Res> implements $MomentDetailS
   factory _$MomentDetailStateCopyWith(_MomentDetailState value, $Res Function(_MomentDetailState) _then) = __$MomentDetailStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool showDeleteConfirm, bool isEnableFavourite, bool isEnablePinOnTop, bool isHideFromWidget
+ bool showDeleteConfirm, bool isEnablePinOnTop, bool isHideFromWidget, Loaded<MomentEntity> moment, Loaded<Unit> deleteAction
 });
 
 
@@ -264,13 +266,14 @@ class __$MomentDetailStateCopyWithImpl<$Res>
 
 /// Create a copy of MomentDetailState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? showDeleteConfirm = null,Object? isEnableFavourite = null,Object? isEnablePinOnTop = null,Object? isHideFromWidget = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? showDeleteConfirm = null,Object? isEnablePinOnTop = null,Object? isHideFromWidget = null,Object? moment = null,Object? deleteAction = null,}) {
   return _then(_MomentDetailState(
 showDeleteConfirm: null == showDeleteConfirm ? _self.showDeleteConfirm : showDeleteConfirm // ignore: cast_nullable_to_non_nullable
-as bool,isEnableFavourite: null == isEnableFavourite ? _self.isEnableFavourite : isEnableFavourite // ignore: cast_nullable_to_non_nullable
 as bool,isEnablePinOnTop: null == isEnablePinOnTop ? _self.isEnablePinOnTop : isEnablePinOnTop // ignore: cast_nullable_to_non_nullable
 as bool,isHideFromWidget: null == isHideFromWidget ? _self.isHideFromWidget : isHideFromWidget // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,moment: null == moment ? _self.moment : moment // ignore: cast_nullable_to_non_nullable
+as Loaded<MomentEntity>,deleteAction: null == deleteAction ? _self.deleteAction : deleteAction // ignore: cast_nullable_to_non_nullable
+as Loaded<Unit>,
   ));
 }
 

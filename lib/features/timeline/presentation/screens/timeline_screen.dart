@@ -1,9 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:music_app/core/di/injector.dart';
 import 'package:music_app/core/router/app_routers.dart';
 import 'package:music_app/core/theme/app_colors.dart';
+import 'package:music_app/core/utils/extensions/date_time_extension.dart';
 import 'package:music_app/core/utils/extensions/screen_padding.dart';
+import 'package:music_app/features/moment/domain/models/moment_entity.dart';
+import 'package:music_app/features/moment/domain/usecases/get_moments_usecase.dart';
+import 'package:music_app/features/timeline/presentation/cubit/timeline_cubit.dart';
 import 'package:music_app/features/timeline/presentation/widgets/current_time_widget.dart';
 import 'package:music_app/features/timeline/presentation/widgets/flexible_app_bar_space_widget.dart';
 import 'package:music_app/features/timeline/presentation/widgets/timeline_memories_widget.dart';
@@ -14,7 +20,10 @@ class TimelineScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _TimelineScreenRoot();
+    return BlocProvider(
+      create: (_) => TimelineCubit(getMomentsUseCase: getIt<GetMomentsUseCase>())..loadMoments(),
+      child: const _TimelineScreenRoot(),
+    );
   }
 }
 
@@ -34,12 +43,33 @@ class _TimelineScreenRootState extends State<_TimelineScreenRoot> {
     super.dispose();
   }
 
+  TimelineEntry _toTimelineEntry(MomentEntity moment) {
+    final title = _summaryTitle(moment);
+    return TimelineEntry(
+      id: moment.id,
+      time: moment.momentDate.toTimeString(),
+      title: title,
+      body: moment.note,
+      mood: null,
+      location: moment.locationName,
+      tags: moment.tags.map((t) => t.name).toList(),
+      bookmarked: moment.isFavorite,
+    );
+  }
+
+  String _summaryTitle(MomentEntity moment) {
+    if (moment.title != null) return moment.title!;
+    final note = moment.note;
+    if (note != null) return note.substring(0, note.length.clamp(0, 50));
+    return 'Khoảnh khắc';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: .start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const FlexibleAppBarSpace(),
             SizedBox(height: AppSpacing.sm),
@@ -50,13 +80,46 @@ class _TimelineScreenRootState extends State<_TimelineScreenRoot> {
                 physics: const BouncingScrollPhysics(),
                 controller: _scrollController,
                 slivers: [
-                  SliverList.separated(
-                    itemCount: 100,
-                    itemBuilder: (context, index) {
-                      return MemoriaTimeline(entries: TimelineEntry.mock());
+                  BlocBuilder<TimelineCubit, TimelineState>(
+                    builder: (context, state) {
+                      final moments = state.moments;
+                      if (moments.isLoading && !moments.hasData) {
+                        return const SliverToBoxAdapter(
+                          child: Center(child: CircularProgressIndicator.adaptive()),
+                        );
+                      }
+                      if (moments.isFailure && !moments.hasData) {
+                        return SliverToBoxAdapter(
+                          child: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(moments.error ?? 'Đã có lỗi xảy ra'),
+                                const SizedBox(height: 8),
+                                TextButton(
+                                  onPressed: () => context.read<TimelineCubit>().loadMoments(),
+                                  child: const Text('Thử lại'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                      if (moments.isSuccess && (moments.data?.isEmpty ?? true)) {
+                        return const SliverToBoxAdapter(
+                          child: Center(child: Text('Chưa có khoảnh khắc nào')),
+                        );
+                      }
+                      return SliverList.separated(
+                        itemCount: moments.data?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return MemoriaTimeline(
+                            entries: [_toTimelineEntry(moments.data![index])],
+                          );
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(height: 8),
+                      );
                     },
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 8),
                   ),
                 ],
               ),
@@ -80,8 +143,9 @@ class _TimelineScreenRootState extends State<_TimelineScreenRoot> {
           FloatingActionButton.small(
             heroTag: null,
             child: const Icon(Icons.add),
-            onPressed: () {
-              context.router.push(CreateMomentRoute());
+            onPressed: () async {
+              await context.router.push(CreateMomentRoute());
+              if (context.mounted) context.read<TimelineCubit>().loadMoments();
             },
           ),
         ],

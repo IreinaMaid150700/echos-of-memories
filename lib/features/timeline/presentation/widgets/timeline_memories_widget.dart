@@ -1,10 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:music_app/core/gen/assets.gen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/core/router/app_routers.dart';
+import 'package:music_app/features/timeline/presentation/cubit/timeline_cubit.dart';
 
 class TimelineEntry {
+  final String? id;
   final String time;
   final String title;
   final String? body;
@@ -17,6 +18,7 @@ class TimelineEntry {
   final bool bookmarked;
 
   const TimelineEntry({
+    this.id,
     required this.time,
     required this.title,
     this.body,
@@ -28,103 +30,6 @@ class TimelineEntry {
     this.dot = DotVariant.primary,
     this.bookmarked = false,
   });
-
-  static List<TimelineEntry> mock() => [
-    TimelineEntry(
-      time: '06:30',
-      title: 'Morning coffee & journaling',
-      body:
-          'Woke up early today. The light was soft through the curtains. Wrote three pages about dreams I had — something about a library that never ends.',
-      mood: 'Peaceful',
-      location: 'Home, balcony',
-      tags: ['morning', 'journaling', 'coffee'],
-      leadingIcon: SvgPicture.asset(Assets.icons.icWeatherRain),
-    ),
-    TimelineEntry(
-      time: '07:15',
-      title: 'Walk in the park',
-      body:
-          'The air was crisp and fresh. Saw a family of ducks crossing the path. Sat on my usual bench for ten minutes just breathing.',
-      mood: 'Calm',
-      location: 'Central Park',
-      tags: ['walk', 'nature'],
-      dot: DotVariant.secondary,
-    ),
-    TimelineEntry(
-      time: '09:00',
-      title: 'Deep work session',
-      body:
-          'Finally cracked that algorithm problem. Four hours of focus, no distractions. The flow state was real today.',
-      mood: 'Focused',
-      tags: ['coding', 'deepwork'],
-    ),
-    TimelineEntry(
-      time: '12:30',
-      title: 'Lunch break',
-      body:
-          'Made a simple pasta with olive oil and garlic. Read a chapter of Murakami while eating. Small pleasures.',
-      mood: 'Calm',
-      location: 'Home',
-      tags: ['food', 'reading'],
-      dot: DotVariant.secondary,
-    ),
-    TimelineEntry(
-      time: '14:00',
-      title: 'Rainy afternoon reading',
-      body:
-          'Finished "The Wind-Up Bird Chronicle". The rain outside made the whole experience feel cinematic. Put on some lo-fi in the background.',
-      mood: 'Peaceful',
-      tags: ['reading', 'rain', 'music'],
-    ),
-    TimelineEntry(
-      time: '16:45',
-      title: 'Coffee with An',
-      body:
-          'Met An at the new café on Nguyen Hue. We talked for two hours about travel plans and life. She brought her film camera — took a portrait of me by the window.',
-      mood: 'Warm',
-      location: 'The Workshop Coffee',
-      tags: ['friends', 'coffee', 'photography'],
-      dot: DotVariant.secondary,
-    ),
-    TimelineEntry(
-      time: '18:00',
-      title: 'Sunset at the rooftop',
-      body:
-          'The sky turned pink and orange. Stood there for fifteen minutes watching the city slow down. Took a photo but it doesn\'t do justice to the real thing.',
-      mood: 'Calm',
-      location: 'Rooftop, District 1',
-      tags: ['sunset', 'city'],
-    ),
-    TimelineEntry(
-      time: '19:30',
-      title: 'Evening meditation',
-      body:
-          'Twenty minutes of guided meditation. Focused on gratitude. Felt a deep sense of calm wash over me afterward.',
-      mood: 'Peaceful',
-      location: 'Home',
-      tags: ['meditation', 'gratitude'],
-      dot: DotVariant.secondary,
-    ),
-    TimelineEntry(
-      time: '21:00',
-      title: 'Night reflection',
-      body:
-          'Looked back at the day. Productive, balanced, and full of small meaningful moments. Grateful for the people in my life and the quiet spaces in between.',
-      mood: 'Calm',
-      location: 'Home, bedroom',
-      tags: ['reflection', 'gratitude'],
-    ),
-    TimelineEntry(
-      time: '23:15',
-      title: 'Late night rain',
-      body:
-          'Can\'t sleep. The rain started again — heavy drops on the window. There\'s something comforting about being warm inside while the world outside is wet and dark.',
-      mood: 'Calm',
-      location: 'Home',
-      tags: ['rain', 'night', 'insomnia'],
-      bookmarked: true,
-    ),
-  ];
 }
 
 enum DotVariant { primary, secondary }
@@ -286,8 +191,13 @@ class _TimelineRow extends StatelessWidget {
         : t.dotColorB;
 
     return GestureDetector(
-      onTap: () {
-        context.router.push(MomentDetailRoute());
+      onTap: () async {
+        if (entry.id != null) {
+          await context.router.push(MomentDetailRoute(momentId: entry.id!));
+          if (context.mounted) {
+            context.read<TimelineCubit>().loadMoments();
+          }
+        }
       },
       child: Padding(
         padding: EdgeInsets.only(bottom: isLast ? 0 : t.entrySpacing),

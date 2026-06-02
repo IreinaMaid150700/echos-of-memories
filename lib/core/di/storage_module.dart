@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,4 +24,8 @@ abstract class StorageModule {
   // Database quản lý connection state riêng nên có thể Inject đồng thời như Singleton
   @lazySingleton
   AppDatabase get appDatabase => AppDatabase();
+
+  // 4. ImagePicker
+  @lazySingleton
+  ImagePicker get imagePicker => ImagePicker();
 }

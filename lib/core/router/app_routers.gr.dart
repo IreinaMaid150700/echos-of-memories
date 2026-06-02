@@ -60,18 +60,49 @@ class HomeRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [MomentDetailScreen]
-class MomentDetailRoute extends PageRouteInfo<void> {
-  const MomentDetailRoute({List<PageRouteInfo>? children})
-    : super(MomentDetailRoute.name, initialChildren: children);
+class MomentDetailRoute extends PageRouteInfo<MomentDetailRouteArgs> {
+  MomentDetailRoute({
+    Key? key,
+    required String momentId,
+    List<PageRouteInfo>? children,
+  }) : super(
+         MomentDetailRoute.name,
+         args: MomentDetailRouteArgs(key: key, momentId: momentId),
+         initialChildren: children,
+       );
 
   static const String name = 'MomentDetailRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const MomentDetailScreen();
+      final args = data.argsAs<MomentDetailRouteArgs>();
+      return MomentDetailScreen(key: args.key, momentId: args.momentId);
     },
   );
+}
+
+class MomentDetailRouteArgs {
+  const MomentDetailRouteArgs({this.key, required this.momentId});
+
+  final Key? key;
+
+  final String momentId;
+
+  @override
+  String toString() {
+    return 'MomentDetailRouteArgs{key: $key, momentId: $momentId}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! MomentDetailRouteArgs) return false;
+    return key == other.key && momentId == other.momentId;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ momentId.hashCode;
 }
 
 /// generated route for

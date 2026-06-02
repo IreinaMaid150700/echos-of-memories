@@ -12,6 +12,7 @@
 import 'package:dio/dio.dart' as _i361;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
+import 'package:image_picker/image_picker.dart' as _i183;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
@@ -25,6 +26,20 @@ import '../../features/create_moment/domain/usecases/delete_tag_usecase.dart'
     as _i74;
 import '../../features/create_moment/domain/usecases/get_tags_usecase.dart'
     as _i173;
+import '../../features/moment/data/repositories/moment_repository_impl.dart'
+    as _i1042;
+import '../../features/moment/domain/repositories/moment_repository.dart'
+    as _i286;
+import '../../features/moment/domain/usecases/create_moment_usecase.dart'
+    as _i777;
+import '../../features/moment/domain/usecases/delete_moment_usecase.dart'
+    as _i918;
+import '../../features/moment/domain/usecases/get_moment_by_id_usecase.dart'
+    as _i752;
+import '../../features/moment/domain/usecases/get_moments_usecase.dart'
+    as _i707;
+import '../../features/moment/domain/usecases/update_moment_flags_usecase.dart'
+    as _i479;
 import '../../features/theme/data/repositories/theme_repository_impl.dart'
     as _i592;
 import '../../features/theme/domain/repositories/theme_repository.dart'
@@ -58,6 +73,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => storageModule.secureStorage,
     );
     gh.lazySingleton<_i690.AppDatabase>(() => storageModule.appDatabase);
+    gh.lazySingleton<_i183.ImagePicker>(() => storageModule.imagePicker);
     gh.lazySingleton<_i745.AuthInterceptor>(() => _i745.AuthInterceptor());
     gh.lazySingleton<_i283.AppRouters>(() => _i283.AppRouters());
     gh.lazySingleton<String>(
@@ -78,6 +94,24 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i705.TagRepository>(
       () => _i167.TagRepositoryImpl(gh<_i690.AppDatabase>()),
+    );
+    gh.lazySingleton<_i286.MomentRepository>(
+      () => _i1042.MomentRepositoryImpl(gh<_i690.AppDatabase>()),
+    );
+    gh.factory<_i777.CreateMomentUseCase>(
+      () => _i777.CreateMomentUseCase(gh<_i286.MomentRepository>()),
+    );
+    gh.factory<_i918.DeleteMomentUseCase>(
+      () => _i918.DeleteMomentUseCase(gh<_i286.MomentRepository>()),
+    );
+    gh.factory<_i752.GetMomentByIdUseCase>(
+      () => _i752.GetMomentByIdUseCase(gh<_i286.MomentRepository>()),
+    );
+    gh.factory<_i707.GetMomentsUseCase>(
+      () => _i707.GetMomentsUseCase(gh<_i286.MomentRepository>()),
+    );
+    gh.factory<_i479.UpdateMomentFlagsUseCase>(
+      () => _i479.UpdateMomentFlagsUseCase(gh<_i286.MomentRepository>()),
     );
     gh.factory<_i938.CreateTagUseCase>(
       () => _i938.CreateTagUseCase(gh<_i705.TagRepository>()),

@@ -6,16 +6,26 @@ import 'package:music_app/core/utils/models/loaded.dart';
 import 'package:music_app/features/create_moment/domain/enum/create_moment_direct_enum.dart';
 import 'package:music_app/features/create_moment/domain/models/tag_entity.dart';
 import 'package:music_app/features/create_moment/domain/usecases/get_tags_usecase.dart';
+import 'package:music_app/features/moment/domain/models/create_moment_params.dart';
+import 'package:music_app/features/moment/domain/models/moment_entity.dart';
+import 'package:music_app/features/moment/domain/usecases/create_moment_usecase.dart';
 import 'package:image_picker/image_picker.dart';
 part 'create_moment_state.dart';
 part 'create_moment_cubit.freezed.dart';
 
 class CreateMomentCubit extends BaseCubit<CreateMomentState> {
   final GetTagsUseCase _getTagsUseCase;
+  final CreateMomentUseCase _createMomentUseCase;
+  final ImagePicker _imagePicker;
 
-  CreateMomentCubit({required GetTagsUseCase getTagsUseCase})
-    : _getTagsUseCase = getTagsUseCase,
-      super(const CreateMomentState());
+  CreateMomentCubit({
+    required GetTagsUseCase getTagsUseCase,
+    required CreateMomentUseCase createMomentUseCase,
+    required ImagePicker imagePicker,
+  }) : _getTagsUseCase = getTagsUseCase,
+       _createMomentUseCase = createMomentUseCase,
+       _imagePicker = imagePicker,
+       super(const CreateMomentState());
 
   Future<void> initialData() async {
     await loadTagsSuggestions();
@@ -63,9 +73,8 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
   }
 
   Future<void> openImagePicker() async {
-    final picker = ImagePicker();
     try {
-      final List<XFile> pickedFileList = await picker.pickMultiImage();
+      final List<XFile> pickedFileList = await _imagePicker.pickMultiImage();
 
       if (pickedFileList.isNotEmpty) {
         emit(
@@ -122,5 +131,23 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
   void removeTag(String tagId) {
     final updatedTags = state.tagsSelected.where((t) => t.id != tagId).toList();
     emit(state.copyWith(tagsSelected: updatedTags));
+  }
+
+  Future<void> saveMoment() async {
+    final trimmedNote = state.note?.trim();
+    final params = CreateMomentParams(
+      note: (trimmedNote?.isEmpty ?? true) ? null : trimmedNote,
+      momentDate: state.momentDate ?? DateTime.now(),
+      tags: state.tagsSelected,
+      isFavorite: state.isLoved,
+      isHiddenFromWidget: state.hideFromWidget,
+      isLocked: state.isLockMoment,
+    );
+    await execute(
+      loadingState: state.copyWith(saveAction: state.saveAction.toLoading()),
+      action: () => _createMomentUseCase(params),
+      onSuccess: (moment) => state.copyWith(saveAction: state.saveAction.toSuccess(moment)),
+      onFailure: (f) => state.copyWith(saveAction: state.saveAction.toFailure(f.message)),
+    );
   }
 }

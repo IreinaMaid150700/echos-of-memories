@@ -5,9 +5,17 @@ class _BottomSaveCta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CreateMomentCubit, CreateMomentState>(
+    return BlocConsumer<CreateMomentCubit, CreateMomentState>(
+      listenWhen: (prev, curr) => prev.saveAction != curr.saveAction,
+      listener: (context, state) {
+        if (state.saveAction.isSuccess && context.mounted) {
+          context.router.maybePop();
+        }
+      },
       builder: (context, state) {
-        final isEnabled = false;
+        final isSaving = state.saveAction.isLoading;
+        final isEnabled = !isSaving &&
+            ((state.note?.trim().isNotEmpty ?? false) || state.tagsSelected.isNotEmpty);
         return Container(
           padding: EdgeInsets.only(
             left: AppSpacing.xl,
@@ -52,7 +60,9 @@ class _BottomSaveCta extends StatelessWidget {
                     ],
                   ),
                   child: ElevatedButton(
-                    onPressed: isEnabled ? () {} : null,
+                    onPressed: isEnabled
+                        ? () => context.read<CreateMomentCubit>().saveMoment()
+                        : null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                       shadowColor: Colors.transparent,
@@ -61,13 +71,22 @@ class _BottomSaveCta extends StatelessWidget {
                         borderRadius: BorderRadius.circular(AppRadius.full),
                       ),
                     ),
-                    child: Text(
-                      'Lưu lại khoảnh khắc',
-                      style: context.textTheme.titleMedium?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
+                    child: isSaving
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          )
+                        : Text(
+                            'Lưu lại khoảnh khắc',
+                            style: context.textTheme.titleMedium?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
                   ),
                 ),
               ),
