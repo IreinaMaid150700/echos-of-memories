@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
             previous.theme.data != current.theme.data,
         builder: (context, state) {
           return MaterialApp.router(
-            title: 'Save your Memories',
+            title: 'Echos Of Memories',
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,

@@ -34,33 +34,39 @@ class _MediaPickerSection extends StatelessWidget {
         const Gap(AppSpacing.md),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
-          child: Row(
-            children: [
-              Expanded(flex: 3, child: _CoverCard()),
-              const Gap(AppSpacing.sm),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: [
-                    _AddPhotoButton(
-                      onTap: () =>
-                          context.read<CreateMomentCubit>().openImagePicker(),
-                    ),
-                    const Gap(AppSpacing.sm),
-                    const SizedBox(
-                      height: 54,
-                      child: Row(
-                        children: [
-                          Expanded(child: _MiniThumb()),
-                          Gap(AppSpacing.xs),
-                          Expanded(child: _MiniThumb()),
-                        ],
+          child: SizedBox(
+            height: 228,
+            child: Row(
+              children: [
+                Expanded(flex: 3, child: _CoverCard()),
+                const Gap(AppSpacing.sm),
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: _AddPhotoButton(
+                          onTap: () => context
+                              .read<CreateMomentCubit>()
+                              .openImagePicker(),
+                        ),
                       ),
-                    ),
-                  ],
+                      const Gap(AppSpacing.sm),
+                      const SizedBox(
+                        height: 54,
+                        child: Row(
+                          children: [
+                            Expanded(child: _MiniThumb()),
+                            Gap(AppSpacing.xs),
+                            Expanded(child: _MiniThumb()),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
@@ -139,14 +145,10 @@ class _AddPhotoButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: context.themeColors.surface.withValues(alpha: 0.7),
+          color: context.themeColors.tertiary.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(AppRadius.xl),
-          border: Border.all(
-            color: const Color(0xFFD9C9BB),
-            width: 1.5,
-            strokeAlign: BorderSide.strokeAlignOutside,
-          ),
         ),
         child: Container(
           width: 44,
