@@ -3,8 +3,14 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
+import 'package:music_app/core/di/injector.dart';
 import 'package:music_app/core/theme/app_colors.dart';
 import 'package:music_app/core/theme/app_custom_colors.dart';
+import 'package:music_app/core/utils/extensions/date_time_extension.dart';
+import 'package:music_app/features/moment/domain/usecases/delete_moment_usecase.dart';
+import 'package:music_app/features/moment/domain/usecases/get_moment_by_id_usecase.dart';
+import 'package:music_app/features/moment/domain/usecases/update_moment_flags_usecase.dart';
 import 'package:music_app/features/moment_detail/presentation/screens/cubit/moment_detail_cubit.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -19,12 +25,17 @@ part '../widgets/delete_section.dart';
 
 @RoutePage()
 class MomentDetailScreen extends StatelessWidget {
-  const MomentDetailScreen({super.key});
+  final String momentId;
+  const MomentDetailScreen({super.key, required this.momentId});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MomentDetailCubit(),
+      create: (context) => MomentDetailCubit(
+        getMomentByIdUseCase: getIt<GetMomentByIdUseCase>(),
+        deleteMomentUseCase: getIt<DeleteMomentUseCase>(),
+        updateMomentFlagsUseCase: getIt<UpdateMomentFlagsUseCase>(),
+      )..loadMoment(momentId),
       child: Scaffold(
         backgroundColor: context.themeColors.background,
         body: SafeArea(
@@ -78,7 +89,7 @@ class _MediaCarousel extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return _imageOutlined(context);
       },
-      itemCount: 10,
+      itemCount: 1,
       itemWidth: 300.0,
       itemHeight: 400.0,
       layout: SwiperLayout.TINDER,

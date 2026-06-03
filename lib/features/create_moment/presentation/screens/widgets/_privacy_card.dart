@@ -125,7 +125,7 @@ class _CustomSwitch extends StatelessWidget {
         height: 28,
         padding: const EdgeInsets.all(3),
         decoration: BoxDecoration(
-          color: value ? context.themeColors.primary : const Color(0xFFD7C9BF),
+          color: value ? context.themeColors.primary : context.themeColors.borderDefault,
           borderRadius: BorderRadius.circular(AppRadius.full),
         ),
         child: AnimatedAlign(
@@ -188,8 +188,8 @@ class _PrivacyToggleWithPromptState extends State<_PrivacyToggleWithPrompt> {
                   ),
                   _CustomSwitch(
                     value: state.isLockMoment,
-                    onChanged: (_) =>
-                        context.read<CreateMomentCubit>().toggleLockedMoment,
+                    onChanged: (val) =>
+                        context.read<CreateMomentCubit>().toggleLockedMoment(val),
                   ),
                 ],
               ),
@@ -228,10 +228,11 @@ class _PrivacyIconContainer extends StatelessWidget {
       width: 40,
       height: 40,
       decoration: BoxDecoration(
-        color: const Color(0xFFEFE4D7),
+        color: context.themeColors.privacyChipBackground,
         shape: BoxShape.circle,
+        border: Border.all(color: context.themeColors.privacyChipBorder),
       ),
-      child: Icon(icon, size: 18, color: const Color(0xFF9F705A)),
+      child: Icon(icon, size: 18, color: context.themeColors.privacyChipForeground),
     );
   }
 }

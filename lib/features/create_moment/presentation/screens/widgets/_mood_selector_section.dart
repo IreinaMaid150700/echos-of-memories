@@ -70,11 +70,26 @@ class _MoodSelectorSection extends StatelessWidget {
             separatorBuilder: (_, __) => const Gap(AppSpacing.xs),
             itemBuilder: (context, index) {
               final mood = _moods[index];
+              final Color bg;
+              final Color fg;
+              if (mood.bgColorKey == 'moodCalmBackground') {
+                bg = context.themeColors.moodCalmBackground;
+                fg = context.themeColors.moodCalmText;
+              } else if (mood.bgColorKey == 'moodWarmBackground') {
+                bg = context.themeColors.moodWarmBackground;
+                fg = context.themeColors.moodWarmText;
+              } else if (mood.bgColorKey == 'moodFocusedBackground') {
+                bg = context.themeColors.moodFocusedBackground;
+                fg = context.themeColors.moodFocusedText;
+              } else {
+                bg = context.themeColors.moodPeacefulBackground;
+                fg = context.themeColors.moodPeacefulText;
+              }
               return _MoodChip(
                 emoji: mood.emoji,
                 label: mood.label,
-                bgColor: _moodColors[index],
-                textColor: const Color(0xFF5F4A3E),
+                bgColor: bg,
+                textColor: fg,
               );
             },
           ),
@@ -107,7 +122,7 @@ class _MoodChip extends StatelessWidget {
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(AppRadius.full),
-        border: Border.all(color: const Color(0xFFB7D6AF), width: 1),
+        border: Border.all(color: textColor.withValues(alpha: 0.15), width: 1),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

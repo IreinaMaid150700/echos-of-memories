@@ -5,27 +5,39 @@ class _MomentContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Quiet coffee after work',
-          style: context.textTheme.titleLarge?.copyWith(
-            color: context.themeColors.textPrimary,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const Gap(AppSpacing.sm),
-        Text(
-          'The café had a quiet corner by the window. I ordered my usual latte and spent an hour just watching the street below. People passing by, wind through the leaves, nothing much on my mind.',
-          style: context.textTheme.bodyMedium?.copyWith(
-            color: context.themeColors.textSecondary,
-            height: 1.6,
-          ),
-        ),
-        const Gap(AppSpacing.md),
-        const _MoodChip(label: 'Calm'),
-      ],
+    return BlocBuilder<MomentDetailCubit, MomentDetailState>(
+      buildWhen: (prev, curr) => prev.moment != curr.moment,
+      builder: (context, state) {
+        final moment = state.moment.data;
+        if (moment == null) return const SizedBox.shrink();
+        final note = moment.note;
+        final summary = note == null ? '' : note.substring(0, note.length.clamp(0, 80));
+        final displayTitle = moment.title ?? summary;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (displayTitle.isNotEmpty)
+              Text(
+                displayTitle,
+                style: context.textTheme.titleLarge?.copyWith(
+                  color: context.themeColors.textPrimary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            if (moment.note != null) ...[
+              const Gap(AppSpacing.sm),
+              Text(
+                moment.note!,
+                style: context.textTheme.bodyMedium?.copyWith(
+                  color: context.themeColors.textSecondary,
+                  height: 1.6,
+                ),
+              ),
+            ],
+            const Gap(AppSpacing.md),
+          ],
+        );
+      },
     );
   }
 }

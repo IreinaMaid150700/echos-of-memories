@@ -27,6 +27,7 @@ class _NoteInputSection extends StatelessWidget {
               border: Border.all(color: context.themeColors.borderSubtle),
             ),
             child: TextField(
+              onChanged: context.read<CreateMomentCubit>().onChangeNote,
               maxLines: null,
               minLines: 4,
               style: context.textTheme.bodyLarge?.copyWith(

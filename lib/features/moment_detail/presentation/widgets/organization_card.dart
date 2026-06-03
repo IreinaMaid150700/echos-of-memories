@@ -5,47 +5,35 @@ class _OrganizationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _SectionCard(
-      title: 'ORGANIZATION',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Tags',
-            style: context.textTheme.labelSmall?.copyWith(
-              color: context.themeColors.textMuted,
-            ),
-          ),
-          const Gap(AppSpacing.xs),
-          const Wrap(
-            spacing: AppSpacing.xs,
-            runSpacing: AppSpacing.xs,
+    return BlocBuilder<MomentDetailCubit, MomentDetailState>(
+      buildWhen: (prev, curr) => prev.moment != curr.moment,
+      builder: (context, state) {
+        final moment = state.moment.data;
+        if (moment == null || moment.tags.isEmpty) return const SizedBox.shrink();
+        return _SectionCard(
+          title: 'ORGANIZATION',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _TagChip(label: '# morning'),
-              _TagChip(label: '# coffee'),
-              _TagChip(label: '# gratitude'),
-              _TagChip(label: '# solitude'),
+              Text(
+                'Tags',
+                style: context.textTheme.labelSmall?.copyWith(
+                  color: context.themeColors.textMuted,
+                ),
+              ),
+              const Gap(AppSpacing.xs),
+              Wrap(
+                spacing: AppSpacing.xs,
+                runSpacing: AppSpacing.xs,
+                children: moment.tags
+                    .map((t) => _TagChip(label: '# ${t.name}'))
+                    .toList(),
+              ),
+              const Gap(AppSpacing.md),
             ],
           ),
-          const Gap(AppSpacing.md),
-          Text(
-            'Collections',
-            style: context.textTheme.labelSmall?.copyWith(
-              color: context.themeColors.textMuted,
-            ),
-          ),
-          const Gap(AppSpacing.xs),
-          const Wrap(
-            spacing: AppSpacing.xs,
-            runSpacing: AppSpacing.xs,
-            children: [
-              _CollectionChip(label: 'Slow mornings'),
-              _CollectionChip(label: 'Café notes'),
-            ],
-          ),
-          const Gap(AppSpacing.md),
-        ],
-      ),
+        );
+      },
     );
   }
 }

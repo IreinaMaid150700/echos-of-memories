@@ -42,24 +42,35 @@ class _DateTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          'Oct 24',
-          style: context.textTheme.titleMedium?.copyWith(
-            color: context.themeColors.textPrimary,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const Gap(2),
-        Text(
-          'THURSDAY · 8:15 AM',
-          style: context.textTheme.labelMedium?.copyWith(
-            color: context.themeColors.textMuted,
-            letterSpacing: 0.5,
-          ),
-        ),
-      ],
+    return BlocBuilder<MomentDetailCubit, MomentDetailState>(
+      buildWhen: (prev, curr) => prev.moment != curr.moment,
+      builder: (context, state) {
+        final moment = state.moment.data;
+        final date = moment?.momentDate ?? DateTime.now();
+        final dayMonthStr = DateFormat('MMM d').format(date);
+        final weekdayStr = DateFormat('EEEE').format(date).toUpperCase();
+        final timeStr = date.toTimeString();
+
+        return Column(
+          children: [
+            Text(
+              dayMonthStr,
+              style: context.textTheme.titleMedium?.copyWith(
+                color: context.themeColors.textPrimary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const Gap(2),
+            Text(
+              '$weekdayStr · $timeStr',
+              style: context.textTheme.labelMedium?.copyWith(
+                color: context.themeColors.textMuted,
+                letterSpacing: 0.5,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

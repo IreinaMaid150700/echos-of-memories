@@ -5,9 +5,17 @@ class _BottomSaveCta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CreateMomentCubit, CreateMomentState>(
+    return BlocConsumer<CreateMomentCubit, CreateMomentState>(
+      listenWhen: (prev, curr) => prev.saveAction != curr.saveAction,
+      listener: (context, state) {
+        if (state.saveAction.isSuccess && context.mounted) {
+          context.router.maybePop();
+        }
+      },
       builder: (context, state) {
-        final isEnabled = false;
+        final isSaving = state.saveAction.isLoading;
+        final isEnabled = !isSaving &&
+            ((state.note?.trim().isNotEmpty ?? false) || state.tagsSelected.isNotEmpty);
         return Container(
           padding: EdgeInsets.only(
             left: AppSpacing.xl,
@@ -20,10 +28,10 @@ class _BottomSaveCta extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                context.themeColors.background,
                 context.themeColors.background.withValues(alpha: 0),
+                context.themeColors.background,
               ],
-              stops: const [0.7, 1.0],
+              stops: const [0.0, 0.3],
             ),
           ),
           child: Column(
@@ -38,21 +46,23 @@ class _BottomSaveCta extends StatelessWidget {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        const Color(0xFFDC8669),
-                        const Color(0xFFC96C53),
+                        context.themeColors.primary,
+                        context.themeColors.primary.withValues(alpha: 0.8),
                       ],
                     ),
                     borderRadius: BorderRadius.circular(AppRadius.full),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFFC96C53).withValues(alpha: 0.34),
+                        color: context.themeColors.primary.withValues(alpha: 0.34),
                         blurRadius: 34,
                         offset: const Offset(0, 14),
                       ),
                     ],
                   ),
                   child: ElevatedButton(
-                    onPressed: isEnabled ? () {} : null,
+                    onPressed: isEnabled
+                        ? () => context.read<CreateMomentCubit>().saveMoment()
+                        : null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                       shadowColor: Colors.transparent,
@@ -61,13 +71,22 @@ class _BottomSaveCta extends StatelessWidget {
                         borderRadius: BorderRadius.circular(AppRadius.full),
                       ),
                     ),
-                    child: Text(
-                      'Lưu lại khoảnh khắc',
-                      style: context.textTheme.titleMedium?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
+                    child: isSaving
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          )
+                        : Text(
+                            'Lưu lại khoảnh khắc',
+                            style: context.textTheme.titleMedium?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
                   ),
                 ),
               ),

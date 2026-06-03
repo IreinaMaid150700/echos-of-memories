@@ -137,7 +137,7 @@ class _TagInputShellState extends State<_TagInputShell> {
             width: 34,
             height: 34,
             decoration: BoxDecoration(
-              color: const Color(0xFFF8E5DA),
+              color: context.themeColors.primary.withValues(alpha: 0.15),
               shape: BoxShape.circle,
             ),
             child: Center(

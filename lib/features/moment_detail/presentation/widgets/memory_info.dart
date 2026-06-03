@@ -1,26 +1,37 @@
 part of '../screens/moment_detail_screen.dart';
+
 class _MemoryInfoCard extends StatelessWidget {
   const _MemoryInfoCard();
 
   @override
   Widget build(BuildContext context) {
-    return _SectionCard(
-      title: 'MEMORY INFO',
-      child: Column(
-        children: [
-          _InfoRow(
-            icon: Icons.access_time_rounded,
-            label: 'Moment',
-            value: 'Thursday, Oct 24 · 8:15 AM',
+    return BlocBuilder<MomentDetailCubit, MomentDetailState>(
+      buildWhen: (prev, curr) => prev.moment != curr.moment,
+      builder: (context, state) {
+        final moment = state.moment.data;
+        if (moment == null) return const SizedBox.shrink();
+        final dateStr = '${moment.momentDate.toVietnamese(showYear: false, showMonth: true, showDay: true)} · ${moment.momentDate.toTimeString()}';
+        return _SectionCard(
+          title: 'MEMORY INFO',
+          child: Column(
+            children: [
+              _InfoRow(
+                icon: Icons.access_time_rounded,
+                label: 'Moment',
+                value: dateStr,
+              ),
+              if (moment.locationName != null) ...[
+                Divider(height: 1, color: context.themeColors.borderSubtle),
+                _InfoRow(
+                  icon: Icons.location_on_outlined,
+                  label: 'Place',
+                  value: moment.locationName!,
+                ),
+              ],
+            ],
           ),
-          Divider(height: 1, color: context.themeColors.borderSubtle),
-          _InfoRow(
-            icon: Icons.location_on_outlined,
-            label: 'Place',
-            value: 'Little Bloom Café',
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
