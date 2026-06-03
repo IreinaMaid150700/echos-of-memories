@@ -3,6 +3,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import 'package:music_app/core/di/injector.dart';
 import 'package:music_app/core/theme/app_colors.dart';
 import 'package:music_app/core/theme/app_custom_colors.dart';

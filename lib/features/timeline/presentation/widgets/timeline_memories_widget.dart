@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/core/router/app_routers.dart';
+import 'package:music_app/core/theme/app_colors.dart';
+import 'package:music_app/core/theme/app_custom_colors.dart';
 import 'package:music_app/features/timeline/presentation/cubit/timeline_cubit.dart';
 
 class TimelineEntry {
@@ -39,33 +41,33 @@ enum DotVariant { primary, secondary }
 // ────────────────────────────────────────────────────────────────
 
 class MemoriaTimelineTheme {
-  final Color dotColorA;
-  final Color dotColorB;
+  final Color? dotColorA;
+  final Color? dotColorB;
   final double dotRadius;
   final double dotBorderWidth;
-  final Color dotBorderColor;
+  final Color? dotBorderColor;
   final bool dotGlow;
-  final Color lineColor;
+  final Color? lineColor;
   final double lineWidth;
   final bool lineGradient;
-  final Color cardColor;
+  final Color? cardColor;
   final double cardRadius;
   final EdgeInsets cardPadding;
-  final List<BoxShadow> cardShadow;
-  final Color cardBorderColor;
+  final List<BoxShadow>? cardShadow;
+  final Color? cardBorderColor;
   final double cardBorderWidth;
-  final TextStyle titleStyle;
-  final TextStyle bodyStyle;
-  final TextStyle timeStyle;
-  final TextStyle captionStyle;
-  final Color tagBackground;
-  final Color tagBorder;
-  final Color tagForeground;
+  final TextStyle? titleStyle;
+  final TextStyle? bodyStyle;
+  final TextStyle? timeStyle;
+  final TextStyle? captionStyle;
+  final Color? tagBackground;
+  final Color? tagBorder;
+  final Color? tagForeground;
   final double chipRadius;
-  final Color moodBackground;
-  final Color moodBorder;
-  final Color moodForeground;
-  final Color moodIconColor;
+  final Color? moodBackground;
+  final Color? moodBorder;
+  final Color? moodForeground;
+  final Color? moodIconColor;
   final double timeColumnWidth;
   final double dotColumnWidth;
   final double cardDotGap;
@@ -73,49 +75,33 @@ class MemoriaTimelineTheme {
   final double dotTopOffset;
 
   const MemoriaTimelineTheme({
-    this.dotColorA = const Color(0xFFC05231),
-    this.dotColorB = const Color(0xFF6B8F71),
+    this.dotColorA,
+    this.dotColorB,
     this.dotRadius = 6,
     this.dotBorderWidth = 2,
-    this.dotBorderColor = const Color(0xFFF5EFE6),
+    this.dotBorderColor,
     this.dotGlow = true,
-    this.lineColor = const Color(0xFFE8C4B0),
+    this.lineColor,
     this.lineWidth = 1.5,
     this.lineGradient = true,
-    this.cardColor = Colors.white,
+    this.cardColor,
     this.cardRadius = 16,
     this.cardPadding = const EdgeInsets.all(14),
-    this.cardShadow = const [
-      BoxShadow(color: Color(0x12C05231), blurRadius: 14, offset: Offset(0, 4)),
-      BoxShadow(color: Color(0x0A000000), blurRadius: 4, offset: Offset(0, 1)),
-    ],
-    this.cardBorderColor = Colors.transparent,
+    this.cardShadow,
+    this.cardBorderColor,
     this.cardBorderWidth = 0,
-    this.titleStyle = const TextStyle(
-      fontSize: 14.5,
-      fontWeight: FontWeight.w700,
-      color: Color(0xFF2C1810),
-      height: 1.3,
-    ),
-    this.bodyStyle = const TextStyle(
-      fontSize: 12.5,
-      color: Color(0xFF6B4F3A),
-      height: 1.5,
-    ),
-    this.timeStyle = const TextStyle(
-      fontSize: 11.5,
-      fontWeight: FontWeight.w600,
-      color: Color(0xFFC05231),
-    ),
-    this.captionStyle = const TextStyle(fontSize: 12, color: Color(0xFFA08070)),
-    this.tagBackground = const Color(0xFFFDF7F2),
-    this.tagBorder = const Color(0xFFE8D5C8),
-    this.tagForeground = const Color(0xFF8A6A58),
+    this.titleStyle,
+    this.bodyStyle,
+    this.timeStyle,
+    this.captionStyle,
+    this.tagBackground,
+    this.tagBorder,
+    this.tagForeground,
     this.chipRadius = 20,
-    this.moodBackground = const Color(0xFFFDF7F2),
-    this.moodBorder = const Color(0xFFE0CFC5),
-    this.moodForeground = const Color(0xFF7A5C4A),
-    this.moodIconColor = const Color(0xFF6B8F71),
+    this.moodBackground,
+    this.moodBorder,
+    this.moodForeground,
+    this.moodIconColor,
     this.timeColumnWidth = 68,
     this.dotColumnWidth = 22,
     this.cardDotGap = 10,
@@ -186,9 +172,19 @@ class _TimelineRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = theme;
+    final fallbackDotColorA = context.themeColors.primary;
+    final fallbackDotColorB = context.themeColors.secondary;
     final dotColor = entry.dot == DotVariant.primary
-        ? t.dotColorA
-        : t.dotColorB;
+        ? (t.dotColorA ?? fallbackDotColorA)
+        : (t.dotColorB ?? fallbackDotColorB);
+    final textStyleTime = t.timeStyle ?? context.textTheme.labelMedium?.copyWith(
+      color: dotColor,
+      fontWeight: FontWeight.w600,
+    ) ?? TextStyle(
+      fontSize: 11.5,
+      fontWeight: FontWeight.w600,
+      color: dotColor,
+    );
 
     return GestureDetector(
       onTap: () async {
@@ -213,7 +209,7 @@ class _TimelineRow extends StatelessWidget {
                     SizedBox(height: t.dotTopOffset),
                     Text(
                       entry.time,
-                      style: t.timeStyle.copyWith(color: dotColor),
+                      style: textStyleTime.copyWith(color: dotColor),
                     ),
                     if (entry.leadingIcon != null) ...[
                       const SizedBox(height: 5),
@@ -243,11 +239,11 @@ class _TimelineRow extends StatelessWidget {
                                       end: Alignment.bottomCenter,
                                       colors: [
                                         dotColor.withOpacity(0.4),
-                                        t.lineColor,
+                                        t.lineColor ?? context.themeColors.borderDefault,
                                       ],
                                     )
                                   : null,
-                              color: t.lineGradient ? null : t.lineColor,
+                              color: t.lineGradient ? null : (t.lineColor ?? context.themeColors.borderDefault),
                             ),
                           ),
                         ),
@@ -277,6 +273,7 @@ class _DefaultDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final d = theme.dotRadius * 2;
+    final dotBorderCol = theme.dotBorderColor ?? context.themeColors.background;
     return Container(
       width: d,
       height: d,
@@ -284,7 +281,7 @@ class _DefaultDot extends StatelessWidget {
         shape: BoxShape.circle,
         color: color,
         border: Border.all(
-          color: theme.dotBorderColor,
+          color: dotBorderCol,
           width: theme.dotBorderWidth,
         ),
         boxShadow: theme.dotGlow
@@ -309,14 +306,31 @@ class _DefaultCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = theme;
+    final cardBg = t.cardColor ?? context.themeColors.surface;
+    final cardBorderCol = t.cardBorderColor ?? context.themeColors.borderSubtle;
+    final cardBorderW = t.cardBorderWidth > 0 ? t.cardBorderWidth : 1.0;
+    final cardShadows = t.cardShadow ?? [
+      BoxShadow(
+        color: context.themeColors.primary.withValues(alpha: 0.08),
+        blurRadius: 14,
+        offset: const Offset(0, 4),
+      ),
+      BoxShadow(
+        color: Colors.black.withValues(alpha: 0.04),
+        blurRadius: 4,
+        offset: const Offset(0, 1),
+      ),
+    ];
+    final textStyleCaption = t.captionStyle ?? context.textTheme.bodySmall?.copyWith(
+      color: context.themeColors.textMuted,
+    ) ?? const TextStyle(fontSize: 12, color: Color(0xFFA08070));
+
     return Container(
       decoration: BoxDecoration(
-        color: t.cardColor,
+        color: cardBg,
         borderRadius: BorderRadius.circular(t.cardRadius),
-        border: t.cardBorderWidth > 0
-            ? Border.all(color: t.cardBorderColor, width: t.cardBorderWidth)
-            : null,
-        boxShadow: t.cardShadow,
+        border: Border.all(color: cardBorderCol, width: cardBorderW),
+        boxShadow: cardShadows,
       ),
       padding: t.cardPadding,
       child: Column(
@@ -332,10 +346,10 @@ class _DefaultCard extends StatelessWidget {
                 Icon(
                   Icons.location_on_outlined,
                   size: 12,
-                  color: t.captionStyle.color,
+                  color: textStyleCaption.color,
                 ),
                 const SizedBox(width: 3),
-                Text(entry.location!, style: t.captionStyle),
+                Text(entry.location!, style: textStyleCaption),
               ],
             ),
           ],
@@ -363,6 +377,10 @@ class _CardWithThumbnail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = theme;
+    final textStyleBody = t.bodyStyle ?? context.textTheme.bodyMedium?.copyWith(
+      color: context.themeColors.textSecondary,
+      height: 1.5,
+    ) ?? const TextStyle(fontSize: 12.5, color: Color(0xFF6B4F3A), height: 1.5);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -380,7 +398,7 @@ class _CardWithThumbnail extends StatelessWidget {
                 const SizedBox(height: 5),
                 Text(
                   entry.body!,
-                  style: t.bodyStyle,
+                  style: textStyleBody,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -405,6 +423,10 @@ class _CardTextOnly extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = theme;
+    final textStyleBody = t.bodyStyle ?? context.textTheme.bodyMedium?.copyWith(
+      color: context.themeColors.textSecondary,
+      height: 1.5,
+    ) ?? const TextStyle(fontSize: 12.5, color: Color(0xFF6B4F3A), height: 1.5);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -413,7 +435,7 @@ class _CardTextOnly extends StatelessWidget {
           const SizedBox(height: 5),
           Text(
             entry.body!,
-            style: t.bodyStyle,
+            style: textStyleBody,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ),
@@ -435,13 +457,19 @@ class _TitleRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = theme;
+    final textStyleTitle = t.titleStyle ?? context.textTheme.titleMedium?.copyWith(
+      color: context.themeColors.textPrimary,
+      fontWeight: FontWeight.bold,
+    ) ?? const TextStyle(fontSize: 14.5, fontWeight: FontWeight.w700, color: Color(0xFF2C1810), height: 1.3);
+    final fallbackDotColorA = context.themeColors.primary;
+    final bookmarkCol = t.dotColorA ?? fallbackDotColorA;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(child: Text(entry.title, style: t.titleStyle)),
+        Expanded(child: Text(entry.title, style: textStyleTitle)),
         if (entry.bookmarked) ...[
           const SizedBox(width: 6),
-          Icon(Icons.bookmark_rounded, color: t.dotColorA, size: 17),
+          Icon(Icons.bookmark_rounded, color: bookmarkCol, size: 17),
         ],
       ],
     );
@@ -456,23 +484,27 @@ class _MoodChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = theme;
+    final bg = t.moodBackground ?? context.themeColors.moodCalmBackground;
+    final borderCol = t.moodBorder ?? context.themeColors.borderSubtle;
+    final fg = t.moodForeground ?? context.themeColors.moodCalmText;
+    final iconCol = t.moodIconColor ?? context.themeColors.moodCalmText;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
       decoration: BoxDecoration(
-        color: t.moodBackground,
+        color: bg,
         borderRadius: BorderRadius.circular(t.chipRadius),
-        border: Border.all(color: t.moodBorder),
+        border: Border.all(color: borderCol),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.eco, size: 10, color: t.moodIconColor),
+          Icon(Icons.eco, size: 10, color: iconCol),
           const SizedBox(width: 4),
           Text(
             label,
             style: TextStyle(
               fontSize: 11.5,
-              color: t.moodForeground,
+              color: fg,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -490,16 +522,19 @@ class _TagChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = theme;
+    final bg = t.tagBackground ?? context.themeColors.tagChipBackground;
+    final borderCol = t.tagBorder ?? context.themeColors.borderSubtle;
+    final fg = t.tagForeground ?? context.themeColors.textSecondary;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
       decoration: BoxDecoration(
-        color: t.tagBackground,
+        color: bg,
         borderRadius: BorderRadius.circular(t.chipRadius),
-        border: Border.all(color: t.tagBorder),
+        border: Border.all(color: borderCol),
       ),
       child: Text(
         "#$label",
-        style: TextStyle(fontSize: 11.5, color: t.tagForeground),
+        style: TextStyle(fontSize: 11.5, color: fg),
       ),
     );
   }

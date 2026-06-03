@@ -39,7 +39,9 @@ class _DeleteCard extends StatelessWidget {
           }
         }
 
-        if (state.deleteAction.isSuccess && content.mounted) context.router.maybePop();
+        if (state.deleteAction.isSuccess && context.mounted) {
+          context.router.maybePop();
+        }
       },
       builder: (context, state) {
         final momentId = state.moment.data?.id;

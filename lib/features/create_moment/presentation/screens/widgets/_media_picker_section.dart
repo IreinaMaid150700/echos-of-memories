@@ -80,14 +80,14 @@ class _CoverCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            const Color(0xFFF4C3A0).withValues(alpha: 0.58),
-            const Color(0xFFC8D4C0).withValues(alpha: 0.56),
+            context.themeColors.primary.withValues(alpha: 0.3),
+            context.themeColors.secondary.withValues(alpha: 0.3),
           ],
         ),
         borderRadius: BorderRadius.circular(AppRadius.xl),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x14000000),
+            color: Color(0x0D000000),
             blurRadius: 40,
             offset: Offset(0, 14),
           ),
@@ -115,7 +115,7 @@ class _CoverCard extends StatelessWidget {
                   Text(
                     'Ảnh bìa',
                     style: context.textTheme.labelSmall?.copyWith(
-                      color: const Color(0xFF6E5140),
+                      color: context.themeColors.textPrimary,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -143,7 +143,7 @@ class _AddPhotoButton extends StatelessWidget {
           color: context.themeColors.surface.withValues(alpha: 0.7),
           borderRadius: BorderRadius.circular(AppRadius.xl),
           border: Border.all(
-            color: const Color(0xFFD9C9BB),
+            color: context.themeColors.borderSubtle,
             width: 1.5,
             strokeAlign: BorderSide.strokeAlignOutside,
           ),
