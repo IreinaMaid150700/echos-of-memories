@@ -1,17 +1,13 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:music_app/core/gen/assets.gen.dart';
-import 'package:music_app/core/shared/widgets/app_bottom_bar/app_bottom_bar_items.dart';
-import 'package:music_app/core/theme/app_custom_colors.dart';
+import 'package:music_app/core/shared/widgets/app_bottom_bar/custom_bottom_nav_bar.dart';
 import 'package:music_app/features/calendar/presentation/screens/calendar_screen.dart';
 import 'package:music_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:music_app/features/home/presentation/cubit/home_state.dart';
 import 'package:music_app/features/settings/presentation/screens/settings_screen.dart';
 import 'package:music_app/features/timeline/presentation/screens/timeline_screen.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -24,12 +20,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(create: (_) => HomeCubit(), child: const _HomeScreenRoot());
+    return BlocProvider(
+      create: (_) => HomeCubit(),
+      child: const _HomeScreenRoot(),
+    );
   }
 }
 
 class _HomeScreenRoot extends StatefulWidget {
-  const _HomeScreenRoot({super.key});
+  const _HomeScreenRoot();
 
   @override
   State<_HomeScreenRoot> createState() => _HomeScreenRootState();
@@ -40,6 +39,7 @@ class _HomeScreenRootState extends State<_HomeScreenRoot> {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) => Scaffold(
+        extendBody: true,
         body: AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
           switchInCurve: Curves.easeInOut,
@@ -82,48 +82,22 @@ class _HomeScreenRootState extends State<_HomeScreenRoot> {
 class _HomeBottomNavigationBar extends StatelessWidget {
   const _HomeBottomNavigationBar();
 
-  List<AppBottomBarItemsModels> buildHomeBottomBarItems(BuildContext context) {
-    return [
-      AppBottomBarItemsModels(path: Assets.icons.icTimeline, title: "Timeline"),
-      AppBottomBarItemsModels(path: Assets.icons.icSearch, title: "Calendar"),
-      AppBottomBarItemsModels(path: Assets.icons.icMap, title: "Map"),
-      AppBottomBarItemsModels(path: Assets.icons.icSetting, title: "Setting"),
-    ];
-  }
-
-  void _onTabTapped(BuildContext context, int index) {
-    context.read<HomeCubit>().onChangeBottomBar(index);
-  }
+  static List<CustomNavItem> get _items => [
+    CustomNavItem(iconPath: Assets.icons.icTimeline, label: 'Timeline'),
+    CustomNavItem(iconPath: Assets.icons.icSearch, label: 'Calendar'),
+    CustomNavItem(iconPath: Assets.icons.icMap, label: 'Map'),
+    CustomNavItem(iconPath: Assets.icons.icSetting, label: 'Setting'),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return BlocSelector<HomeCubit, HomeState, int>(
       selector: (state) => state.currentTab,
       builder: (context, currentTab) {
-        return SalomonBottomBar(
+        return CustomBottomNavBar(
           currentIndex: currentTab,
-          onTap: (index) => _onTabTapped(context, index),
-          items: buildHomeBottomBarItems(context).mapIndexed((index, element) {
-            final isActive = index == currentTab;
-            return SalomonBottomBarItem(
-              icon: SvgPicture.asset(
-                element.path,
-                color: isActive
-                    ? context.themeColors.primary
-                    : context.themeColors.bottomNavInactiveIcon,
-              ),
-              title: Text(
-                element.title,
-                style: TextStyle(
-                  color: isActive
-                      ? context.themeColors.primary
-                      : context.themeColors.bottomNavInactiveLabel,
-                ),
-              ),
-              selectedColor: context.themeColors.bottomNavActiveBackground,
-              unselectedColor: context.themeColors.bottomNavBackground,
-            );
-          }).toList(),
+          items: _items,
+          onTap: (index) => context.read<HomeCubit>().onChangeBottomBar(index),
         );
       },
     );
