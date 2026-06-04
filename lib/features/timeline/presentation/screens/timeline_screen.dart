@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:music_app/core/di/injector.dart';
 import 'package:music_app/core/router/app_routers.dart';
+import 'package:music_app/core/shared/widgets/empty_state_widget.dart';
 import 'package:music_app/core/theme/app_colors.dart';
 import 'package:music_app/core/utils/extensions/date_time_extension.dart';
 import 'package:music_app/core/utils/extensions/screen_padding.dart';
@@ -21,7 +22,9 @@ class TimelineScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => TimelineCubit(getMomentsUseCase: getIt<GetMomentsUseCase>())..loadMoments(),
+      create: (_) =>
+          TimelineCubit(getMomentsUseCase: getIt<GetMomentsUseCase>())
+            ..loadMoments(),
       child: const _TimelineScreenRoot(),
     );
   }
@@ -85,7 +88,9 @@ class _TimelineScreenRootState extends State<_TimelineScreenRoot> {
                       final moments = state.moments;
                       if (moments.isLoading && !moments.hasData) {
                         return const SliverToBoxAdapter(
-                          child: Center(child: CircularProgressIndicator.adaptive()),
+                          child: Center(
+                            child: CircularProgressIndicator.adaptive(),
+                          ),
                         );
                       }
                       if (moments.isFailure && !moments.hasData) {
@@ -97,7 +102,9 @@ class _TimelineScreenRootState extends State<_TimelineScreenRoot> {
                                 Text(moments.error ?? 'Đã có lỗi xảy ra'),
                                 const SizedBox(height: 8),
                                 TextButton(
-                                  onPressed: () => context.read<TimelineCubit>().loadMoments(),
+                                  onPressed: () => context
+                                      .read<TimelineCubit>()
+                                      .loadMoments(),
                                   child: const Text('Thử lại'),
                                 ),
                               ],
@@ -105,9 +112,10 @@ class _TimelineScreenRootState extends State<_TimelineScreenRoot> {
                           ),
                         );
                       }
-                      if (moments.isSuccess && (moments.data?.isEmpty ?? true)) {
-                        return const SliverToBoxAdapter(
-                          child: Center(child: Text('Chưa có khoảnh khắc nào')),
+                      if (moments.isSuccess &&
+                          (moments.data?.isEmpty ?? true)) {
+                        return SliverToBoxAdapter(
+                          child: EmptyStateWidget(onCreatePressed: () => {}),
                         );
                       }
                       return SliverList.separated(
@@ -117,7 +125,8 @@ class _TimelineScreenRootState extends State<_TimelineScreenRoot> {
                             entries: [_toTimelineEntry(moments.data![index])],
                           );
                         },
-                        separatorBuilder: (context, index) => const SizedBox(height: 8),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 8),
                       );
                     },
                   ),
