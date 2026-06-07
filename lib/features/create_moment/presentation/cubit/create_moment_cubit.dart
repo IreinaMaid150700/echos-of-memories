@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:music_app/core/cubit/base_cubit.dart';
 import 'package:music_app/core/utils/models/loaded.dart';
 import 'package:music_app/features/create_moment/domain/enum/create_moment_direct_enum.dart';
@@ -138,6 +140,81 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
     emit(state.copyWith(tagsSelected: updatedTags));
   }
 
+  /// Lấy vị trí hiện tại của thiết bị để gắn vào khoảnh khắc (xin quyền nếu
+  /// cần). Lưu lat/long + tên hiển thị dạng toạ độ vào state, sẽ persist khi
+  /// [saveMoment].
+  Future<void> pickCurrentLocation() async {
+    if (state.isPickingLocation) return;
+    emit(state.copyWith(isPickingLocation: true, locationMessage: null));
+    try {
+      final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        emit(
+          state.copyWith(
+            isPickingLocation: false,
+            locationMessage: 'Dịch vụ vị trí đang tắt. Hãy bật GPS rồi thử lại.',
+          ),
+        );
+        return;
+      }
+
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+      }
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        emit(
+          state.copyWith(
+            isPickingLocation: false,
+            locationMessage: 'Ứng dụng chưa được cấp quyền vị trí.',
+          ),
+        );
+        return;
+      }
+
+      final position = await Geolocator.getCurrentPosition();
+      final name = await _resolveAddress(position.latitude, position.longitude);
+      emit(
+        state.copyWith(
+          isPickingLocation: false,
+          latitude: position.latitude,
+          longitude: position.longitude,
+          locationName: name,
+        ),
+      );
+    } catch (_) {
+      emit(
+        state.copyWith(
+          isPickingLocation: false,
+          locationMessage: 'Không lấy được vị trí. Hãy thử lại.',
+        ),
+      );
+    }
+  }
+
+  /// Reverse-geocode toạ độ -> tên địa chỉ người đọc được.
+  /// Lỗi/không có kết quả -> fallback về toạ độ rút gọn.
+  Future<String> _resolveAddress(double lat, double long) async {
+    final fallback =
+        '${lat.toStringAsFixed(5)}, ${long.toStringAsFixed(5)}';
+    try {
+      final placemarks = await placemarkFromCoordinates(lat, long);
+      if (placemarks.isEmpty) return fallback;
+      final p = placemarks.first;
+      final parts = <String?>[
+        p.street,
+        p.subAdministrativeArea,
+        p.administrativeArea,
+        p.country,
+      ].where((e) => e != null && e.trim().isNotEmpty).toList();
+      if (parts.isEmpty) return fallback;
+      return parts.join(', ');
+    } catch (_) {
+      return fallback;
+    }
+  }
+
   Future<void> saveMoment() async {
     final trimmedNote = state.note?.trim();
     final params = CreateMomentParams(
@@ -147,6 +224,9 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
       isFavorite: state.isLoved,
       isHiddenFromWidget: state.hideFromWidget,
       isLocked: state.isLockMoment,
+      latitude: state.latitude,
+      longitude: state.longitude,
+      locationName: state.locationName,
     );
     await execute(
       loadingState: state.copyWith(saveAction: state.saveAction.toLoading()),

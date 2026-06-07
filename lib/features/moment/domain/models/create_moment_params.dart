@@ -8,6 +8,9 @@ class CreateMomentParams {
   final bool isFavorite;
   final bool isHiddenFromWidget;
   final bool isLocked;
+  final double? latitude;
+  final double? longitude;
+  final String? locationName;
 
   const CreateMomentParams({
     this.title,
@@ -17,5 +20,8 @@ class CreateMomentParams {
     required this.isFavorite,
     required this.isHiddenFromWidget,
     required this.isLocked,
+    this.latitude,
+    this.longitude,
+    this.locationName,
   });
 }

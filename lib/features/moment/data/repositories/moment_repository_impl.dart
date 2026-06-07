@@ -75,6 +75,15 @@ class MomentRepositoryImpl implements MomentRepository {
               isFavorite: Value(params.isFavorite),
               isHiddenFromWidget: Value(params.isHiddenFromWidget),
               isLocked: Value(params.isLocked),
+              latitude: params.latitude != null
+                  ? Value(params.latitude!)
+                  : const Value.absent(),
+              longitude: params.longitude != null
+                  ? Value(params.longitude!)
+                  : const Value.absent(),
+              locationName: params.locationName != null
+                  ? Value(params.locationName!)
+                  : const Value.absent(),
             ));
 
         for (final tag in params.tags) {
@@ -108,6 +117,9 @@ class MomentRepositoryImpl implements MomentRepository {
         title: params.title,
         note: params.note,
         momentDate: params.momentDate,
+        locationName: params.locationName,
+        latitude: params.latitude,
+        longitude: params.longitude,
         isFavorite: params.isFavorite,
         isPinned: false,
         isHiddenFromWidget: params.isHiddenFromWidget,

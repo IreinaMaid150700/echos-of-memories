@@ -50,8 +50,16 @@ class _CreateMomentBody extends StatelessWidget {
     return BlocListener<CreateMomentCubit, CreateMomentState>(
       listenWhen: (previous, current) =>
           previous.createMomentDirectEnum != current.createMomentDirectEnum ||
-          previous.timeStamp != current.timeStamp,
+          previous.timeStamp != current.timeStamp ||
+          previous.locationMessage != current.locationMessage,
       listener: (context, state) {
+        if (state.locationMessage != null) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(content: Text(state.locationMessage!)),
+            );
+        }
         if (state.createMomentDirectEnum != null) {
           switch (state.createMomentDirectEnum) {
             case CreateMomentDirectEnum.showDialogDevelopment:

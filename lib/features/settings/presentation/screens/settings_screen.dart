@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:music_app/core/router/app_routers.dart';
 import 'package:music_app/core/theme/app_colors.dart';
 import 'package:music_app/core/theme/app_custom_colors.dart';
 import 'package:music_app/features/settings/presentation/cubit/settings_cubit.dart';
@@ -25,7 +27,7 @@ class SettingsScreen extends StatelessWidget {
         body: SafeArea(
           child: ListView(
             padding: const EdgeInsets.all(AppSpacing.md),
-            children: const [
+            children: [
               _SettingsSection(
                 title: 'Privacy',
                 items: [
@@ -85,6 +87,21 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              if (kDebugMode) ...[
+                const SizedBox(height: AppSpacing.lg),
+                _SettingsSection(
+                  title: 'Developer',
+                  items: [
+                    _SettingsNavigationItem(
+                      icon: Icons.storage_outlined,
+                      title: 'Database',
+                      subtitle: 'View & manage local DB',
+                      onTap: () =>
+                          context.router.push(const DevDbViewerRoute()),
+                    ),
+                  ],
+                ),
+              ],
             ],
           ),
         ),

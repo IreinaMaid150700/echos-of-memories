@@ -35,12 +35,22 @@ class _DateLocationCard extends StatelessWidget {
             },
           ),
           Divider(height: 1, color: context.themeColors.borderSubtle),
-          _TappableRow(
-            icon: Icons.location_on_outlined,
-            label: 'Địa điểm',
-            value: null,
-            onTap: () =>
-                context.read<CreateMomentCubit>().showDevelopmentDialog(),
+          BlocSelector<CreateMomentCubit, CreateMomentState,
+              ({bool loading, String? name})>(
+            selector: (state) =>
+                (loading: state.isPickingLocation, name: state.locationName),
+            builder: (context, data) {
+              return _TappableRow(
+                icon: Icons.location_on_outlined,
+                label: 'Địa điểm',
+                value: data.loading ? 'Đang lấy vị trí...' : data.name,
+                onTap: data.loading
+                    ? () {}
+                    : () => context
+                        .read<CreateMomentCubit>()
+                        .pickCurrentLocation(),
+              );
+            },
           ),
         ],
       ),

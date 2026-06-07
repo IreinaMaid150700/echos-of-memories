@@ -59,6 +59,22 @@ class CreateMomentRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [DevDbViewerScreen]
+class DevDbViewerRoute extends PageRouteInfo<void> {
+  const DevDbViewerRoute({List<PageRouteInfo>? children})
+    : super(DevDbViewerRoute.name, initialChildren: children);
+
+  static const String name = 'DevDbViewerRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const DevDbViewerScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [HomeScreen]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})

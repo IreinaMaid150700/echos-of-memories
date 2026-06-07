@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:music_app/features/calendar/presentation/screens/calendar_screen.dart';
 import 'package:music_app/features/create_collection/presentation/screens/create_collection_screen.dart';
 import 'package:music_app/features/create_moment/presentation/screens/create_moment_screen.dart';
+import 'package:music_app/features/dev_db_viewer/presentation/screens/dev_db_viewer_screen.dart';
 import 'package:music_app/features/home/presentation/screens/home_screen.dart';
 import 'package:music_app/features/introduction/presentation/introduction_screen.dart';
 import 'package:music_app/features/moment_detail/presentation/screens/moment_detail_screen.dart';
@@ -25,6 +26,7 @@ final class AppRouters extends RootStackRouter {
     AutoRoute(page: CalendarRoute.page),
     AutoRoute(page: MomentDetailRoute.page),
     AutoRoute(page: CreateMomentRoute.page),
+    AutoRoute(page: DevDbViewerRoute.page),
     AutoRoute(page: CreateCollectionRoute.page),
   ];
 }
