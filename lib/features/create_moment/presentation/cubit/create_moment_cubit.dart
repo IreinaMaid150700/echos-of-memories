@@ -102,6 +102,11 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
     );
   }
 
+  void selectTone(String toneId) {
+    final next = state.toneIdSelected == toneId ? null : toneId;
+    emit(state.copyWith(toneIdSelected: next));
+  }
+
   void addTag(String tagName) {
     final normalizedName = tagName.trim().toLowerCase().replaceAll('#', '');
     if (normalizedName.isEmpty) return;

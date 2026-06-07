@@ -115,7 +115,14 @@ class _TimelineScreenRootState extends State<_TimelineScreenRoot> {
                       if (moments.isSuccess &&
                           (moments.data?.isEmpty ?? true)) {
                         return SliverToBoxAdapter(
-                          child: EmptyStateWidget(onCreatePressed: () => {}),
+                          child: EmptyStateWidget(
+                            onCreatePressed: () async {
+                              await context.router.push(CreateMomentRoute());
+                              if (context.mounted) {
+                                context.read<TimelineCubit>().loadMoments();
+                              }
+                            },
+                          ),
                         );
                       }
                       return SliverList.separated(

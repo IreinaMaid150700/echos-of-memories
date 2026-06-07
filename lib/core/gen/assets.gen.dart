@@ -168,11 +168,22 @@ class $AssetsLottiesGen {
   List<LottieGenImage> get values => [splashAnimation, success, weatherWindy];
 }
 
+class $AssetsRivesGen {
+  const $AssetsRivesGen();
+
+  /// File path: assets/rives/splash.riv
+  String get splash => 'assets/rives/splash.riv';
+
+  /// List of all assets
+  List<String> get values => [splash];
+}
+
 class Assets {
   const Assets._();
 
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsLottiesGen lotties = $AssetsLottiesGen();
+  static const $AssetsRivesGen rives = $AssetsRivesGen();
 }
 
 class LottieGenImage {

@@ -7,6 +7,7 @@ class _CollectionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(AppRadius.lg),
+      onTap: () => context.router.push(const CreateCollectionRoute()),
       child: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.md,
