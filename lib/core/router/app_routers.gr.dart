@@ -27,6 +27,22 @@ class CalendarRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CreateCollectionScreen]
+class CreateCollectionRoute extends PageRouteInfo<void> {
+  const CreateCollectionRoute({List<PageRouteInfo>? children})
+    : super(CreateCollectionRoute.name, initialChildren: children);
+
+  static const String name = 'CreateCollectionRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CreateCollectionScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [CreateMomentScreen]
 class CreateMomentRoute extends PageRouteInfo<void> {
   const CreateMomentRoute({List<PageRouteInfo>? children})
