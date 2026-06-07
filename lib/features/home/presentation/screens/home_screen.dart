@@ -6,6 +6,7 @@ import 'package:music_app/core/shared/widgets/app_bottom_bar/custom_bottom_nav_b
 import 'package:music_app/features/calendar/presentation/screens/calendar_screen.dart';
 import 'package:music_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:music_app/features/home/presentation/cubit/home_state.dart';
+import 'package:music_app/features/map/presentation/screens/map_screen.dart';
 import 'package:music_app/features/settings/presentation/screens/settings_screen.dart';
 import 'package:music_app/features/timeline/presentation/screens/timeline_screen.dart';
 
@@ -70,7 +71,7 @@ class _HomeScreenRootState extends State<_HomeScreenRoot> {
       case 1:
         return const CalendarScreen().keyed(const ValueKey('calendar'));
       case 2:
-        return const SizedBox.shrink().keyed(const ValueKey('map'));
+        return const MapScreen().keyed(const ValueKey('map'));
       case 3:
         return const SettingsScreen().keyed(const ValueKey('settings'));
       default:
