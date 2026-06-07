@@ -3,47 +3,6 @@ part of '../create_moment_screen.dart';
 class _MoodSelectorSection extends StatelessWidget {
   const _MoodSelectorSection();
 
-  static const _moods = [
-    (
-      emoji: '🌿',
-      label: 'Bình yên',
-      bgColorKey: 'moodCalmBackground',
-      textColorKey: 'moodCalmText',
-    ),
-    (
-      emoji: '😊',
-      label: 'Vui vẻ',
-      bgColorKey: 'moodWarmBackground',
-      textColorKey: 'moodWarmText',
-    ),
-    (
-      emoji: '🌙',
-      label: 'Trầm lắng',
-      bgColorKey: 'moodFocusedBackground',
-      textColorKey: 'moodFocusedText',
-    ),
-    (
-      emoji: '😮‍💨',
-      label: 'Mệt mỏi',
-      bgColorKey: 'moodFocusedBackground',
-      textColorKey: 'moodFocusedText',
-    ),
-    (
-      emoji: '✨',
-      label: 'Biết ơn',
-      bgColorKey: 'moodCalmBackground',
-      textColorKey: 'moodCalmText',
-    ),
-  ];
-
-  static const _moodColors = [
-    Color(0xFFE6F1DF),
-    Color(0xFFFFE2D8),
-    Color(0xFFF4DFC7),
-    Color(0xFFF5E8DF),
-    Color(0xFFFFF0C8),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -61,38 +20,52 @@ class _MoodSelectorSection extends StatelessWidget {
           ),
         ),
         const Gap(AppSpacing.sm),
-        SizedBox(
-          height: 44,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
-            itemCount: _moods.length,
-            separatorBuilder: (_, __) => const Gap(AppSpacing.xs),
-            itemBuilder: (context, index) {
-              final mood = _moods[index];
-              final Color bg;
-              final Color fg;
-              if (mood.bgColorKey == 'moodCalmBackground') {
-                bg = context.themeColors.moodCalmBackground;
-                fg = context.themeColors.moodCalmText;
-              } else if (mood.bgColorKey == 'moodWarmBackground') {
-                bg = context.themeColors.moodWarmBackground;
-                fg = context.themeColors.moodWarmText;
-              } else if (mood.bgColorKey == 'moodFocusedBackground') {
-                bg = context.themeColors.moodFocusedBackground;
-                fg = context.themeColors.moodFocusedText;
-              } else {
-                bg = context.themeColors.moodPeacefulBackground;
-                fg = context.themeColors.moodPeacefulText;
-              }
-              return _MoodChip(
-                emoji: mood.emoji,
-                label: mood.label,
-                bgColor: bg,
-                textColor: fg,
+        BlocBuilder<CreateMomentCubit, CreateMomentState>(
+          buildWhen: (p, c) =>
+              p.moods != c.moods || p.moodIdSelected != c.moodIdSelected,
+          builder: (context, state) {
+            final moods = state.moods.data ?? const <MoodEntity>[];
+            if (state.moods.isLoading && moods.isEmpty) {
+              return const SizedBox(
+                height: 44,
+                child: Center(
+                  child: SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                ),
               );
-            },
-          ),
+            }
+            if (moods.isEmpty) return const SizedBox.shrink();
+            return SizedBox(
+              height: 44,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+                itemCount: moods.length,
+                separatorBuilder: (_, __) => const Gap(AppSpacing.xs),
+                itemBuilder: (context, index) {
+                  final mood = moods[index];
+                  final bg =
+                      mood.colorHex.toColorOr(context.themeColors.tertiary);
+                  final fg = ThemeData.estimateBrightnessForColor(bg) ==
+                          Brightness.dark
+                      ? Colors.white
+                      : const Color(0xFF2A211E);
+                  return _MoodChip(
+                    emoji: mood.emoji,
+                    label: mood.name,
+                    bgColor: bg,
+                    textColor: fg,
+                    selected: state.moodIdSelected == mood.id,
+                    onTap: () =>
+                        context.read<CreateMomentCubit>().selectMood(mood.id),
+                  );
+                },
+              ),
+            );
+          },
         ),
       ],
     );
@@ -104,40 +77,53 @@ class _MoodChip extends StatelessWidget {
   final String label;
   final Color bgColor;
   final Color textColor;
+  final bool selected;
+  final VoidCallback onTap;
 
   const _MoodChip({
     required this.emoji,
     required this.label,
     required this.bgColor,
     required this.textColor,
+    required this.selected,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: AppSpacing.xs,
-      ),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(AppRadius.full),
-        border: Border.all(color: textColor.withValues(alpha: 0.15), width: 1),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(emoji, style: const TextStyle(fontSize: 14)),
-          const Gap(AppSpacing.xxs),
-          Text(
-            label,
-            style: TextStyle(
-              color: textColor,
-              fontSize: 13,
-              fontWeight: FontWeight.w700,
-            ),
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.sm,
+          vertical: AppSpacing.xs,
+        ),
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(AppRadius.full),
+          border: Border.all(
+            color: selected
+                ? context.themeColors.primary
+                : textColor.withValues(alpha: 0.15),
+            width: selected ? 2 : 1,
           ),
-        ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(emoji, style: const TextStyle(fontSize: 14)),
+            const Gap(AppSpacing.xxs),
+            Text(
+              label,
+              style: TextStyle(
+                color: textColor,
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

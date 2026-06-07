@@ -63,6 +63,12 @@ class MomentRepositoryImpl implements MomentRepository {
       final deviceId = await _getDeviceId();
       final resolvedTags = <TagEntity>[];
 
+      final assetRows = [
+        for (var i = 0; i < params.assets.length; i++)
+          (id: const Uuid().v4(), input: params.assets[i]),
+      ];
+      final coverAssetId = assetRows.isNotEmpty ? assetRows.first.id : null;
+
       await _db.transaction(() async {
         await _db.into(_db.moments).insert(MomentsCompanion.insert(
               id: momentId,
@@ -84,7 +90,34 @@ class MomentRepositoryImpl implements MomentRepository {
               locationName: params.locationName != null
                   ? Value(params.locationName!)
                   : const Value.absent(),
+              moodId: params.moodId != null
+                  ? Value(params.moodId!)
+                  : const Value.absent(),
+              toneId: params.toneId != null
+                  ? Value(params.toneId!)
+                  : const Value.absent(),
+              coverAssetId: coverAssetId != null
+                  ? Value(coverAssetId)
+                  : const Value.absent(),
             ));
+
+        for (final asset in assetRows) {
+          await _db.into(_db.momentAssets).insert(MomentAssetsCompanion.insert(
+                id: asset.id,
+                momentId: momentId,
+                type: 'image',
+                path: asset.input.path,
+                width: asset.input.width,
+                height: asset.input.height,
+                fileSize: asset.input.fileSize,
+                sortOrder: asset.input.sortOrder,
+                createdAt: now,
+                updatedAt: now,
+                mimeType: asset.input.mimeType != null
+                    ? Value(asset.input.mimeType!)
+                    : const Value.absent(),
+              ));
+        }
 
         for (final tag in params.tags) {
           final normalizedName = tag.name.trim().toLowerCase().replaceAll('#', '');

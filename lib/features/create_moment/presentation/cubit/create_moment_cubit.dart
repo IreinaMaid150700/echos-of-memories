@@ -1,6 +1,10 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
+import 'package:music_app/features/moment/domain/models/moment_asset_input.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:music_app/core/cubit/base_cubit.dart';
@@ -8,6 +12,10 @@ import 'package:music_app/core/utils/models/loaded.dart';
 import 'package:music_app/features/create_moment/domain/enum/create_moment_direct_enum.dart';
 import 'package:music_app/features/create_moment/domain/models/tag_entity.dart';
 import 'package:music_app/features/create_moment/domain/usecases/get_tags_usecase.dart';
+import 'package:music_app/features/mood_tone/domain/models/mood_entity.dart';
+import 'package:music_app/features/mood_tone/domain/models/tone_entity.dart';
+import 'package:music_app/features/mood_tone/domain/usecases/get_moods_usecase.dart';
+import 'package:music_app/features/mood_tone/domain/usecases/get_tones_usecase.dart';
 import 'package:music_app/features/moment/domain/models/create_moment_params.dart';
 import 'package:music_app/features/moment/domain/models/moment_entity.dart';
 import 'package:music_app/features/moment/domain/usecases/create_moment_usecase.dart';
@@ -18,19 +26,52 @@ part 'create_moment_cubit.freezed.dart';
 class CreateMomentCubit extends BaseCubit<CreateMomentState> {
   final GetTagsUseCase _getTagsUseCase;
   final CreateMomentUseCase _createMomentUseCase;
+  final GetMoodsUseCase _getMoodsUseCase;
+  final GetTonesUseCase _getTonesUseCase;
   final ImagePicker _imagePicker;
 
   CreateMomentCubit({
     required GetTagsUseCase getTagsUseCase,
     required CreateMomentUseCase createMomentUseCase,
+    required GetMoodsUseCase getMoodsUseCase,
+    required GetTonesUseCase getTonesUseCase,
     required ImagePicker imagePicker,
   }) : _getTagsUseCase = getTagsUseCase,
        _createMomentUseCase = createMomentUseCase,
+       _getMoodsUseCase = getMoodsUseCase,
+       _getTonesUseCase = getTonesUseCase,
        _imagePicker = imagePicker,
        super(const CreateMomentState());
 
   Future<void> initialData() async {
-    await loadTagsSuggestions();
+    await Future.wait([
+      loadTagsSuggestions(),
+      loadMoods(),
+      loadTones(),
+    ]);
+  }
+
+  Future<void> loadMoods() async {
+    await execute(
+      loadingState: state.copyWith(moods: state.moods.toLoading()),
+      action: () => _getMoodsUseCase(),
+      onSuccess: (moods) => state.copyWith(moods: state.moods.toSuccess(moods)),
+      onFailure: (f) => state.copyWith(moods: state.moods.toFailure(f.message)),
+    );
+  }
+
+  Future<void> loadTones() async {
+    await execute(
+      loadingState: state.copyWith(tones: state.tones.toLoading()),
+      action: () => _getTonesUseCase(),
+      onSuccess: (tones) => state.copyWith(tones: state.tones.toSuccess(tones)),
+      onFailure: (f) => state.copyWith(tones: state.tones.toFailure(f.message)),
+    );
+  }
+
+  void selectMood(String moodId) {
+    final next = state.moodIdSelected == moodId ? null : moodId;
+    emit(state.copyWith(moodIdSelected: next));
   }
 
   Future<void> loadTagsSuggestions() async {
@@ -217,6 +258,7 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
 
   Future<void> saveMoment() async {
     final trimmedNote = state.note?.trim();
+    final assets = await _persistPickedImages(state.imagePicker);
     final params = CreateMomentParams(
       note: (trimmedNote?.isEmpty ?? true) ? null : trimmedNote,
       momentDate: state.momentDate ?? DateTime.now(),
@@ -227,6 +269,9 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
       latitude: state.latitude,
       longitude: state.longitude,
       locationName: state.locationName,
+      moodId: state.moodIdSelected,
+      toneId: state.toneIdSelected,
+      assets: assets,
     );
     await execute(
       loadingState: state.copyWith(saveAction: state.saveAction.toLoading()),
@@ -234,5 +279,66 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
       onSuccess: (moment) => state.copyWith(saveAction: state.saveAction.toSuccess(moment)),
       onFailure: (f) => state.copyWith(saveAction: state.saveAction.toFailure(f.message)),
     );
+  }
+
+  /// Copies picked images into persistent app storage (image_picker returns
+  /// temp cache paths) and probes each file's dimensions + size so they can be
+  /// written into `moment_assets`.
+  Future<List<MomentAssetInput>> _persistPickedImages(List<File> files) async {
+    if (files.isEmpty) return const [];
+    final docsDir = await getApplicationDocumentsDirectory();
+    final assetsDir = Directory(p.join(docsDir.path, 'moment_assets'));
+    if (!await assetsDir.exists()) {
+      await assetsDir.create(recursive: true);
+    }
+
+    final result = <MomentAssetInput>[];
+    for (var i = 0; i < files.length; i++) {
+      final source = files[i];
+      final ext = p.extension(source.path);
+      final fileName = '${DateTime.now().microsecondsSinceEpoch}_$i$ext';
+      final copied = await source.copy(p.join(assetsDir.path, fileName));
+      final bytes = await copied.readAsBytes();
+
+      var width = 0;
+      var height = 0;
+      try {
+        final codec = await ui.instantiateImageCodec(bytes);
+        final frame = await codec.getNextFrame();
+        width = frame.image.width;
+        height = frame.image.height;
+        frame.image.dispose();
+        codec.dispose();
+      } catch (_) {
+        // Leave dimensions at 0 if the image can't be decoded.
+      }
+
+      result.add(MomentAssetInput(
+        path: copied.path,
+        width: width,
+        height: height,
+        fileSize: bytes.length,
+        mimeType: _mimeFromExtension(ext),
+        sortOrder: i,
+      ));
+    }
+    return result;
+  }
+
+  String _mimeFromExtension(String ext) {
+    switch (ext.toLowerCase()) {
+      case '.png':
+        return 'image/png';
+      case '.gif':
+        return 'image/gif';
+      case '.webp':
+        return 'image/webp';
+      case '.heic':
+        return 'image/heic';
+      case '.jpg':
+      case '.jpeg':
+      default:
+        return 'image/jpeg';
+    }
   }
 }

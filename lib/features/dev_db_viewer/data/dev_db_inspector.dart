@@ -31,10 +31,12 @@ class DevDbInspector {
   /// All tables, alphabetically sorted, with their column names.
   List<TableMeta> tables() {
     final metas = _db.allTables
-        .map((t) => TableMeta(
-              name: t.actualTableName,
-              columns: t.$columns.map((c) => c.name).toList(),
-            ))
+        .map(
+          (t) => TableMeta(
+            name: t.actualTableName,
+            columns: t.$columns.map((c) => c.name).toList(),
+          ),
+        )
         .toList();
     metas.sort((a, b) => a.name.compareTo(b.name));
     return metas;
@@ -42,8 +44,9 @@ class DevDbInspector {
 
   Future<int> count(String table) async {
     _assertKnown(table);
-    final row =
-        await _db.customSelect('SELECT COUNT(*) AS c FROM "$table"').getSingle();
+    final row = await _db
+        .customSelect('SELECT COUNT(*) AS c FROM "$table"')
+        .getSingle();
     return row.read<int>('c');
   }
 
