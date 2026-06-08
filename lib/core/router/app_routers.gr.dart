@@ -27,6 +27,22 @@ class CalendarRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CameraCaptureScreen]
+class CameraCaptureRoute extends PageRouteInfo<void> {
+  const CameraCaptureRoute({List<PageRouteInfo>? children})
+    : super(CameraCaptureRoute.name, initialChildren: children);
+
+  static const String name = 'CameraCaptureRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CameraCaptureScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [CreateCollectionScreen]
 class CreateCollectionRoute extends PageRouteInfo<void> {
   const CreateCollectionRoute({List<PageRouteInfo>? children})
@@ -44,18 +60,56 @@ class CreateCollectionRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [CreateMomentScreen]
-class CreateMomentRoute extends PageRouteInfo<void> {
-  const CreateMomentRoute({List<PageRouteInfo>? children})
-    : super(CreateMomentRoute.name, initialChildren: children);
+class CreateMomentRoute extends PageRouteInfo<CreateMomentRouteArgs> {
+  CreateMomentRoute({
+    Key? key,
+    List<File> initialImages = const [],
+    List<PageRouteInfo>? children,
+  }) : super(
+         CreateMomentRoute.name,
+         args: CreateMomentRouteArgs(key: key, initialImages: initialImages),
+         initialChildren: children,
+       );
 
   static const String name = 'CreateMomentRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const CreateMomentScreen();
+      final args = data.argsAs<CreateMomentRouteArgs>(
+        orElse: () => const CreateMomentRouteArgs(),
+      );
+      return CreateMomentScreen(
+        key: args.key,
+        initialImages: args.initialImages,
+      );
     },
   );
+}
+
+class CreateMomentRouteArgs {
+  const CreateMomentRouteArgs({this.key, this.initialImages = const []});
+
+  final Key? key;
+
+  final List<File> initialImages;
+
+  @override
+  String toString() {
+    return 'CreateMomentRouteArgs{key: $key, initialImages: $initialImages}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! CreateMomentRouteArgs) return false;
+    return key == other.key &&
+        const ListEquality<File>().equals(initialImages, other.initialImages);
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^ const ListEquality<File>().hash(initialImages);
 }
 
 /// generated route for
