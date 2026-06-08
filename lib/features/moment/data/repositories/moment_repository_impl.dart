@@ -157,6 +157,8 @@ class MomentRepositoryImpl implements MomentRepository {
         isPinned: false,
         isHiddenFromWidget: params.isHiddenFromWidget,
         isLocked: params.isLocked,
+        moodId: params.moodId,
+        toneId: params.toneId,
         createdAt: now,
         updatedAt: now,
         tags: resolvedTags,

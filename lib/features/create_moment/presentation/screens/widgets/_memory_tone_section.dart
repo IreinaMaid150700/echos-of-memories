@@ -61,6 +61,7 @@ class _MemoryToneSection extends StatelessWidget {
                   final tone = tones[index];
                   return _ToneSwatch(
                     label: tone.name,
+                    semanticLabel: '${tone.name}, tone',
                     color: tone.lightColorHex
                         .toColor(fallback: context.themeColors.tertiary),
                     selected: state.toneIdSelected == tone.id,
@@ -79,12 +80,14 @@ class _MemoryToneSection extends StatelessWidget {
 
 class _ToneSwatch extends StatelessWidget {
   final String label;
+  final String semanticLabel;
   final Color color;
   final bool selected;
   final VoidCallback onTap;
 
   const _ToneSwatch({
     required this.label,
+    required this.semanticLabel,
     required this.color,
     required this.selected,
     required this.onTap,
@@ -92,10 +95,14 @@ class _ToneSwatch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Column(
+    return Semantics(
+      label: semanticLabel,
+      button: true,
+      selected: selected,
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
@@ -145,6 +152,7 @@ class _ToneSwatch extends StatelessWidget {
             ),
           ),
         ],
+        ),
       ),
     );
   }

@@ -56,6 +56,7 @@ class _MoodSelectorSection extends StatelessWidget {
                   return _MoodChip(
                     emoji: mood.emoji,
                     label: mood.name,
+                    semanticLabel: 'Tâm trạng: ${mood.name}',
                     bgColor: bg,
                     textColor: fg,
                     selected: state.moodIdSelected == mood.id,
@@ -75,6 +76,7 @@ class _MoodSelectorSection extends StatelessWidget {
 class _MoodChip extends StatelessWidget {
   final String emoji;
   final String label;
+  final String semanticLabel;
   final Color bgColor;
   final Color textColor;
   final bool selected;
@@ -83,6 +85,7 @@ class _MoodChip extends StatelessWidget {
   const _MoodChip({
     required this.emoji,
     required this.label,
+    required this.semanticLabel,
     required this.bgColor,
     required this.textColor,
     required this.selected,
@@ -91,10 +94,14 @@ class _MoodChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
+    return Semantics(
+      label: semanticLabel,
+      button: true,
+      selected: selected,
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.sm,
           vertical: AppSpacing.xs,
@@ -123,6 +130,7 @@ class _MoodChip extends StatelessWidget {
               ),
             ),
           ],
+        ),
         ),
       ),
     );
