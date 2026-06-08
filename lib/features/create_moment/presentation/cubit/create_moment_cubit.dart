@@ -43,12 +43,21 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
        _imagePicker = imagePicker,
        super(const CreateMomentState());
 
-  Future<void> initialData() async {
+  Future<void> initialData({List<File> initialImages = const []}) async {
+    seedInitialImages(initialImages);
     await Future.wait([
       loadTagsSuggestions(),
       loadMoods(),
       loadTones(),
+      pickCurrentLocation(),
     ]);
+  }
+
+  /// Seeds photos handed over from the camera capture screen. Pure (no I/O) so
+  /// it is unit-testable; file persistence still happens in [saveMoment].
+  void seedInitialImages(List<File> images) {
+    if (images.isEmpty) return;
+    emit(state.copyWith(imagePicker: [...state.imagePicker, ...images]));
   }
 
   Future<void> loadMoods() async {
@@ -118,14 +127,16 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
   Future<void> openImagePicker() async {
     try {
       final List<XFile> pickedFileList = await _imagePicker.pickMultiImage();
+      if (pickedFileList.isEmpty) return;
 
-      if (pickedFileList.isNotEmpty) {
-        emit(
-          state.copyWith(
-            imagePicker: pickedFileList.map((e) => File(e.path)).toList(),
-          ),
-        );
-      }
+      final existingPaths = state.imagePicker.map((f) => f.path).toSet();
+      final added = pickedFileList
+          .map((e) => File(e.path))
+          .where((f) => existingPaths.add(f.path))
+          .toList();
+      if (added.isEmpty) return;
+
+      emit(state.copyWith(imagePicker: [...state.imagePicker, ...added]));
     } catch (_) {
       emit(
         state.copyWith(
@@ -134,6 +145,13 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
         ),
       );
     }
+  }
+
+  void removeImageAt(int index) {
+    final list = [...state.imagePicker];
+    if (index < 0 || index >= list.length) return;
+    list.removeAt(index);
+    emit(state.copyWith(imagePicker: list));
   }
 
   void showDevelopmentDialog() {
