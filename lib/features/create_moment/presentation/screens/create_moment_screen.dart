@@ -7,10 +7,15 @@ import 'package:music_app/core/di/injector.dart';
 import 'package:music_app/core/router/app_routers.dart';
 import 'package:music_app/core/theme/app_colors.dart';
 import 'package:music_app/core/theme/app_custom_colors.dart';
+import 'package:music_app/core/utils/extensions/color_hex_extension.dart';
 import 'package:music_app/core/utils/extensions/date_time_extension.dart';
 import 'package:music_app/core/widgets/under_development_dialog.dart';
 import 'package:music_app/features/create_moment/domain/enum/create_moment_direct_enum.dart';
 import 'package:music_app/features/create_moment/domain/usecases/get_tags_usecase.dart';
+import 'package:music_app/features/mood_tone/domain/models/mood_entity.dart';
+import 'package:music_app/features/mood_tone/domain/models/tone_entity.dart';
+import 'package:music_app/features/mood_tone/domain/usecases/get_moods_usecase.dart';
+import 'package:music_app/features/mood_tone/domain/usecases/get_tones_usecase.dart';
 import 'package:music_app/features/moment/domain/usecases/create_moment_usecase.dart';
 import 'package:music_app/features/create_moment/presentation/cubit/create_moment_cubit.dart';
 
@@ -35,6 +40,8 @@ class CreateMomentScreen extends StatelessWidget {
       create: (_) => CreateMomentCubit(
         getTagsUseCase: getIt<GetTagsUseCase>(),
         createMomentUseCase: getIt<CreateMomentUseCase>(),
+        getMoodsUseCase: getIt<GetMoodsUseCase>(),
+        getTonesUseCase: getIt<GetTonesUseCase>(),
         imagePicker: getIt<ImagePicker>(),
       )..initialData(),
       child: const _CreateMomentBody(),

@@ -40,6 +40,14 @@ import '../../features/moment/domain/usecases/get_moments_usecase.dart'
     as _i707;
 import '../../features/moment/domain/usecases/update_moment_flags_usecase.dart'
     as _i479;
+import '../../features/mood_tone/data/repositories/mood_tone_repository_impl.dart'
+    as _i296;
+import '../../features/mood_tone/domain/repositories/mood_tone_repository.dart'
+    as _i1018;
+import '../../features/mood_tone/domain/usecases/get_moods_usecase.dart'
+    as _i874;
+import '../../features/mood_tone/domain/usecases/get_tones_usecase.dart'
+    as _i618;
 import '../../features/theme/data/repositories/theme_repository_impl.dart'
     as _i592;
 import '../../features/theme/domain/repositories/theme_repository.dart'
@@ -95,6 +103,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i705.TagRepository>(
       () => _i167.TagRepositoryImpl(gh<_i690.AppDatabase>()),
     );
+    gh.lazySingleton<_i1018.MoodToneRepository>(
+      () => _i296.MoodToneRepositoryImpl(gh<_i690.AppDatabase>()),
+    );
     gh.lazySingleton<_i286.MomentRepository>(
       () => _i1042.MomentRepositoryImpl(gh<_i690.AppDatabase>()),
     );
@@ -126,6 +137,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i592.ThemeRepositoryImpl(gh<_i636.PreferencesService>()),
     );
     gh.lazySingleton<_i361.Dio>(() => networkModule.dio(gh<_i667.DioClient>()));
+    gh.factory<_i874.GetMoodsUseCase>(
+      () => _i874.GetMoodsUseCase(gh<_i1018.MoodToneRepository>()),
+    );
+    gh.factory<_i618.GetTonesUseCase>(
+      () => _i618.GetTonesUseCase(gh<_i1018.MoodToneRepository>()),
+    );
     gh.factory<_i620.GetThemeUseCase>(
       () => _i620.GetThemeUseCase(gh<_i869.ThemeRepository>()),
     );

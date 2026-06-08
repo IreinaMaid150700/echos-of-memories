@@ -3,14 +3,6 @@ part of '../create_moment_screen.dart';
 class _MemoryToneSection extends StatelessWidget {
   const _MemoryToneSection();
 
-  static const _tones = [
-    (id: 'golden_hour', label: 'Golden\nHour', color: Color(0xFFF4C3A0)),
-    (id: 'foggy_forest', label: 'Foggy\nForest', color: Color(0xFFC8D4C0)),
-    (id: 'cozy_hearth', label: 'Cozy\nHearth', color: Color(0xFFD9C4B0)),
-    (id: 'ocean_mist', label: 'Ocean\nMist', color: Color(0xFFB8C8D4)),
-    (id: 'dusk_sky', label: 'Dusk\nSky', color: Color(0xFFC8B8D4)),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,29 +32,46 @@ class _MemoryToneSection extends StatelessWidget {
           ),
         ),
         const Gap(AppSpacing.sm),
-        SizedBox(
-          height: 100,
-          child: BlocSelector<CreateMomentCubit, CreateMomentState, String?>(
-            selector: (state) => state.toneIdSelected,
-            builder: (context, selectedToneId) {
-              return ListView.separated(
+        BlocBuilder<CreateMomentCubit, CreateMomentState>(
+          buildWhen: (p, c) =>
+              p.tones != c.tones || p.toneIdSelected != c.toneIdSelected,
+          builder: (context, state) {
+            final tones = state.tones.data ?? const <ToneEntity>[];
+            if (state.tones.isLoading && tones.isEmpty) {
+              return const SizedBox(
+                height: 100,
+                child: Center(
+                  child: SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                ),
+              );
+            }
+            if (tones.isEmpty) return const SizedBox.shrink();
+            return SizedBox(
+              height: 100,
+              child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
-                itemCount: _tones.length,
+                itemCount: tones.length,
                 separatorBuilder: (_, __) => const Gap(AppSpacing.sm),
                 itemBuilder: (context, index) {
-                  final tone = _tones[index];
+                  final tone = tones[index];
                   return _ToneSwatch(
-                    label: tone.label,
-                    color: tone.color,
-                    selected: selectedToneId == tone.id,
+                    label: tone.name,
+                    semanticLabel: '${tone.name}, tone',
+                    color: tone.lightColorHex
+                        .toColor(fallback: context.themeColors.tertiary),
+                    selected: state.toneIdSelected == tone.id,
                     onTap: () =>
                         context.read<CreateMomentCubit>().selectTone(tone.id),
                   );
                 },
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ],
     );
@@ -71,12 +80,14 @@ class _MemoryToneSection extends StatelessWidget {
 
 class _ToneSwatch extends StatelessWidget {
   final String label;
+  final String semanticLabel;
   final Color color;
   final bool selected;
   final VoidCallback onTap;
 
   const _ToneSwatch({
     required this.label,
+    required this.semanticLabel,
     required this.color,
     required this.selected,
     required this.onTap,
@@ -84,10 +95,14 @@ class _ToneSwatch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Column(
+    return Semantics(
+      label: semanticLabel,
+      button: true,
+      selected: selected,
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
@@ -119,19 +134,25 @@ class _ToneSwatch extends StatelessWidget {
                 : null,
           ),
           const Gap(AppSpacing.xs),
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            style: context.textTheme.labelSmall?.copyWith(
-              color: selected
-                  ? context.themeColors.primary
-                  : context.themeColors.textMuted,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 0.03,
-              height: 1.2,
+          SizedBox(
+            width: 64,
+            child: Text(
+              label,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: context.textTheme.labelSmall?.copyWith(
+                color: selected
+                    ? context.themeColors.primary
+                    : context.themeColors.textMuted,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.03,
+                height: 1.2,
+              ),
             ),
           ),
         ],
+        ),
       ),
     );
   }
