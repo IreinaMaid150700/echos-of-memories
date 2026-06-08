@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +34,9 @@ part 'widgets/_bottom_save_cta.dart';
 
 @RoutePage()
 class CreateMomentScreen extends StatelessWidget {
-  const CreateMomentScreen({super.key});
+  final List<File> initialImages;
+
+  const CreateMomentScreen({super.key, this.initialImages = const []});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +47,7 @@ class CreateMomentScreen extends StatelessWidget {
         getMoodsUseCase: getIt<GetMoodsUseCase>(),
         getTonesUseCase: getIt<GetTonesUseCase>(),
         imagePicker: getIt<ImagePicker>(),
-      )..initialData(),
+      )..initialData(initialImages: initialImages),
       child: const _CreateMomentBody(),
     );
   }

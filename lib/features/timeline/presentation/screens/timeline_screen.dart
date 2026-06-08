@@ -117,7 +117,7 @@ class _TimelineScreenRootState extends State<_TimelineScreenRoot> {
                         return SliverToBoxAdapter(
                           child: EmptyStateWidget(
                             onCreatePressed: () async {
-                              await context.router.push(CreateMomentRoute());
+                              await context.router.push(CameraCaptureRoute());
                               if (context.mounted) {
                                 context.read<TimelineCubit>().loadMoments();
                               }
@@ -160,7 +160,7 @@ class _TimelineScreenRootState extends State<_TimelineScreenRoot> {
             heroTag: null,
             child: const Icon(Icons.add),
             onPressed: () async {
-              await context.router.push(CreateMomentRoute());
+              await context.router.push(CameraCaptureRoute());
               if (context.mounted) context.read<TimelineCubit>().loadMoments();
             },
           ),
