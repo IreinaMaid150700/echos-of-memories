@@ -18,41 +18,20 @@ class _DateLocationCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        children: [
-          BlocSelector<CreateMomentCubit, CreateMomentState, DateTime>(
-            selector: (state) {
-              return state.momentDate ?? DateTime.now();
-            },
-            builder: (context, momentDate) {
-              return _TappableRow(
-                icon: Icons.calendar_today_outlined,
-                label: 'Ngày khoảnh khắc',
-                value: momentDate.toVietnamese(showYear: false),
-                onTap: () =>
-                    context.read<CreateMomentCubit>().showDevelopmentDialog(),
-              );
-            },
-          ),
-          Divider(height: 1, color: context.themeColors.borderSubtle),
-          BlocSelector<CreateMomentCubit, CreateMomentState,
-              ({bool loading, String? name})>(
-            selector: (state) =>
-                (loading: state.isPickingLocation, name: state.locationName),
-            builder: (context, data) {
-              return _TappableRow(
-                icon: Icons.location_on_outlined,
-                label: 'Địa điểm',
-                value: data.loading ? 'Đang lấy vị trí...' : data.name,
-                onTap: data.loading
-                    ? () {}
-                    : () => context
-                        .read<CreateMomentCubit>()
-                        .pickCurrentLocation(),
-              );
-            },
-          ),
-        ],
+      child: BlocSelector<CreateMomentCubit, CreateMomentState,
+          ({bool loading, String? name})>(
+        selector: (state) =>
+            (loading: state.isPickingLocation, name: state.locationName),
+        builder: (context, data) {
+          return _TappableRow(
+            icon: Icons.location_on_outlined,
+            label: 'Địa điểm',
+            value: data.loading ? 'Đang lấy vị trí...' : data.name,
+            onTap: data.loading
+                ? () {}
+                : () => context.read<CreateMomentCubit>().pickCurrentLocation(),
+          );
+        },
       ),
     );
   }
