@@ -144,27 +144,31 @@ class _TimelineScreenRootState extends State<_TimelineScreenRoot> {
         ),
       ),
       floatingActionButtonLocation: ExpandableFab.location,
-      floatingActionButton: ExpandableFab(
-        children: [
-          FloatingActionButton.small(
-            heroTag: null,
-            child: const Icon(Icons.edit),
-            onPressed: () {},
-          ),
-          FloatingActionButton.small(
-            heroTag: null,
-            child: const Icon(Icons.search),
-            onPressed: () {},
-          ),
-          FloatingActionButton.small(
-            heroTag: null,
-            child: const Icon(Icons.add),
-            onPressed: () async {
-              await context.router.push(CameraCaptureRoute());
-              if (context.mounted) context.read<TimelineCubit>().loadMoments();
-            },
-          ),
-        ],
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
+        child: ExpandableFab(
+          children: [
+            FloatingActionButton.small(
+              heroTag: null,
+              child: const Icon(Icons.edit),
+              onPressed: () {},
+            ),
+            FloatingActionButton.small(
+              heroTag: null,
+              child: const Icon(Icons.search),
+              onPressed: () {},
+            ),
+            FloatingActionButton.small(
+              heroTag: null,
+              child: const Icon(Icons.add),
+              onPressed: () async {
+                await context.router.push(CameraCaptureRoute());
+                if (context.mounted)
+                  context.read<TimelineCubit>().loadMoments();
+              },
+            ),
+          ],
+        ),
       ),
     ).paddingSymmetric(horizontal: AppSpacing.xl);
   }
