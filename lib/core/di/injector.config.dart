@@ -73,8 +73,8 @@ import '../../features/theme/domain/repositories/theme_repository.dart'
 import '../../features/theme/domain/usecases/get_theme_usecase.dart' as _i620;
 import '../../features/theme/domain/usecases/set_theme_usecase.dart' as _i684;
 import '../../features/theme/presentation/cubit/theme_cubit.dart' as _i5;
-import '../media/data/image_picker_service.dart' as _i161;
-import '../media/domain/image_picker_gateway.dart' as _i388;
+import '../media/data/media_picker_service.dart' as _i775;
+import '../media/domain/media_picker_gateway.dart' as _i181;
 import '../network/dio_client.dart' as _i667;
 import '../network/interceptors/auth_interceptor.dart' as _i745;
 import '../permissions/data/permission_service.dart' as _i417;
@@ -126,11 +126,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i745.AuthInterceptor>(),
       ),
     );
+    gh.lazySingleton<_i181.MediaPickerGateway>(
+      () => _i775.MediaPickerService(gh<_i183.ImagePicker>()),
+    );
     gh.lazySingleton<_i636.PreferencesService>(
       () => _i636.PreferencesService(gh<_i460.SharedPreferences>()),
-    );
-    gh.lazySingleton<_i388.ImagePickerGateway>(
-      () => _i161.ImagePickerService(gh<_i183.ImagePicker>()),
     );
     gh.factory<_i398.CleanupMomentAssetsUseCase>(
       () =>
@@ -192,7 +192,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i618.GetTonesUseCase(gh<_i1018.MoodToneRepository>()),
     );
     gh.factory<_i90.PickMomentImagesUseCase>(
-      () => _i90.PickMomentImagesUseCase(gh<_i388.ImagePickerGateway>()),
+      () => _i90.PickMomentImagesUseCase(gh<_i181.MediaPickerGateway>()),
     );
     gh.factory<_i620.GetThemeUseCase>(
       () => _i620.GetThemeUseCase(gh<_i869.ThemeRepository>()),
