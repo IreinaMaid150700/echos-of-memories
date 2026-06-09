@@ -177,14 +177,13 @@ class _TimelineRow extends StatelessWidget {
     final dotColor = entry.dot == DotVariant.primary
         ? (t.dotColorA ?? fallbackDotColorA)
         : (t.dotColorB ?? fallbackDotColorB);
-    final textStyleTime = t.timeStyle ?? context.textTheme.labelMedium?.copyWith(
-      color: dotColor,
-      fontWeight: FontWeight.w600,
-    ) ?? TextStyle(
-      fontSize: 11.5,
-      fontWeight: FontWeight.w600,
-      color: dotColor,
-    );
+    final textStyleTime =
+        t.timeStyle ??
+        context.textTheme.labelMedium?.copyWith(
+          color: dotColor,
+          fontWeight: FontWeight.w600,
+        ) ??
+        TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, color: dotColor);
 
     return GestureDetector(
       onTap: () async {
@@ -239,11 +238,15 @@ class _TimelineRow extends StatelessWidget {
                                       end: Alignment.bottomCenter,
                                       colors: [
                                         dotColor.withOpacity(0.4),
-                                        t.lineColor ?? context.themeColors.borderDefault,
+                                        t.lineColor ??
+                                            context.themeColors.borderDefault,
                                       ],
                                     )
                                   : null,
-                              color: t.lineGradient ? null : (t.lineColor ?? context.themeColors.borderDefault),
+                              color: t.lineGradient
+                                  ? null
+                                  : (t.lineColor ??
+                                        context.themeColors.borderDefault),
                             ),
                           ),
                         ),
@@ -280,10 +283,7 @@ class _DefaultDot extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: color,
-        border: Border.all(
-          color: dotBorderCol,
-          width: theme.dotBorderWidth,
-        ),
+        border: Border.all(color: dotBorderCol, width: theme.dotBorderWidth),
         boxShadow: theme.dotGlow
             ? [
                 BoxShadow(
@@ -309,21 +309,26 @@ class _DefaultCard extends StatelessWidget {
     final cardBg = t.cardColor ?? context.themeColors.surface;
     final cardBorderCol = t.cardBorderColor ?? context.themeColors.borderSubtle;
     final cardBorderW = t.cardBorderWidth > 0 ? t.cardBorderWidth : 1.0;
-    final cardShadows = t.cardShadow ?? [
-      BoxShadow(
-        color: context.themeColors.primary.withValues(alpha: 0.08),
-        blurRadius: 14,
-        offset: const Offset(0, 4),
-      ),
-      BoxShadow(
-        color: Colors.black.withValues(alpha: 0.04),
-        blurRadius: 4,
-        offset: const Offset(0, 1),
-      ),
-    ];
-    final textStyleCaption = t.captionStyle ?? context.textTheme.bodySmall?.copyWith(
-      color: context.themeColors.textMuted,
-    ) ?? const TextStyle(fontSize: 12, color: Color(0xFFA08070));
+    final cardShadows =
+        t.cardShadow ??
+        [
+          BoxShadow(
+            color: context.themeColors.primary.withValues(alpha: 0.08),
+            blurRadius: 14,
+            offset: const Offset(0, 4),
+          ),
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 4,
+            offset: const Offset(0, 1),
+          ),
+        ];
+    final textStyleCaption =
+        t.captionStyle ??
+        context.textTheme.bodySmall?.copyWith(
+          color: context.themeColors.textMuted,
+        ) ??
+        const TextStyle(fontSize: 12, color: Color(0xFFA08070));
 
     return Container(
       decoration: BoxDecoration(
@@ -349,7 +354,14 @@ class _DefaultCard extends StatelessWidget {
                   color: textStyleCaption.color,
                 ),
                 const SizedBox(width: 3),
-                Text(entry.location!, style: textStyleCaption),
+                Flexible(
+                  child: Text(
+                    entry.location!,
+                    style: textStyleCaption,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ],
             ),
           ],
@@ -377,10 +389,13 @@ class _CardWithThumbnail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = theme;
-    final textStyleBody = t.bodyStyle ?? context.textTheme.bodyMedium?.copyWith(
-      color: context.themeColors.textSecondary,
-      height: 1.5,
-    ) ?? const TextStyle(fontSize: 12.5, color: Color(0xFF6B4F3A), height: 1.5);
+    final textStyleBody =
+        t.bodyStyle ??
+        context.textTheme.bodyMedium?.copyWith(
+          color: context.themeColors.textSecondary,
+          height: 1.5,
+        ) ??
+        const TextStyle(fontSize: 12.5, color: Color(0xFF6B4F3A), height: 1.5);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -423,10 +438,13 @@ class _CardTextOnly extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = theme;
-    final textStyleBody = t.bodyStyle ?? context.textTheme.bodyMedium?.copyWith(
-      color: context.themeColors.textSecondary,
-      height: 1.5,
-    ) ?? const TextStyle(fontSize: 12.5, color: Color(0xFF6B4F3A), height: 1.5);
+    final textStyleBody =
+        t.bodyStyle ??
+        context.textTheme.bodyMedium?.copyWith(
+          color: context.themeColors.textSecondary,
+          height: 1.5,
+        ) ??
+        const TextStyle(fontSize: 12.5, color: Color(0xFF6B4F3A), height: 1.5);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -457,10 +475,18 @@ class _TitleRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = theme;
-    final textStyleTitle = t.titleStyle ?? context.textTheme.titleMedium?.copyWith(
-      color: context.themeColors.textPrimary,
-      fontWeight: FontWeight.bold,
-    ) ?? const TextStyle(fontSize: 14.5, fontWeight: FontWeight.w700, color: Color(0xFF2C1810), height: 1.3);
+    final textStyleTitle =
+        t.titleStyle ??
+        context.textTheme.titleMedium?.copyWith(
+          color: context.themeColors.textPrimary,
+          fontWeight: FontWeight.bold,
+        ) ??
+        const TextStyle(
+          fontSize: 14.5,
+          fontWeight: FontWeight.w700,
+          color: Color(0xFF2C1810),
+          height: 1.3,
+        );
     final fallbackDotColorA = context.themeColors.primary;
     final bookmarkCol = t.dotColorA ?? fallbackDotColorA;
     return Row(
@@ -532,10 +558,7 @@ class _TagChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(t.chipRadius),
         border: Border.all(color: borderCol),
       ),
-      child: Text(
-        "#$label",
-        style: TextStyle(fontSize: 11.5, color: fg),
-      ),
+      child: Text("#$label", style: TextStyle(fontSize: 11.5, color: fg)),
     );
   }
 }
