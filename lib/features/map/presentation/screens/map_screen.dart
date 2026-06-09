@@ -13,6 +13,7 @@ import 'package:music_app/core/theme/app_custom_colors.dart';
 import 'package:music_app/core/utils/extensions/date_time_extension.dart';
 import 'package:music_app/features/map/presentation/cubit/map_cubit.dart';
 import 'package:music_app/features/moment/domain/models/moment_entity.dart';
+import 'package:music_app/core/permissions/domain/permission_gateway.dart';
 import 'package:music_app/features/moment/domain/usecases/watch_moments_usecase.dart';
 
 /// Bản đồ hiển thị các moment có toạ độ + vị trí hiện tại của người dùng.
@@ -23,8 +24,10 @@ class MapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => MapCubit(watchMomentsUseCase: getIt<WatchMomentsUseCase>())
-        ..loadMoments(),
+      create: (_) => MapCubit(
+        watchMomentsUseCase: getIt<WatchMomentsUseCase>(),
+        permissionGateway: getIt<PermissionGateway>(),
+      )..loadMoments(),
       child: const _MapScreenRoot(),
     );
   }

@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:music_app/core/cubit/base_cubit.dart';
+import 'package:music_app/core/permissions/domain/app_permission.dart';
+import 'package:music_app/core/permissions/domain/permission_gateway.dart';
+import 'package:music_app/core/permissions/domain/permission_result.dart';
 import 'package:music_app/core/utils/models/loaded.dart';
 import 'package:music_app/features/moment/domain/models/moment_entity.dart';
 import 'package:music_app/features/moment/domain/usecases/watch_moments_usecase.dart';
@@ -12,10 +15,14 @@ part 'map_cubit.freezed.dart';
 
 class MapCubit extends BaseCubit<MapState> {
   final WatchMomentsUseCase _watchMomentsUseCase;
+  final PermissionGateway _permissionGateway;
   StreamSubscription<List<MomentEntity>>? _sub;
 
-  MapCubit({required WatchMomentsUseCase watchMomentsUseCase})
-      : _watchMomentsUseCase = watchMomentsUseCase,
+  MapCubit({
+    required WatchMomentsUseCase watchMomentsUseCase,
+    required PermissionGateway permissionGateway,
+  })  : _watchMomentsUseCase = watchMomentsUseCase,
+        _permissionGateway = permissionGateway,
         super(const MapState());
 
   void loadMoments() {
@@ -41,12 +48,8 @@ class MapCubit extends BaseCubit<MapState> {
         return;
       }
 
-      var permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-      }
-      if (permission == LocationPermission.denied ||
-          permission == LocationPermission.deniedForever) {
+      final result = await _permissionGateway.request(AppPermission.location);
+      if (!result.isGranted) {
         emit(state.copyWith(
           isLocating: false,
           locateMessage: 'Ứng dụng chưa được cấp quyền vị trí.',
