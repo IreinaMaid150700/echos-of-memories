@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:music_app/core/di/injector.dart';
+import 'package:music_app/core/permissions/domain/app_permission.dart';
+import 'package:music_app/core/permissions/domain/permission_gateway.dart';
+import 'package:music_app/core/permissions/domain/permission_result.dart';
 
 part 'camera_capture_state.dart';
 part 'camera_capture_cubit.freezed.dart';
@@ -12,15 +15,19 @@ part 'camera_capture_cubit.freezed.dart';
 /// is kept as a field (not in state — it is not value-comparable) and exposed
 /// via [controller] for [CameraPreview]; UI gates on [CameraCaptureState.isReady].
 class CameraCaptureCubit extends Cubit<CameraCaptureState> {
-  CameraCaptureCubit() : super(const CameraCaptureState());
+  CameraCaptureCubit({PermissionGateway? permissionGateway})
+      : _permissionGateway = permissionGateway,
+        super(const CameraCaptureState());
 
+  final PermissionGateway? _permissionGateway;
   CameraController? _controller;
   CameraController? get controller => _controller;
 
   Future<void> init() async {
     emit(state.copyWith(isInitializing: true, errorMessage: null));
-    final status = await Permission.camera.request();
-    if (!status.isGranted) {
+    final gateway = _permissionGateway ?? getIt<PermissionGateway>();
+    final result = await gateway.request(AppPermission.camera);
+    if (!result.isGranted) {
       emit(state.copyWith(isInitializing: false, permissionDenied: true));
       return;
     }
