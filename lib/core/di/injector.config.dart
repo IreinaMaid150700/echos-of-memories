@@ -77,6 +77,8 @@ import '../media/data/image_picker_service.dart' as _i161;
 import '../media/domain/image_picker_gateway.dart' as _i388;
 import '../network/dio_client.dart' as _i667;
 import '../network/interceptors/auth_interceptor.dart' as _i745;
+import '../permissions/data/permission_service.dart' as _i417;
+import '../permissions/domain/permission_gateway.dart' as _i327;
 import '../router/app_routers.dart' as _i283;
 import '../storage/app_database.dart' as _i690;
 import '../storage/preferences_service.dart' as _i636;
@@ -104,6 +106,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i183.ImagePicker>(() => storageModule.imagePicker);
     gh.lazySingleton<_i745.AuthInterceptor>(() => _i745.AuthInterceptor());
     gh.lazySingleton<_i283.AppRouters>(() => _i283.AppRouters());
+    gh.lazySingleton<_i327.PermissionGateway>(() => _i417.PermissionService());
     gh.lazySingleton<_i246.MomentLocationRepository>(
       () => _i347.MomentLocationService(),
     );
