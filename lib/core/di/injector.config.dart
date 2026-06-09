@@ -107,15 +107,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i745.AuthInterceptor>(() => _i745.AuthInterceptor());
     gh.lazySingleton<_i283.AppRouters>(() => _i283.AppRouters());
     gh.lazySingleton<_i327.PermissionGateway>(() => _i417.PermissionService());
-    gh.lazySingleton<_i246.MomentLocationRepository>(
-      () => _i347.MomentLocationService(),
-    );
     gh.lazySingleton<_i1059.MomentAssetRepository>(
       () => _i577.MomentAssetService(),
     );
     gh.lazySingleton<String>(
       () => networkModule.baseUrl,
       instanceName: 'baseUrl',
+    );
+    gh.lazySingleton<_i246.MomentLocationRepository>(
+      () => _i347.MomentLocationService(gh<_i327.PermissionGateway>()),
     );
     gh.lazySingleton<_i666.SecureStorageService>(
       () => _i666.SecureStorageService(gh<_i558.FlutterSecureStorage>()),

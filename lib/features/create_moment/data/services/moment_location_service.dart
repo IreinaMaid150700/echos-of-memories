@@ -3,12 +3,19 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
 import 'package:music_app/core/error/failure.dart';
+import 'package:music_app/core/permissions/domain/app_permission.dart';
+import 'package:music_app/core/permissions/domain/permission_gateway.dart';
+import 'package:music_app/core/permissions/domain/permission_result.dart';
 import 'package:music_app/features/create_moment/domain/models/moment_location_data.dart';
 import 'package:music_app/features/create_moment/domain/repositories/moment_location_repository.dart';
 
 /// Wraps Geolocator + Geocoding.
 @LazySingleton(as: MomentLocationRepository)
 class MomentLocationService implements MomentLocationRepository {
+  MomentLocationService(this._permissionGateway);
+
+  final PermissionGateway _permissionGateway;
+
   @override
   Future<Either<Failure, MomentLocationData>> getCurrentLocation() async {
     try {
@@ -21,12 +28,8 @@ class MomentLocationService implements MomentLocationRepository {
         );
       }
 
-      var permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-      }
-      if (permission == LocationPermission.denied ||
-          permission == LocationPermission.deniedForever) {
+      final result = await _permissionGateway.request(AppPermission.location);
+      if (!result.isGranted) {
         return const Left(
           UnknownFailure(message: 'Ứng dụng chưa được cấp quyền vị trí.'),
         );
