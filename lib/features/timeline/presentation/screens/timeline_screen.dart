@@ -9,7 +9,7 @@ import 'package:music_app/core/theme/app_colors.dart';
 import 'package:music_app/core/utils/extensions/date_time_extension.dart';
 import 'package:music_app/core/utils/extensions/screen_padding.dart';
 import 'package:music_app/features/moment/domain/models/moment_entity.dart';
-import 'package:music_app/features/moment/domain/usecases/get_moments_usecase.dart';
+import 'package:music_app/features/moment/domain/usecases/watch_moments_usecase.dart';
 import 'package:music_app/features/timeline/presentation/cubit/timeline_cubit.dart';
 import 'package:music_app/features/timeline/presentation/widgets/current_time_widget.dart';
 import 'package:music_app/features/timeline/presentation/widgets/flexible_app_bar_space_widget.dart';
@@ -23,7 +23,7 @@ class TimelineScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) =>
-          TimelineCubit(getMomentsUseCase: getIt<GetMomentsUseCase>())
+          TimelineCubit(watchMomentsUseCase: getIt<WatchMomentsUseCase>())
             ..loadMoments(),
       child: const _TimelineScreenRoot(),
     );
@@ -118,9 +118,6 @@ class _TimelineScreenRootState extends State<_TimelineScreenRoot> {
                           child: EmptyStateWidget(
                             onCreatePressed: () async {
                               await context.router.push(CameraCaptureRoute());
-                              if (context.mounted) {
-                                context.read<TimelineCubit>().loadMoments();
-                              }
                             },
                           ),
                         );
@@ -163,8 +160,9 @@ class _TimelineScreenRootState extends State<_TimelineScreenRoot> {
               child: const Icon(Icons.add),
               onPressed: () async {
                 await context.router.push(CameraCaptureRoute());
-                if (context.mounted)
+                if (context.mounted) {
                   context.read<TimelineCubit>().loadMoments();
+                }
               },
             ),
           ],

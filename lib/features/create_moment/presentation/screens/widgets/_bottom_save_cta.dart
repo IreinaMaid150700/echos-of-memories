@@ -8,14 +8,28 @@ class _BottomSaveCta extends StatelessWidget {
     return BlocConsumer<CreateMomentCubit, CreateMomentState>(
       listenWhen: (prev, curr) => prev.saveAction != curr.saveAction,
       listener: (context, state) {
-        if (state.saveAction.isSuccess && context.mounted) {
-          context.router.maybePop();
+        if (!context.mounted) return;
+        if (state.saveAction.isSuccess) {
+          context.router.pop();
+        } else if (state.saveAction.isFailure) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Text(
+                  state.saveAction.error ??
+                      'Không thể lưu khoảnh khắc. Vui lòng thử lại.',
+                ),
+              ),
+            );
         }
       },
       builder: (context, state) {
         final isSaving = state.saveAction.isLoading;
-        final isEnabled = !isSaving &&
-            ((state.note?.trim().isNotEmpty ?? false) || state.tagsSelected.isNotEmpty);
+        final isEnabled =
+            !isSaving &&
+            ((state.note?.trim().isNotEmpty ?? false) ||
+                state.tagsSelected.isNotEmpty);
         return Container(
           padding: EdgeInsets.only(
             left: AppSpacing.xl,
@@ -53,7 +67,9 @@ class _BottomSaveCta extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppRadius.full),
                     boxShadow: [
                       BoxShadow(
-                        color: context.themeColors.primary.withValues(alpha: 0.34),
+                        color: context.themeColors.primary.withValues(
+                          alpha: 0.34,
+                        ),
                         blurRadius: 34,
                         offset: const Offset(0, 14),
                       ),

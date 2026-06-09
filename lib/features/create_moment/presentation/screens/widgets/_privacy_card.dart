@@ -112,38 +112,41 @@ class _PrivacyToggleRow extends StatelessWidget {
 
 class _CustomSwitch extends StatelessWidget {
   final bool value;
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<bool>? onChanged;
 
-  const _CustomSwitch({required this.value, required this.onChanged});
+  const _CustomSwitch({required this.value, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onChanged(!value),
-      child: Container(
-        width: 48,
-        height: 28,
-        padding: const EdgeInsets.all(3),
-        decoration: BoxDecoration(
-          color: value ? context.themeColors.primary : context.themeColors.borderDefault,
-          borderRadius: BorderRadius.circular(AppRadius.full),
-        ),
-        child: AnimatedAlign(
-          duration: const Duration(milliseconds: 200),
-          alignment: value ? Alignment.centerRight : Alignment.centerLeft,
-          child: Container(
-            width: 22,
-            height: 22,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.18),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+      onTap: onChanged != null ? () => onChanged!(!value) : null,
+      child: Opacity(
+        opacity: onChanged != null ? 1.0 : 0.38,
+        child: Container(
+          width: 48,
+          height: 28,
+          padding: const EdgeInsets.all(3),
+          decoration: BoxDecoration(
+            color: value ? context.themeColors.primary : context.themeColors.borderDefault,
+            borderRadius: BorderRadius.circular(AppRadius.full),
+          ),
+          child: AnimatedAlign(
+            duration: const Duration(milliseconds: 200),
+            alignment: value ? Alignment.centerRight : Alignment.centerLeft,
+            child: Container(
+              width: 22,
+              height: 22,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.18),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -187,9 +190,8 @@ class _PrivacyToggleWithPromptState extends State<_PrivacyToggleWithPrompt> {
                     ),
                   ),
                   _CustomSwitch(
-                    value: state.isLockMoment,
-                    onChanged: (val) =>
-                        context.read<CreateMomentCubit>().toggleLockedMoment(val),
+                    value: false,
+                    // disabled until PIN setup is implemented
                   ),
                 ],
               ),

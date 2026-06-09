@@ -4,6 +4,7 @@ import 'package:music_app/features/moment/domain/models/create_moment_params.dar
 import 'package:music_app/features/moment/domain/models/moment_entity.dart';
 
 abstract class MomentRepository {
+  Stream<List<MomentEntity>> watchMoments();
   Future<Either<Failure, List<MomentEntity>>> getMoments();
   Future<Either<Failure, MomentEntity>> getMomentById(String id);
   Future<Either<Failure, MomentEntity>> createMoment(CreateMomentParams params);

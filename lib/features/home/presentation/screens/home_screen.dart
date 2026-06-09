@@ -36,47 +36,57 @@ class _HomeScreenRoot extends StatefulWidget {
 }
 
 class _HomeScreenRootState extends State<_HomeScreenRoot> {
+  static const _tabs = <Widget>[
+    TimelineScreen(),
+    CalendarScreen(),
+    MapScreen(),
+    SettingsScreen(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) => Scaffold(
         extendBody: true,
-        body: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
-          switchInCurve: Curves.easeInOut,
-          switchOutCurve: Curves.easeInOut,
-          transitionBuilder: (child, animation) {
-            return FadeTransition(
-              opacity: animation,
-              child: SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(0.02, 0),
-                  end: Offset.zero,
-                ).animate(animation),
-                child: child,
+        // Mọi tab luôn mounted (giữ state: camera bản đồ, scroll, cubit) nhưng
+        // vẫn fade + slide nhẹ khi chuyển tab. Tab không active bị tắt touch.
+        body: Stack(
+          children: [
+            for (var i = 0; i < _tabs.length; i++)
+              _AnimatedTab(
+                isActive: state.currentTab == i,
+                child: _tabs[i],
               ),
-            );
-          },
-          child: _buildTabContent(state.currentTab),
+          ],
         ),
         bottomNavigationBar: const _HomeBottomNavigationBar(),
       ),
     );
   }
+}
 
-  Widget _buildTabContent(int index) {
-    switch (index) {
-      case 0:
-        return const TimelineScreen().keyed(const ValueKey('timeline'));
-      case 1:
-        return const CalendarScreen().keyed(const ValueKey('calendar'));
-      case 2:
-        return const MapScreen().keyed(const ValueKey('map'));
-      case 3:
-        return const SettingsScreen().keyed(const ValueKey('settings'));
-      default:
-        return const TimelineScreen().keyed(const ValueKey('timeline'));
-    }
+class _AnimatedTab extends StatelessWidget {
+  final bool isActive;
+  final Widget child;
+
+  const _AnimatedTab({required this.isActive, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      ignoring: !isActive,
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        opacity: isActive ? 1 : 0,
+        child: AnimatedSlide(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          offset: isActive ? Offset.zero : const Offset(0.02, 0),
+          child: child,
+        ),
+      ),
+    );
   }
 }
 
@@ -103,8 +113,4 @@ class _HomeBottomNavigationBar extends StatelessWidget {
       },
     );
   }
-}
-
-extension WidgetKeyed on Widget {
-  Widget keyed(Key key) => KeyedSubtree(key: key, child: this);
 }

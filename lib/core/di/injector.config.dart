@@ -18,14 +18,30 @@ import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 import '../../features/create_moment/data/repositories/tag_repository_impl.dart'
     as _i167;
+import '../../features/create_moment/data/services/moment_asset_service.dart'
+    as _i577;
+import '../../features/create_moment/data/services/moment_location_service.dart'
+    as _i347;
+import '../../features/create_moment/domain/repositories/moment_asset_repository.dart'
+    as _i1059;
+import '../../features/create_moment/domain/repositories/moment_location_repository.dart'
+    as _i246;
 import '../../features/create_moment/domain/repositories/tag_repository.dart'
     as _i705;
+import '../../features/create_moment/domain/usecases/cleanup_moment_assets_usecase.dart'
+    as _i398;
 import '../../features/create_moment/domain/usecases/create_tag_usecase.dart'
     as _i938;
 import '../../features/create_moment/domain/usecases/delete_tag_usecase.dart'
     as _i74;
+import '../../features/create_moment/domain/usecases/get_current_moment_location_usecase.dart'
+    as _i25;
 import '../../features/create_moment/domain/usecases/get_tags_usecase.dart'
     as _i173;
+import '../../features/create_moment/domain/usecases/persist_moment_assets_usecase.dart'
+    as _i1022;
+import '../../features/create_moment/domain/usecases/pick_moment_images_usecase.dart'
+    as _i90;
 import '../../features/moment/data/repositories/moment_repository_impl.dart'
     as _i1042;
 import '../../features/moment/domain/repositories/moment_repository.dart'
@@ -40,6 +56,8 @@ import '../../features/moment/domain/usecases/get_moments_usecase.dart'
     as _i707;
 import '../../features/moment/domain/usecases/update_moment_flags_usecase.dart'
     as _i479;
+import '../../features/moment/domain/usecases/watch_moments_usecase.dart'
+    as _i583;
 import '../../features/mood_tone/data/repositories/mood_tone_repository_impl.dart'
     as _i296;
 import '../../features/mood_tone/domain/repositories/mood_tone_repository.dart'
@@ -55,6 +73,8 @@ import '../../features/theme/domain/repositories/theme_repository.dart'
 import '../../features/theme/domain/usecases/get_theme_usecase.dart' as _i620;
 import '../../features/theme/domain/usecases/set_theme_usecase.dart' as _i684;
 import '../../features/theme/presentation/cubit/theme_cubit.dart' as _i5;
+import '../media/data/image_picker_service.dart' as _i161;
+import '../media/domain/image_picker_gateway.dart' as _i388;
 import '../network/dio_client.dart' as _i667;
 import '../network/interceptors/auth_interceptor.dart' as _i745;
 import '../router/app_routers.dart' as _i283;
@@ -84,6 +104,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i183.ImagePicker>(() => storageModule.imagePicker);
     gh.lazySingleton<_i745.AuthInterceptor>(() => _i745.AuthInterceptor());
     gh.lazySingleton<_i283.AppRouters>(() => _i283.AppRouters());
+    gh.lazySingleton<_i246.MomentLocationRepository>(
+      () => _i347.MomentLocationService(),
+    );
+    gh.lazySingleton<_i1059.MomentAssetRepository>(
+      () => _i577.MomentAssetService(),
+    );
     gh.lazySingleton<String>(
       () => networkModule.baseUrl,
       instanceName: 'baseUrl',
@@ -100,11 +126,27 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i636.PreferencesService>(
       () => _i636.PreferencesService(gh<_i460.SharedPreferences>()),
     );
+    gh.lazySingleton<_i388.ImagePickerGateway>(
+      () => _i161.ImagePickerService(gh<_i183.ImagePicker>()),
+    );
+    gh.factory<_i398.CleanupMomentAssetsUseCase>(
+      () =>
+          _i398.CleanupMomentAssetsUseCase(gh<_i1059.MomentAssetRepository>()),
+    );
+    gh.factory<_i1022.PersistMomentAssetsUseCase>(
+      () =>
+          _i1022.PersistMomentAssetsUseCase(gh<_i1059.MomentAssetRepository>()),
+    );
     gh.lazySingleton<_i705.TagRepository>(
       () => _i167.TagRepositoryImpl(gh<_i690.AppDatabase>()),
     );
     gh.lazySingleton<_i1018.MoodToneRepository>(
       () => _i296.MoodToneRepositoryImpl(gh<_i690.AppDatabase>()),
+    );
+    gh.factory<_i25.GetCurrentMomentLocationUseCase>(
+      () => _i25.GetCurrentMomentLocationUseCase(
+        gh<_i246.MomentLocationRepository>(),
+      ),
     );
     gh.lazySingleton<_i286.MomentRepository>(
       () => _i1042.MomentRepositoryImpl(gh<_i690.AppDatabase>()),
@@ -124,6 +166,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i479.UpdateMomentFlagsUseCase>(
       () => _i479.UpdateMomentFlagsUseCase(gh<_i286.MomentRepository>()),
     );
+    gh.factory<_i583.WatchMomentsUseCase>(
+      () => _i583.WatchMomentsUseCase(gh<_i286.MomentRepository>()),
+    );
     gh.factory<_i938.CreateTagUseCase>(
       () => _i938.CreateTagUseCase(gh<_i705.TagRepository>()),
     );
@@ -142,6 +187,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i618.GetTonesUseCase>(
       () => _i618.GetTonesUseCase(gh<_i1018.MoodToneRepository>()),
+    );
+    gh.factory<_i90.PickMomentImagesUseCase>(
+      () => _i90.PickMomentImagesUseCase(gh<_i388.ImagePickerGateway>()),
     );
     gh.factory<_i620.GetThemeUseCase>(
       () => _i620.GetThemeUseCase(gh<_i869.ThemeRepository>()),

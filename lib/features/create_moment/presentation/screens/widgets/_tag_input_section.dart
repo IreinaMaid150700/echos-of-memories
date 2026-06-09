@@ -95,7 +95,8 @@ class _TagInputShellState extends State<_TagInputShell> {
 
   void _onFocusChange() {
     if (!_focusNode.hasFocus) {
-      _onFocusLost();
+      _controller.clear();
+      context.read<CreateMomentCubit>().updateInputText('');
     }
   }
 
@@ -103,19 +104,13 @@ class _TagInputShellState extends State<_TagInputShell> {
     context.read<CreateMomentCubit>().updateInputText(_controller.text);
   }
 
-  void _onFocusLost() {
+  void _submitTag() {
     final tagName = _controller.text.trim();
     if (tagName.isNotEmpty) {
       context.read<CreateMomentCubit>().addTag(tagName);
       _controller.clear();
       context.read<CreateMomentCubit>().updateInputText('');
     }
-  }
-
-  void _clearInput() {
-    _controller.clear();
-    context.read<CreateMomentCubit>().updateInputText('');
-    _focusNode.requestFocus();
   }
 
   @override
@@ -173,40 +168,11 @@ class _TagInputShellState extends State<_TagInputShell> {
                 contentPadding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
               ),
 
-              onTapOutside: (_) => _onFocusLost(),
-              onSubmitted: (_) => _onFocusLost(),
+              onTapOutside: (_) => _focusNode.unfocus(),
+              onSubmitted: (_) => _submitTag(),
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _ClearButton extends StatelessWidget {
-  final VoidCallback onPressed;
-
-  const _ClearButton({required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        width: 24,
-        height: 24,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: context.themeColors.textMuted.withValues(alpha: 0.5),
-            width: 1.5,
-          ),
-        ),
-        child: Icon(
-          Icons.close,
-          size: 12,
-          color: context.themeColors.textMuted,
-        ),
       ),
     );
   }

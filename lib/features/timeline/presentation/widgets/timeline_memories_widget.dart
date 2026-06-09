@@ -189,9 +189,6 @@ class _TimelineRow extends StatelessWidget {
       onTap: () async {
         if (entry.id != null) {
           await context.router.push(MomentDetailRoute(momentId: entry.id!));
-          if (context.mounted) {
-            context.read<TimelineCubit>().loadMoments();
-          }
         }
       },
       child: Padding(

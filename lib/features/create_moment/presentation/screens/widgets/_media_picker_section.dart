@@ -23,7 +23,7 @@ class _MediaPickerSection extends StatelessWidget {
               ),
               const Gap(AppSpacing.xxs),
               Text(
-                'Thêm ít nhất một tấm ảnh',
+                'Thêm ảnh cho khoảnh khắc',
                 style: context.textTheme.bodySmall?.copyWith(
                   color: context.themeColors.textMuted,
                 ),

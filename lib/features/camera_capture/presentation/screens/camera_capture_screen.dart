@@ -148,7 +148,11 @@ class _CaptureBar extends StatelessWidget {
                         child: const CircleAvatar(
                           radius: 9,
                           backgroundColor: Colors.black54,
-                          child: Icon(Icons.close, size: 12, color: Colors.white),
+                          child: Icon(
+                            Icons.close,
+                            size: 12,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -212,8 +216,11 @@ class _PermissionDenied extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.no_photography_outlined,
-                color: Colors.white, size: 48),
+            const Icon(
+              Icons.no_photography_outlined,
+              color: Colors.white,
+              size: 48,
+            ),
             const Gap(AppSpacing.md),
             const Text(
               'Chưa được cấp quyền camera.',
@@ -231,8 +238,10 @@ class _PermissionDenied extends StatelessWidget {
                 const Gap(AppSpacing.sm),
                 TextButton(
                   onPressed: onSkip,
-                  child: const Text('Bỏ qua',
-                      style: TextStyle(color: Colors.white)),
+                  child: const Text(
+                    'Bỏ qua',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
             ),

@@ -17,6 +17,22 @@ class MomentRepositoryImpl implements MomentRepository {
   MomentRepositoryImpl(this._db);
 
   @override
+  Stream<List<MomentEntity>> watchMoments() {
+    return (_db.select(_db.moments)
+          ..where((t) => t.deletedAt.isNull())
+          ..orderBy([(t) => OrderingTerm.desc(t.momentDate)]))
+        .watch()
+        .asyncMap((rows) async {
+      if (rows.isEmpty) return <MomentEntity>[];
+      final momentIds = rows.map((r) => r.id).toList();
+      final tagsByMoment = await _tagsForMoments(momentIds);
+      return rows
+          .map((row) => _toEntity(row, tagsByMoment[row.id] ?? const []))
+          .toList();
+    });
+  }
+
+  @override
   Future<Either<Failure, List<MomentEntity>>> getMoments() async {
     try {
       final rows = await (_db.select(_db.moments)

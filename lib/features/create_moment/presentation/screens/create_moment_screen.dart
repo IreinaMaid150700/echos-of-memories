@@ -4,7 +4,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:music_app/core/di/injector.dart';
 import 'package:music_app/core/router/app_routers.dart';
 import 'package:music_app/core/theme/app_colors.dart';
@@ -12,7 +11,11 @@ import 'package:music_app/core/theme/app_custom_colors.dart';
 import 'package:music_app/core/utils/extensions/color_hex_extension.dart';
 import 'package:music_app/core/widgets/under_development_dialog.dart';
 import 'package:music_app/features/create_moment/domain/enum/create_moment_direct_enum.dart';
+import 'package:music_app/features/create_moment/domain/usecases/cleanup_moment_assets_usecase.dart';
+import 'package:music_app/features/create_moment/domain/usecases/get_current_moment_location_usecase.dart';
 import 'package:music_app/features/create_moment/domain/usecases/get_tags_usecase.dart';
+import 'package:music_app/features/create_moment/domain/usecases/persist_moment_assets_usecase.dart';
+import 'package:music_app/features/create_moment/domain/usecases/pick_moment_images_usecase.dart';
 import 'package:music_app/features/mood_tone/domain/models/mood_entity.dart';
 import 'package:music_app/features/mood_tone/domain/models/tone_entity.dart';
 import 'package:music_app/features/mood_tone/domain/usecases/get_moods_usecase.dart';
@@ -22,6 +25,7 @@ import 'package:music_app/features/create_moment/presentation/cubit/create_momen
 
 part 'widgets/_create_app_bar.dart';
 part 'widgets/_media_picker_section.dart';
+part 'widgets/_title_input_section.dart';
 part 'widgets/_note_input_section.dart';
 part 'widgets/_date_location_card.dart';
 part 'widgets/_mood_selector_section.dart';
@@ -45,7 +49,11 @@ class CreateMomentScreen extends StatelessWidget {
         createMomentUseCase: getIt<CreateMomentUseCase>(),
         getMoodsUseCase: getIt<GetMoodsUseCase>(),
         getTonesUseCase: getIt<GetTonesUseCase>(),
-        imagePicker: getIt<ImagePicker>(),
+        pickMomentImagesUseCase: getIt<PickMomentImagesUseCase>(),
+        getCurrentMomentLocationUseCase:
+            getIt<GetCurrentMomentLocationUseCase>(),
+        persistMomentAssetsUseCase: getIt<PersistMomentAssetsUseCase>(),
+        cleanupMomentAssetsUseCase: getIt<CleanupMomentAssetsUseCase>(),
       )..initialData(initialImages: initialImages),
       child: const _CreateMomentBody(),
     );
@@ -66,12 +74,21 @@ class _CreateMomentBody extends StatelessWidget {
         if (state.locationMessage != null) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text(state.locationMessage!)),
-            );
+            ..showSnackBar(SnackBar(content: Text(state.locationMessage!)));
         }
         if (state.createMomentDirectEnum != null) {
           switch (state.createMomentDirectEnum) {
+            case CreateMomentDirectEnum.showDialogErrorWhenPicker:
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'Không thể mở thư viện ảnh. Kiểm tra quyền và thử lại.',
+                    ),
+                  ),
+                );
+              break;
             case CreateMomentDirectEnum.showDialogDevelopment:
               UnderDevelopmentDialog.show(context);
               break;
@@ -92,6 +109,8 @@ class _CreateMomentBody extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       _MediaPickerSection(),
+                      Gap(AppSpacing.xl),
+                      _TitleInputSection(),
                       Gap(AppSpacing.xl),
                       _NoteInputSection(),
                       Gap(AppSpacing.xl),

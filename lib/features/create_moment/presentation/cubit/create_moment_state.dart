@@ -5,6 +5,7 @@ abstract class CreateMomentState with _$CreateMomentState {
   const factory CreateMomentState({
     CreateMomentDirectEnum? createMomentDirectEnum,
     @Default([]) List<File> imagePicker,
+    String? title,
     String? note,
     DateTime? momentDate,
     @Default([]) List<TagEntity> tagsSelected,
