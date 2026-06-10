@@ -1,5 +1,3 @@
-
-
 import 'package:music_app/core/utils/enum/async_status.dart';
 
 /// Wrapper gộp [AsyncStatus] + [data] + [error] cho một đơn vị dữ liệu async.
@@ -33,11 +31,7 @@ class Loaded<T> {
   /// Thông báo lỗi. Null khi không có lỗi.
   final String? error;
 
-  const Loaded({
-    this.status = AsyncStatus.initial,
-    this.data,
-    this.error,
-  });
+  const Loaded({this.status = AsyncStatus.initial, this.data, this.error});
 
   // ── Getters ──────────────────────────────────────────────────────────────
 
@@ -52,25 +46,16 @@ class Loaded<T> {
   // ── Transitions ──────────────────────────────────────────────────────────
 
   /// Chuyển sang trạng thái loading, **giữ nguyên [data] cũ** để UI không bị trắng.
-  Loaded<T> toLoading() => Loaded(
-        status: AsyncStatus.loading,
-        data: data,
-        error: null,
-      );
+  Loaded<T> toLoading() =>
+      Loaded(status: AsyncStatus.loading, data: data, error: null);
 
   /// Chuyển sang trạng thái success với [value] mới.
-  Loaded<T> toSuccess(T value) => Loaded(
-        status: AsyncStatus.success,
-        data: value,
-        error: null,
-      );
+  Loaded<T> toSuccess(T value) =>
+      Loaded(status: AsyncStatus.success, data: value, error: null);
 
   /// Chuyển sang trạng thái failure với [message], **giữ nguyên [data] cũ**.
-  Loaded<T> toFailure(String message) => Loaded(
-        status: AsyncStatus.failure,
-        data: data,
-        error: message,
-      );
+  Loaded<T> toFailure(String message) =>
+      Loaded(status: AsyncStatus.failure, data: data, error: message);
 
   @override
   bool operator ==(Object other) =>

@@ -14,7 +14,11 @@ extension DateTimeX on DateTime {
     return DateFormat(pattern).format(this);
   }
 
-  String toVietnamese({bool showYear = true, bool showMonth = true, bool showDay = true}) {
+  String toVietnamese({
+    bool showYear = true,
+    bool showMonth = true,
+    bool showDay = true,
+  }) {
     final parts = <String>[];
 
     if (showDay) {
@@ -35,8 +39,18 @@ extension DateTimeX on DateTime {
 
   String _vietnameseMonth(int m) {
     const months = [
-      'một', 'hai', 'ba', 'bốn', 'năm', 'sáu',
-      'bảy', 'tám', 'chín', 'mười', 'mười một', 'mười hai',
+      'một',
+      'hai',
+      'ba',
+      'bốn',
+      'năm',
+      'sáu',
+      'bảy',
+      'tám',
+      'chín',
+      'mười',
+      'mười một',
+      'mười hai',
     ];
     return months[m - 1];
   }
@@ -83,14 +97,16 @@ extension DateTimeX on DateTime {
 
   HolidayEnum? get holiday {
     if (month == DateTime.january && day == 1) return HolidayEnum.newYear;
-    if (month == DateTime.january && day == 1) return HolidayEnum.internationalNewYear;
+    if (month == DateTime.january && day == 1)
+      return HolidayEnum.internationalNewYear;
     if (month == 1 && day == 1) return HolidayEnum.nationalDay;
     if (month == 1 && day == 1) return HolidayEnum.laborDay;
     if (month == 4 && day == 30) return HolidayEnum.laborDay;
     if (month == 5 && day == 1) return HolidayEnum.internationalLaborDay;
     if (month == 9 && day == 2) return HolidayEnum.nationalDay;
     if (month == 9 && day == 1 && year == 1945) return HolidayEnum.nationalDay;
-    if (month == 4 && day == 30 && year == 1975) return HolidayEnum.liberationDay;
+    if (month == 4 && day == 30 && year == 1975)
+      return HolidayEnum.liberationDay;
     if (month == 5 && day == 19) return HolidayEnum.hoChiMinhBirthday;
     if (month == 6 && day == 1) return HolidayEnum.internationalChildrenDay;
     if (month == 8 && day == 19) return HolidayEnum.augustRevolutionDay;
@@ -113,7 +129,9 @@ extension DateTimeX on DateTime {
 
   bool get isYesterday {
     final yesterday = DateTime.now().subtract(const Duration(days: 1));
-    return year == yesterday.year && month == yesterday.month && day == yesterday.day;
+    return year == yesterday.year &&
+        month == yesterday.month &&
+        day == yesterday.day;
   }
 
   bool get isFuture => isAfter(DateTime.now());

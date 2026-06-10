@@ -20,14 +20,16 @@ class DevDbViewerCubit extends BaseCubit<DevDbViewerState> {
 
   Future<void> selectTable(String table) async {
     final meta = state.tables.firstWhere((t) => t.name == table);
-    emit(state.copyWith(
-      selectedTable: table,
-      columns: meta.columns,
-      rows: const [],
-      totalCount: 0,
-      isLoading: true,
-      error: null,
-    ));
+    emit(
+      state.copyWith(
+        selectedTable: table,
+        columns: meta.columns,
+        rows: const [],
+        totalCount: 0,
+        isLoading: true,
+        error: null,
+      ),
+    );
     try {
       final total = await _inspector.count(table);
       final rows = await _inspector.rows(table, limit: pageSize, offset: 0);
@@ -51,10 +53,9 @@ class DevDbViewerCubit extends BaseCubit<DevDbViewerState> {
         limit: pageSize,
         offset: state.rows.length,
       );
-      emit(state.copyWith(
-        rows: [...state.rows, ...more],
-        isLoadingMore: false,
-      ));
+      emit(
+        state.copyWith(rows: [...state.rows, ...more], isLoadingMore: false),
+      );
     } catch (e) {
       emit(state.copyWith(isLoadingMore: false, error: e.toString()));
     }

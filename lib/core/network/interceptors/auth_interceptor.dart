@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
 /// Interceptor tự động thêm Bearer token vào Headers.
@@ -7,7 +8,9 @@ import 'package:injectable/injectable.dart';
 class AuthInterceptor extends Interceptor {
   // Thay thế bằng service/repository quản lý session của bạn
   // Ví dụ: final LocalStorageService _storageService;
-  // AuthInterceptor(this._storageService);
+  final FlutterSecureStorage _storageService;
+
+  AuthInterceptor(this._storageService);
 
   @override
   Future<void> onRequest(
@@ -17,9 +20,9 @@ class AuthInterceptor extends Interceptor {
     // Tùy theo cách bạn lưu trữ token (Storage service, Hive, v.v...)
     // final token = _storageService.authToken;
     // mock get token:
-    const token = 'MOCK_TOKEN'; // TODO: Thay thế bằng token thật
+    final token = await _storageService.read(key: 'auth_token');
 
-    if (token.isNotEmpty) {
+    if (token != null && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
     }
 
@@ -31,7 +34,9 @@ class AuthInterceptor extends Interceptor {
 
   @override
   Future<void> onError(
-      DioException err, ErrorInterceptorHandler handler) async {
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
     // Có thể check 401 ở đây để làm logic refreshToken
     // Nếu token hết hạn => call api refresh token => retry original request
     if (err.response?.statusCode == 401) {

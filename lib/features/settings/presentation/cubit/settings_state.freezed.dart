@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SettingsState {
 
- ThemeMode get themeMode; String get language; bool get notificationsEnabled; bool get appLockEnabled; bool get keepMemoriesOffline; bool get gentleReminders;
+ AppThemeMode get themeMode; String get language; bool get notificationsEnabled; bool get appLockEnabled; bool get keepMemoriesOffline; bool get gentleReminders;
 /// Create a copy of SettingsState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $SettingsStateCopyWith<$Res>  {
   factory $SettingsStateCopyWith(SettingsState value, $Res Function(SettingsState) _then) = _$SettingsStateCopyWithImpl;
 @useResult
 $Res call({
- ThemeMode themeMode, String language, bool notificationsEnabled, bool appLockEnabled, bool keepMemoriesOffline, bool gentleReminders
+ AppThemeMode themeMode, String language, bool notificationsEnabled, bool appLockEnabled, bool keepMemoriesOffline, bool gentleReminders
 });
 
 
@@ -65,7 +65,7 @@ class _$SettingsStateCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? language = null,Object? notificationsEnabled = null,Object? appLockEnabled = null,Object? keepMemoriesOffline = null,Object? gentleReminders = null,}) {
   return _then(_self.copyWith(
 themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
-as ThemeMode,language: null == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
+as AppThemeMode,language: null == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
 as String,notificationsEnabled: null == notificationsEnabled ? _self.notificationsEnabled : notificationsEnabled // ignore: cast_nullable_to_non_nullable
 as bool,appLockEnabled: null == appLockEnabled ? _self.appLockEnabled : appLockEnabled // ignore: cast_nullable_to_non_nullable
 as bool,keepMemoriesOffline: null == keepMemoriesOffline ? _self.keepMemoriesOffline : keepMemoriesOffline // ignore: cast_nullable_to_non_nullable
@@ -155,7 +155,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeMode themeMode,  String language,  bool notificationsEnabled,  bool appLockEnabled,  bool keepMemoriesOffline,  bool gentleReminders)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AppThemeMode themeMode,  String language,  bool notificationsEnabled,  bool appLockEnabled,  bool keepMemoriesOffline,  bool gentleReminders)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SettingsState() when $default != null:
 return $default(_that.themeMode,_that.language,_that.notificationsEnabled,_that.appLockEnabled,_that.keepMemoriesOffline,_that.gentleReminders);case _:
@@ -176,7 +176,7 @@ return $default(_that.themeMode,_that.language,_that.notificationsEnabled,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeMode themeMode,  String language,  bool notificationsEnabled,  bool appLockEnabled,  bool keepMemoriesOffline,  bool gentleReminders)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AppThemeMode themeMode,  String language,  bool notificationsEnabled,  bool appLockEnabled,  bool keepMemoriesOffline,  bool gentleReminders)  $default,) {final _that = this;
 switch (_that) {
 case _SettingsState():
 return $default(_that.themeMode,_that.language,_that.notificationsEnabled,_that.appLockEnabled,_that.keepMemoriesOffline,_that.gentleReminders);case _:
@@ -196,7 +196,7 @@ return $default(_that.themeMode,_that.language,_that.notificationsEnabled,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeMode themeMode,  String language,  bool notificationsEnabled,  bool appLockEnabled,  bool keepMemoriesOffline,  bool gentleReminders)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AppThemeMode themeMode,  String language,  bool notificationsEnabled,  bool appLockEnabled,  bool keepMemoriesOffline,  bool gentleReminders)?  $default,) {final _that = this;
 switch (_that) {
 case _SettingsState() when $default != null:
 return $default(_that.themeMode,_that.language,_that.notificationsEnabled,_that.appLockEnabled,_that.keepMemoriesOffline,_that.gentleReminders);case _:
@@ -211,10 +211,10 @@ return $default(_that.themeMode,_that.language,_that.notificationsEnabled,_that.
 
 
 class _SettingsState implements SettingsState {
-  const _SettingsState({this.themeMode = ThemeMode.system, this.language = 'en', this.notificationsEnabled = true, this.appLockEnabled = false, this.keepMemoriesOffline = true, this.gentleReminders = true});
+  const _SettingsState({this.themeMode = AppThemeMode.system, this.language = 'en', this.notificationsEnabled = true, this.appLockEnabled = false, this.keepMemoriesOffline = true, this.gentleReminders = true});
   
 
-@override@JsonKey() final  ThemeMode themeMode;
+@override@JsonKey() final  AppThemeMode themeMode;
 @override@JsonKey() final  String language;
 @override@JsonKey() final  bool notificationsEnabled;
 @override@JsonKey() final  bool appLockEnabled;
@@ -251,7 +251,7 @@ abstract mixin class _$SettingsStateCopyWith<$Res> implements $SettingsStateCopy
   factory _$SettingsStateCopyWith(_SettingsState value, $Res Function(_SettingsState) _then) = __$SettingsStateCopyWithImpl;
 @override @useResult
 $Res call({
- ThemeMode themeMode, String language, bool notificationsEnabled, bool appLockEnabled, bool keepMemoriesOffline, bool gentleReminders
+ AppThemeMode themeMode, String language, bool notificationsEnabled, bool appLockEnabled, bool keepMemoriesOffline, bool gentleReminders
 });
 
 
@@ -271,7 +271,7 @@ class __$SettingsStateCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? language = null,Object? notificationsEnabled = null,Object? appLockEnabled = null,Object? keepMemoriesOffline = null,Object? gentleReminders = null,}) {
   return _then(_SettingsState(
 themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
-as ThemeMode,language: null == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
+as AppThemeMode,language: null == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
 as String,notificationsEnabled: null == notificationsEnabled ? _self.notificationsEnabled : notificationsEnabled // ignore: cast_nullable_to_non_nullable
 as bool,appLockEnabled: null == appLockEnabled ? _self.appLockEnabled : appLockEnabled // ignore: cast_nullable_to_non_nullable
 as bool,keepMemoriesOffline: null == keepMemoriesOffline ? _self.keepMemoriesOffline : keepMemoriesOffline // ignore: cast_nullable_to_non_nullable

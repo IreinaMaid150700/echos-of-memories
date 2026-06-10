@@ -2,7 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:music_app/core/di/injector.dart';
 import 'package:music_app/core/router/app_routers.dart';
+import 'package:music_app/core/storage/preferences_service.dart';
 import 'package:music_app/core/theme/app_colors.dart';
 import 'package:music_app/core/theme/app_custom_colors.dart';
 import 'package:music_app/features/settings/presentation/cubit/settings_cubit.dart';
@@ -18,7 +20,9 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => SettingsCubit(),
+      create: (_) =>
+          SettingsCubit(preferencesService: getIt<PreferencesService>())
+            ..initialize(),
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,

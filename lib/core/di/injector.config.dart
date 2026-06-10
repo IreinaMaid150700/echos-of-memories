@@ -52,8 +52,6 @@ import '../../features/moment/domain/usecases/delete_moment_usecase.dart'
     as _i918;
 import '../../features/moment/domain/usecases/get_moment_by_id_usecase.dart'
     as _i752;
-import '../../features/moment/domain/usecases/get_moments_usecase.dart'
-    as _i707;
 import '../../features/moment/domain/usecases/update_moment_flags_usecase.dart'
     as _i479;
 import '../../features/moment/domain/usecases/watch_moments_usecase.dart'
@@ -104,7 +102,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i690.AppDatabase>(() => storageModule.appDatabase);
     gh.lazySingleton<_i183.ImagePicker>(() => storageModule.imagePicker);
-    gh.lazySingleton<_i745.AuthInterceptor>(() => _i745.AuthInterceptor());
     gh.lazySingleton<_i283.AppRouters>(() => _i283.AppRouters());
     gh.lazySingleton<_i327.PermissionGateway>(() => _i417.PermissionService());
     gh.lazySingleton<_i1059.MomentAssetRepository>(
@@ -113,6 +110,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<String>(
       () => networkModule.baseUrl,
       instanceName: 'baseUrl',
+    );
+    gh.lazySingleton<_i745.AuthInterceptor>(
+      () => _i745.AuthInterceptor(gh<_i558.FlutterSecureStorage>()),
     );
     gh.lazySingleton<_i246.MomentLocationRepository>(
       () => _i347.MomentLocationService(gh<_i327.PermissionGateway>()),
@@ -162,9 +162,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i752.GetMomentByIdUseCase>(
       () => _i752.GetMomentByIdUseCase(gh<_i286.MomentRepository>()),
-    );
-    gh.factory<_i707.GetMomentsUseCase>(
-      () => _i707.GetMomentsUseCase(gh<_i286.MomentRepository>()),
     );
     gh.factory<_i479.UpdateMomentFlagsUseCase>(
       () => _i479.UpdateMomentFlagsUseCase(gh<_i286.MomentRepository>()),

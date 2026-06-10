@@ -1,6 +1,1 @@
-enum AppPermission {
-  camera,
-  photos,
-  microphone,
-  location,
-}
+enum AppPermission { camera, photos, microphone, location }

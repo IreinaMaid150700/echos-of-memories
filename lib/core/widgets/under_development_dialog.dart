@@ -19,10 +19,7 @@ class UnderDevelopmentDialog extends StatelessWidget {
       backgroundColor: context.themeColors.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.xl),
-        side: BorderSide(
-          color: context.themeColors.borderSubtle,
-          width: 1,
-        ),
+        side: BorderSide(color: context.themeColors.borderSubtle, width: 1),
       ),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.xl),

@@ -65,7 +65,7 @@ class _SaveYourMemIntroductionScreenState
         curve: Curves.easeInOutCubic,
       );
     } else {
-      context.router.push(const HomeRoute());
+      context.router.replaceAll([const HomeRoute()]);
     }
   }
 
@@ -317,5 +317,3 @@ class _PageIllustration extends StatelessWidget {
     );
   }
 }
-
-

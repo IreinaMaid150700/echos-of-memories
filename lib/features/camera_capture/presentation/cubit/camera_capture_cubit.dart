@@ -16,8 +16,8 @@ part 'camera_capture_cubit.freezed.dart';
 /// via [controller] for [CameraPreview]; UI gates on [CameraCaptureState.isReady].
 class CameraCaptureCubit extends Cubit<CameraCaptureState> {
   CameraCaptureCubit({PermissionGateway? permissionGateway})
-      : _permissionGateway = permissionGateway,
-        super(const CameraCaptureState());
+    : _permissionGateway = permissionGateway,
+      super(const CameraCaptureState());
 
   final PermissionGateway? _permissionGateway;
   CameraController? _controller;
@@ -34,10 +34,12 @@ class CameraCaptureCubit extends Cubit<CameraCaptureState> {
     try {
       final cameras = await availableCameras();
       if (cameras.isEmpty) {
-        emit(state.copyWith(
-          isInitializing: false,
-          errorMessage: 'Không tìm thấy camera trên thiết bị.',
-        ));
+        emit(
+          state.copyWith(
+            isInitializing: false,
+            errorMessage: 'Không tìm thấy camera trên thiết bị.',
+          ),
+        );
         return;
       }
       final back = cameras.firstWhere(
@@ -53,10 +55,12 @@ class CameraCaptureCubit extends Cubit<CameraCaptureState> {
       _controller = controller;
       emit(state.copyWith(isInitializing: false, isReady: true));
     } catch (_) {
-      emit(state.copyWith(
-        isInitializing: false,
-        errorMessage: 'Không khởi tạo được camera. Hãy thử lại.',
-      ));
+      emit(
+        state.copyWith(
+          isInitializing: false,
+          errorMessage: 'Không khởi tạo được camera. Hãy thử lại.',
+        ),
+      );
     }
   }
 
@@ -66,15 +70,19 @@ class CameraCaptureCubit extends Cubit<CameraCaptureState> {
     emit(state.copyWith(isCapturing: true, errorMessage: null));
     try {
       final XFile shot = await c.takePicture();
-      emit(state.copyWith(
-        isCapturing: false,
-        captured: [...state.captured, File(shot.path)],
-      ));
+      emit(
+        state.copyWith(
+          isCapturing: false,
+          captured: [...state.captured, File(shot.path)],
+        ),
+      );
     } catch (_) {
-      emit(state.copyWith(
-        isCapturing: false,
-        errorMessage: 'Chụp ảnh thất bại. Hãy thử lại.',
-      ));
+      emit(
+        state.copyWith(
+          isCapturing: false,
+          errorMessage: 'Chụp ảnh thất bại. Hãy thử lại.',
+        ),
+      );
     }
   }
 

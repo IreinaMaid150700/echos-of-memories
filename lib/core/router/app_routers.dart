@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:music_app/features/calendar/presentation/screens/calendar_screen.dart';
@@ -30,7 +31,7 @@ final class AppRouters extends RootStackRouter {
     AutoRoute(page: CalendarRoute.page),
     AutoRoute(page: MomentDetailRoute.page),
     AutoRoute(page: CreateMomentRoute.page),
-    AutoRoute(page: DevDbViewerRoute.page),
+    if (kDebugMode) ...[AutoRoute(page: DevDbViewerRoute.page)],
     AutoRoute(page: CreateCollectionRoute.page),
     AutoRoute(page: CameraCaptureRoute.page),
   ];

@@ -53,10 +53,7 @@ class _HomeScreenRootState extends State<_HomeScreenRoot> {
         body: Stack(
           children: [
             for (var i = 0; i < _tabs.length; i++)
-              _AnimatedTab(
-                isActive: state.currentTab == i,
-                child: _tabs[i],
-              ),
+              _AnimatedTab(isActive: state.currentTab == i, child: _tabs[i]),
           ],
         ),
         bottomNavigationBar: const _HomeBottomNavigationBar(),

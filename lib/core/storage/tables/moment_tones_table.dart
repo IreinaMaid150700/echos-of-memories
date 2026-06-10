@@ -21,7 +21,7 @@ class MomentTones extends Table {
 
   @override
   List<Set<Column>> get uniqueKeys => [
-        {tonePackId, key},
-        {tonePackId, code},
-      ];
+    {tonePackId, key},
+    {tonePackId, code},
+  ];
 }

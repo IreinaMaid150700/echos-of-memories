@@ -17,10 +17,7 @@ class _BottomActionBar extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
-            colors.background.withValues(alpha: 0),
-            colors.background,
-          ],
+          colors: [colors.background.withValues(alpha: 0), colors.background],
           stops: const [0.0, 0.4],
         ),
       ),
@@ -50,49 +47,54 @@ class _BottomActionBar extends StatelessWidget {
           const Gap(AppSpacing.sm),
           Expanded(
             flex: 2,
-            child: BlocSelector<CreateCollectionCubit, CreateCollectionState,
-                bool>(
-              selector: (state) => state.canSave,
-              builder: (context, canSave) {
-                return DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppRadius.full),
-                    boxShadow: canSave
-                        ? [
-                            BoxShadow(
-                              color: colors.primary.withValues(alpha: 0.34),
-                              blurRadius: 28,
-                              offset: const Offset(0, 12),
-                            ),
-                          ]
-                        : null,
-                  ),
-                  child: ElevatedButton(
-                    onPressed:
-                        canSave ? () => context.router.maybePop() : null,
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(52),
-                      backgroundColor: colors.primary,
-                      disabledBackgroundColor: colors.tertiary,
-                      foregroundColor: Colors.white,
-                      disabledForegroundColor: colors.textMuted,
-                      elevation: 0,
-                      shadowColor: Colors.transparent,
-                      shape: RoundedRectangleBorder(
+            child:
+                BlocSelector<
+                  CreateCollectionCubit,
+                  CreateCollectionState,
+                  bool
+                >(
+                  selector: (state) => state.canSave,
+                  builder: (context, canSave) {
+                    return DecoratedBox(
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(AppRadius.full),
+                        boxShadow: canSave
+                            ? [
+                                BoxShadow(
+                                  color: colors.primary.withValues(alpha: 0.34),
+                                  blurRadius: 28,
+                                  offset: const Offset(0, 12),
+                                ),
+                              ]
+                            : null,
                       ),
-                    ),
-                    child: Text(
-                      'Tạo album',
-                      style: context.textTheme.titleSmall?.copyWith(
-                        color: canSave ? Colors.white : colors.textMuted,
-                        fontWeight: FontWeight.w700,
+                      child: ElevatedButton(
+                        onPressed: canSave
+                            ? () => context.router.maybePop()
+                            : null,
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(52),
+                          backgroundColor: colors.primary,
+                          disabledBackgroundColor: colors.tertiary,
+                          foregroundColor: Colors.white,
+                          disabledForegroundColor: colors.textMuted,
+                          elevation: 0,
+                          shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(AppRadius.full),
+                          ),
+                        ),
+                        child: Text(
+                          'Tạo album',
+                          style: context.textTheme.titleSmall?.copyWith(
+                            color: canSave ? Colors.white : colors.textMuted,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-            ),
+                    );
+                  },
+                ),
           ),
         ],
       ),

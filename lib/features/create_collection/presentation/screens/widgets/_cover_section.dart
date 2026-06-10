@@ -118,8 +118,11 @@ class _CoverSwatch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.themeColors;
-    return BlocSelector<CreateCollectionCubit, CreateCollectionState,
-        CollectionCover>(
+    return BlocSelector<
+      CreateCollectionCubit,
+      CreateCollectionState,
+      CollectionCover
+    >(
       selector: (state) => state.cover,
       builder: (context, selected) {
         final active = selected == cover;

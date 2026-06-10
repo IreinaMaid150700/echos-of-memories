@@ -17,10 +17,7 @@ abstract class NetworkModule {
     @Named('baseUrl') String baseUrl,
     AuthInterceptor authInterceptor,
   ) {
-    return DioClient(
-      baseUrl: baseUrl,
-      authInterceptor: authInterceptor,
-    );
+    return DioClient(baseUrl: baseUrl, authInterceptor: authInterceptor);
   }
 
   /// Expose raw Dio để sử dụng trong Retrofit/ApiService được tiện lợi

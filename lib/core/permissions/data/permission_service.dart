@@ -35,7 +35,9 @@ class PermissionService implements PermissionGateway {
       case AppPermission.microphone:
         return Permission.microphone;
       case AppPermission.location:
-        throw StateError('location is handled by geolocator, not permission_handler');
+        throw StateError(
+          'location is handled by geolocator, not permission_handler',
+        );
     }
   }
 
