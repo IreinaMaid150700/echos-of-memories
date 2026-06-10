@@ -1,4 +1,4 @@
-import 'package:music_app/features/create_moment/domain/models/tag_entity.dart';
+import 'package:music_app/features/moment/domain/models/tag_entity.dart';
 import 'package:music_app/features/moment/domain/models/moment_asset_input.dart';
 
 class CreateMomentParams {

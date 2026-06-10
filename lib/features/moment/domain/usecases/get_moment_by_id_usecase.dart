@@ -10,5 +10,6 @@ class GetMomentByIdUseCase {
 
   GetMomentByIdUseCase(this._repository);
 
-  Future<Either<Failure, MomentEntity>> call(String id) => _repository.getMomentById(id);
+  Future<Either<Failure, MomentEntity>> call(String id) =>
+      _repository.getMomentById(id);
 }

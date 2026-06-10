@@ -10,5 +10,6 @@ class GetMomentsUseCase {
 
   GetMomentsUseCase(this._repository);
 
-  Future<Either<Failure, List<MomentEntity>>> call() => _repository.getMoments();
+  Future<Either<Failure, List<MomentEntity>>> call() =>
+      _repository.getMoments();
 }

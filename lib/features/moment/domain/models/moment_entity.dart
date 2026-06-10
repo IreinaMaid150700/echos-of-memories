@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:music_app/features/create_moment/domain/models/tag_entity.dart';
+import 'package:music_app/features/moment/domain/models/tag_entity.dart';
 
 class MomentEntity extends Equatable {
   final String id;
@@ -20,6 +20,8 @@ class MomentEntity extends Equatable {
   final String? toneId;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final String? coverAssetId;
+  final String? coverAsset;
   final List<TagEntity> tags;
 
   const MomentEntity({
@@ -41,29 +43,32 @@ class MomentEntity extends Equatable {
     this.toneId,
     required this.createdAt,
     required this.updatedAt,
+    this.coverAssetId,
     this.tags = const [],
+    this.coverAsset,
   });
 
   @override
   List<Object?> get props => [
-        id,
-        title,
-        note,
-        momentDate,
-        locationName,
-        address,
-        city,
-        country,
-        latitude,
-        longitude,
-        isFavorite,
-        isPinned,
-        isHiddenFromWidget,
-        isLocked,
-        moodId,
-        toneId,
-        createdAt,
-        updatedAt,
-        tags,
-      ];
+    id,
+    title,
+    note,
+    momentDate,
+    locationName,
+    address,
+    city,
+    country,
+    latitude,
+    longitude,
+    isFavorite,
+    isPinned,
+    isHiddenFromWidget,
+    isLocked,
+    moodId,
+    toneId,
+    createdAt,
+    updatedAt,
+    tags,
+    coverAssetId,
+  ];
 }

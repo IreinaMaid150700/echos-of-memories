@@ -11,5 +11,6 @@ class CreateMomentUseCase {
 
   CreateMomentUseCase(this._repository);
 
-  Future<Either<Failure, MomentEntity>> call(CreateMomentParams params) => _repository.createMoment(params);
+  Future<Either<Failure, MomentEntity>> call(CreateMomentParams params) =>
+      _repository.createMoment(params);
 }
