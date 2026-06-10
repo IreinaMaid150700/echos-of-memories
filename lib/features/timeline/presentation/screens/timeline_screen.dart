@@ -8,7 +8,7 @@ import 'package:music_app/core/shared/widgets/empty_state_widget.dart';
 import 'package:music_app/core/theme/app_colors.dart';
 import 'package:music_app/core/utils/extensions/date_time_extension.dart';
 import 'package:music_app/core/utils/extensions/screen_padding.dart';
-import 'package:music_app/features/moment/domain/models/moment_entity.dart';
+import 'package:music_app/features/moment/domain/models/moment_summary.dart';
 import 'package:music_app/features/moment/domain/usecases/watch_moments_usecase.dart';
 import 'package:music_app/features/timeline/presentation/cubit/timeline_cubit.dart';
 import 'package:music_app/features/timeline/presentation/widgets/current_time_widget.dart';
@@ -46,7 +46,7 @@ class _TimelineScreenRootState extends State<_TimelineScreenRoot> {
     super.dispose();
   }
 
-  TimelineEntry _toTimelineEntry(MomentEntity moment) {
+  TimelineEntry _toTimelineEntry(MomentSummary moment) {
     final title = _summaryTitle(moment);
     return TimelineEntry(
       id: moment.id,
@@ -54,13 +54,13 @@ class _TimelineScreenRootState extends State<_TimelineScreenRoot> {
       title: title,
       body: moment.note,
       mood: null,
-      location: moment.locationName,
+      location: null,
       tags: moment.tags.map((t) => t.name).toList(),
       bookmarked: moment.isFavorite,
     );
   }
 
-  String _summaryTitle(MomentEntity moment) {
+  String _summaryTitle(MomentSummary moment) {
     if (moment.title != null) return moment.title!;
     final note = moment.note;
     if (note != null) return note.substring(0, note.length.clamp(0, 50));

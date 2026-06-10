@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:music_app/core/cubit/base_cubit.dart';
 import 'package:music_app/core/utils/models/loaded.dart';
 import 'package:music_app/features/create_moment/domain/enum/create_moment_direct_enum.dart';
-import 'package:music_app/features/create_moment/domain/models/tag_entity.dart';
+import 'package:music_app/features/moment/domain/models/tag_entity.dart';
 import 'package:music_app/features/create_moment/domain/usecases/cleanup_moment_assets_usecase.dart';
 import 'package:music_app/features/create_moment/domain/usecases/get_current_moment_location_usecase.dart';
 import 'package:music_app/features/create_moment/domain/usecases/get_tags_usecase.dart';
@@ -12,7 +12,7 @@ import 'package:music_app/features/create_moment/domain/usecases/persist_moment_
 import 'package:music_app/features/create_moment/domain/usecases/pick_moment_images_usecase.dart';
 import 'package:music_app/features/moment/domain/models/create_moment_params.dart';
 import 'package:music_app/features/moment/domain/models/moment_asset_input.dart';
-import 'package:music_app/features/moment/domain/models/moment_entity.dart';
+import 'package:music_app/features/moment/domain/models/moment_detail_entity.dart';
 import 'package:music_app/features/moment/domain/usecases/create_moment_usecase.dart';
 import 'package:music_app/features/mood_tone/domain/models/mood_entity.dart';
 import 'package:music_app/features/mood_tone/domain/models/tone_entity.dart';

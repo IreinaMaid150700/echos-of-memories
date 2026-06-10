@@ -12,7 +12,7 @@ import 'package:music_app/core/theme/app_colors.dart';
 import 'package:music_app/core/theme/app_custom_colors.dart';
 import 'package:music_app/core/utils/extensions/date_time_extension.dart';
 import 'package:music_app/features/map/presentation/cubit/map_cubit.dart';
-import 'package:music_app/features/moment/domain/models/moment_entity.dart';
+import 'package:music_app/features/moment/domain/models/moment_summary.dart';
 import 'package:music_app/core/permissions/domain/permission_gateway.dart';
 import 'package:music_app/features/moment/domain/usecases/watch_moments_usecase.dart';
 
@@ -58,20 +58,18 @@ class _MapScreenRootState extends State<_MapScreenRoot> {
     Color(0xFF5B8C6E), // green
   ];
 
-  Color _markerColor(MomentEntity m) =>
+  Color _markerColor(MomentSummary m) =>
       _markerPalette[m.id.hashCode.abs() % _markerPalette.length];
 
-  List<MomentEntity> _withCoords(List<MomentEntity>? moments) =>
-      (moments ?? [])
-          .where((m) => m.latitude != null && m.longitude != null)
-          .toList();
+  List<MomentSummary> _withCoords(List<MomentSummary>? moments) => (moments ?? [])
+      .where((m) => m.latitude != null && m.longitude != null)
+      .toList();
 
-  LatLng _initialCenter(List<MomentEntity> located) =>
-      located.isNotEmpty
-          ? LatLng(located.first.latitude!, located.first.longitude!)
-          : _fallbackCenter;
+  LatLng _initialCenter(List<MomentSummary> located) => located.isNotEmpty
+      ? LatLng(located.first.latitude!, located.first.longitude!)
+      : _fallbackCenter;
 
-  void _showMomentSheet(BuildContext context, MomentEntity moment) {
+  void _showMomentSheet(BuildContext context, MomentSummary moment) {
     final colors = context.themeColors;
     showModalBottomSheet<void>(
       context: context,
@@ -88,7 +86,7 @@ class _MapScreenRootState extends State<_MapScreenRoot> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  moment.title ?? moment.locationName ?? 'Khoảnh khắc',
+                  moment.title ?? 'Khoảnh khắc',
                   style: context.textTheme.bodyLarge?.copyWith(
                     color: colors.textPrimary,
                     fontWeight: FontWeight.w800,
@@ -101,27 +99,6 @@ class _MapScreenRootState extends State<_MapScreenRoot> {
                     color: colors.textMuted,
                   ),
                 ),
-                if (moment.locationName != null) ...[
-                  const SizedBox(height: AppSpacing.xs),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.place_outlined,
-                        size: 16,
-                        color: colors.textMuted,
-                      ),
-                      const SizedBox(width: AppSpacing.xxs),
-                      Expanded(
-                        child: Text(
-                          moment.locationName!,
-                          style: context.textTheme.bodySmall?.copyWith(
-                            color: colors.textMuted,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
                 if (moment.note != null) ...[
                   const SizedBox(height: AppSpacing.sm),
                   Text(
@@ -354,10 +331,7 @@ class _CurrentLocationDot extends StatelessWidget {
         shape: BoxShape.circle,
         border: Border.all(color: Colors.white, width: 3),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.2),
-            blurRadius: 6,
-          ),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.2), blurRadius: 6),
         ],
       ),
     );

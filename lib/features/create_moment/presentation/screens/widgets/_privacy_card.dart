@@ -127,7 +127,9 @@ class _CustomSwitch extends StatelessWidget {
           height: 28,
           padding: const EdgeInsets.all(3),
           decoration: BoxDecoration(
-            color: value ? context.themeColors.primary : context.themeColors.borderDefault,
+            color: value
+                ? context.themeColors.primary
+                : context.themeColors.borderDefault,
             borderRadius: BorderRadius.circular(AppRadius.full),
           ),
           child: AnimatedAlign(
@@ -234,7 +236,11 @@ class _PrivacyIconContainer extends StatelessWidget {
         shape: BoxShape.circle,
         border: Border.all(color: context.themeColors.privacyChipBorder),
       ),
-      child: Icon(icon, size: 18, color: context.themeColors.privacyChipForeground),
+      child: Icon(
+        icon,
+        size: 18,
+        color: context.themeColors.privacyChipForeground,
+      ),
     );
   }
 }

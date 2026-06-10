@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateMomentState {
 
- CreateMomentDirectEnum? get createMomentDirectEnum; List<File> get imagePicker; String? get title; String? get note; DateTime? get momentDate; List<TagEntity> get tagsSelected; String? get toneIdSelected; String? get moodIdSelected; Loaded<List<MoodEntity>> get moods; Loaded<List<ToneEntity>> get tones; double? get latitude; double? get longitude; String? get locationName; bool get isPickingLocation; String? get locationMessage; bool get hideFromWidget; bool get isLockMoment; bool get isLoved; int get timeStamp; Loaded<List<TagEntity>> get tagsSuggestions; String get inputText; Loaded<MomentEntity> get saveAction;
+ CreateMomentDirectEnum? get createMomentDirectEnum; List<File> get imagePicker; String? get title; String? get note; DateTime? get momentDate; List<TagEntity> get tagsSelected; String? get toneIdSelected; String? get moodIdSelected; Loaded<List<MoodEntity>> get moods; Loaded<List<ToneEntity>> get tones; double? get latitude; double? get longitude; String? get locationName; bool get isPickingLocation; String? get locationMessage; bool get hideFromWidget; bool get isLockMoment; bool get isLoved; int get timeStamp; Loaded<List<TagEntity>> get tagsSuggestions; String get inputText; Loaded<MomentDetailEntity> get saveAction;
 /// Create a copy of CreateMomentState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $CreateMomentStateCopyWith<$Res>  {
   factory $CreateMomentStateCopyWith(CreateMomentState value, $Res Function(CreateMomentState) _then) = _$CreateMomentStateCopyWithImpl;
 @useResult
 $Res call({
- CreateMomentDirectEnum? createMomentDirectEnum, List<File> imagePicker, String? title, String? note, DateTime? momentDate, List<TagEntity> tagsSelected, String? toneIdSelected, String? moodIdSelected, Loaded<List<MoodEntity>> moods, Loaded<List<ToneEntity>> tones, double? latitude, double? longitude, String? locationName, bool isPickingLocation, String? locationMessage, bool hideFromWidget, bool isLockMoment, bool isLoved, int timeStamp, Loaded<List<TagEntity>> tagsSuggestions, String inputText, Loaded<MomentEntity> saveAction
+ CreateMomentDirectEnum? createMomentDirectEnum, List<File> imagePicker, String? title, String? note, DateTime? momentDate, List<TagEntity> tagsSelected, String? toneIdSelected, String? moodIdSelected, Loaded<List<MoodEntity>> moods, Loaded<List<ToneEntity>> tones, double? latitude, double? longitude, String? locationName, bool isPickingLocation, String? locationMessage, bool hideFromWidget, bool isLockMoment, bool isLoved, int timeStamp, Loaded<List<TagEntity>> tagsSuggestions, String inputText, Loaded<MomentDetailEntity> saveAction
 });
 
 
@@ -86,7 +86,7 @@ as bool,timeStamp: null == timeStamp ? _self.timeStamp : timeStamp // ignore: ca
 as int,tagsSuggestions: null == tagsSuggestions ? _self.tagsSuggestions : tagsSuggestions // ignore: cast_nullable_to_non_nullable
 as Loaded<List<TagEntity>>,inputText: null == inputText ? _self.inputText : inputText // ignore: cast_nullable_to_non_nullable
 as String,saveAction: null == saveAction ? _self.saveAction : saveAction // ignore: cast_nullable_to_non_nullable
-as Loaded<MomentEntity>,
+as Loaded<MomentDetailEntity>,
   ));
 }
 
@@ -171,7 +171,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CreateMomentDirectEnum? createMomentDirectEnum,  List<File> imagePicker,  String? title,  String? note,  DateTime? momentDate,  List<TagEntity> tagsSelected,  String? toneIdSelected,  String? moodIdSelected,  Loaded<List<MoodEntity>> moods,  Loaded<List<ToneEntity>> tones,  double? latitude,  double? longitude,  String? locationName,  bool isPickingLocation,  String? locationMessage,  bool hideFromWidget,  bool isLockMoment,  bool isLoved,  int timeStamp,  Loaded<List<TagEntity>> tagsSuggestions,  String inputText,  Loaded<MomentEntity> saveAction)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CreateMomentDirectEnum? createMomentDirectEnum,  List<File> imagePicker,  String? title,  String? note,  DateTime? momentDate,  List<TagEntity> tagsSelected,  String? toneIdSelected,  String? moodIdSelected,  Loaded<List<MoodEntity>> moods,  Loaded<List<ToneEntity>> tones,  double? latitude,  double? longitude,  String? locationName,  bool isPickingLocation,  String? locationMessage,  bool hideFromWidget,  bool isLockMoment,  bool isLoved,  int timeStamp,  Loaded<List<TagEntity>> tagsSuggestions,  String inputText,  Loaded<MomentDetailEntity> saveAction)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CreateMomentState() when $default != null:
 return $default(_that.createMomentDirectEnum,_that.imagePicker,_that.title,_that.note,_that.momentDate,_that.tagsSelected,_that.toneIdSelected,_that.moodIdSelected,_that.moods,_that.tones,_that.latitude,_that.longitude,_that.locationName,_that.isPickingLocation,_that.locationMessage,_that.hideFromWidget,_that.isLockMoment,_that.isLoved,_that.timeStamp,_that.tagsSuggestions,_that.inputText,_that.saveAction);case _:
@@ -192,7 +192,7 @@ return $default(_that.createMomentDirectEnum,_that.imagePicker,_that.title,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CreateMomentDirectEnum? createMomentDirectEnum,  List<File> imagePicker,  String? title,  String? note,  DateTime? momentDate,  List<TagEntity> tagsSelected,  String? toneIdSelected,  String? moodIdSelected,  Loaded<List<MoodEntity>> moods,  Loaded<List<ToneEntity>> tones,  double? latitude,  double? longitude,  String? locationName,  bool isPickingLocation,  String? locationMessage,  bool hideFromWidget,  bool isLockMoment,  bool isLoved,  int timeStamp,  Loaded<List<TagEntity>> tagsSuggestions,  String inputText,  Loaded<MomentEntity> saveAction)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CreateMomentDirectEnum? createMomentDirectEnum,  List<File> imagePicker,  String? title,  String? note,  DateTime? momentDate,  List<TagEntity> tagsSelected,  String? toneIdSelected,  String? moodIdSelected,  Loaded<List<MoodEntity>> moods,  Loaded<List<ToneEntity>> tones,  double? latitude,  double? longitude,  String? locationName,  bool isPickingLocation,  String? locationMessage,  bool hideFromWidget,  bool isLockMoment,  bool isLoved,  int timeStamp,  Loaded<List<TagEntity>> tagsSuggestions,  String inputText,  Loaded<MomentDetailEntity> saveAction)  $default,) {final _that = this;
 switch (_that) {
 case _CreateMomentState():
 return $default(_that.createMomentDirectEnum,_that.imagePicker,_that.title,_that.note,_that.momentDate,_that.tagsSelected,_that.toneIdSelected,_that.moodIdSelected,_that.moods,_that.tones,_that.latitude,_that.longitude,_that.locationName,_that.isPickingLocation,_that.locationMessage,_that.hideFromWidget,_that.isLockMoment,_that.isLoved,_that.timeStamp,_that.tagsSuggestions,_that.inputText,_that.saveAction);case _:
@@ -212,7 +212,7 @@ return $default(_that.createMomentDirectEnum,_that.imagePicker,_that.title,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CreateMomentDirectEnum? createMomentDirectEnum,  List<File> imagePicker,  String? title,  String? note,  DateTime? momentDate,  List<TagEntity> tagsSelected,  String? toneIdSelected,  String? moodIdSelected,  Loaded<List<MoodEntity>> moods,  Loaded<List<ToneEntity>> tones,  double? latitude,  double? longitude,  String? locationName,  bool isPickingLocation,  String? locationMessage,  bool hideFromWidget,  bool isLockMoment,  bool isLoved,  int timeStamp,  Loaded<List<TagEntity>> tagsSuggestions,  String inputText,  Loaded<MomentEntity> saveAction)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CreateMomentDirectEnum? createMomentDirectEnum,  List<File> imagePicker,  String? title,  String? note,  DateTime? momentDate,  List<TagEntity> tagsSelected,  String? toneIdSelected,  String? moodIdSelected,  Loaded<List<MoodEntity>> moods,  Loaded<List<ToneEntity>> tones,  double? latitude,  double? longitude,  String? locationName,  bool isPickingLocation,  String? locationMessage,  bool hideFromWidget,  bool isLockMoment,  bool isLoved,  int timeStamp,  Loaded<List<TagEntity>> tagsSuggestions,  String inputText,  Loaded<MomentDetailEntity> saveAction)?  $default,) {final _that = this;
 switch (_that) {
 case _CreateMomentState() when $default != null:
 return $default(_that.createMomentDirectEnum,_that.imagePicker,_that.title,_that.note,_that.momentDate,_that.tagsSelected,_that.toneIdSelected,_that.moodIdSelected,_that.moods,_that.tones,_that.latitude,_that.longitude,_that.locationName,_that.isPickingLocation,_that.locationMessage,_that.hideFromWidget,_that.isLockMoment,_that.isLoved,_that.timeStamp,_that.tagsSuggestions,_that.inputText,_that.saveAction);case _:
@@ -227,7 +227,7 @@ return $default(_that.createMomentDirectEnum,_that.imagePicker,_that.title,_that
 
 
 class _CreateMomentState implements CreateMomentState {
-  const _CreateMomentState({this.createMomentDirectEnum, final  List<File> imagePicker = const [], this.title, this.note, this.momentDate, final  List<TagEntity> tagsSelected = const [], this.toneIdSelected, this.moodIdSelected, this.moods = const Loaded<List<MoodEntity>>(), this.tones = const Loaded<List<ToneEntity>>(), this.latitude, this.longitude, this.locationName, this.isPickingLocation = false, this.locationMessage, this.hideFromWidget = false, this.isLockMoment = false, this.isLoved = false, this.timeStamp = 0, this.tagsSuggestions = const Loaded<List<TagEntity>>(), this.inputText = '', this.saveAction = const Loaded<MomentEntity>()}): _imagePicker = imagePicker,_tagsSelected = tagsSelected;
+  const _CreateMomentState({this.createMomentDirectEnum, final  List<File> imagePicker = const [], this.title, this.note, this.momentDate, final  List<TagEntity> tagsSelected = const [], this.toneIdSelected, this.moodIdSelected, this.moods = const Loaded<List<MoodEntity>>(), this.tones = const Loaded<List<ToneEntity>>(), this.latitude, this.longitude, this.locationName, this.isPickingLocation = false, this.locationMessage, this.hideFromWidget = false, this.isLockMoment = false, this.isLoved = false, this.timeStamp = 0, this.tagsSuggestions = const Loaded<List<TagEntity>>(), this.inputText = '', this.saveAction = const Loaded<MomentDetailEntity>()}): _imagePicker = imagePicker,_tagsSelected = tagsSelected;
   
 
 @override final  CreateMomentDirectEnum? createMomentDirectEnum;
@@ -263,7 +263,7 @@ class _CreateMomentState implements CreateMomentState {
 @override@JsonKey() final  int timeStamp;
 @override@JsonKey() final  Loaded<List<TagEntity>> tagsSuggestions;
 @override@JsonKey() final  String inputText;
-@override@JsonKey() final  Loaded<MomentEntity> saveAction;
+@override@JsonKey() final  Loaded<MomentDetailEntity> saveAction;
 
 /// Create a copy of CreateMomentState
 /// with the given fields replaced by the non-null parameter values.
@@ -295,7 +295,7 @@ abstract mixin class _$CreateMomentStateCopyWith<$Res> implements $CreateMomentS
   factory _$CreateMomentStateCopyWith(_CreateMomentState value, $Res Function(_CreateMomentState) _then) = __$CreateMomentStateCopyWithImpl;
 @override @useResult
 $Res call({
- CreateMomentDirectEnum? createMomentDirectEnum, List<File> imagePicker, String? title, String? note, DateTime? momentDate, List<TagEntity> tagsSelected, String? toneIdSelected, String? moodIdSelected, Loaded<List<MoodEntity>> moods, Loaded<List<ToneEntity>> tones, double? latitude, double? longitude, String? locationName, bool isPickingLocation, String? locationMessage, bool hideFromWidget, bool isLockMoment, bool isLoved, int timeStamp, Loaded<List<TagEntity>> tagsSuggestions, String inputText, Loaded<MomentEntity> saveAction
+ CreateMomentDirectEnum? createMomentDirectEnum, List<File> imagePicker, String? title, String? note, DateTime? momentDate, List<TagEntity> tagsSelected, String? toneIdSelected, String? moodIdSelected, Loaded<List<MoodEntity>> moods, Loaded<List<ToneEntity>> tones, double? latitude, double? longitude, String? locationName, bool isPickingLocation, String? locationMessage, bool hideFromWidget, bool isLockMoment, bool isLoved, int timeStamp, Loaded<List<TagEntity>> tagsSuggestions, String inputText, Loaded<MomentDetailEntity> saveAction
 });
 
 
@@ -336,7 +336,7 @@ as bool,timeStamp: null == timeStamp ? _self.timeStamp : timeStamp // ignore: ca
 as int,tagsSuggestions: null == tagsSuggestions ? _self.tagsSuggestions : tagsSuggestions // ignore: cast_nullable_to_non_nullable
 as Loaded<List<TagEntity>>,inputText: null == inputText ? _self.inputText : inputText // ignore: cast_nullable_to_non_nullable
 as String,saveAction: null == saveAction ? _self.saveAction : saveAction // ignore: cast_nullable_to_non_nullable
-as Loaded<MomentEntity>,
+as Loaded<MomentDetailEntity>,
   ));
 }
 

@@ -3,7 +3,7 @@ part of 'map_cubit.dart';
 @freezed
 abstract class MapState with _$MapState {
   const factory MapState({
-    @Default(Loaded<List<MomentEntity>>()) Loaded<List<MomentEntity>> moments,
+    @Default(Loaded<List<MomentSummary>>()) Loaded<List<MomentSummary>> moments,
     @Default(false) bool isLocating,
     double? currentLatitude,
     double? currentLongitude,

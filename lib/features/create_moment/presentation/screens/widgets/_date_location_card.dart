@@ -18,21 +18,27 @@ class _DateLocationCard extends StatelessWidget {
           ),
         ],
       ),
-      child: BlocSelector<CreateMomentCubit, CreateMomentState,
-          ({bool loading, String? name})>(
-        selector: (state) =>
-            (loading: state.isPickingLocation, name: state.locationName),
-        builder: (context, data) {
-          return _TappableRow(
-            icon: Icons.location_on_outlined,
-            label: 'Địa điểm',
-            value: data.loading ? 'Đang lấy vị trí...' : data.name,
-            onTap: data.loading
-                ? () {}
-                : () => context.read<CreateMomentCubit>().pickCurrentLocation(),
-          );
-        },
-      ),
+      child:
+          BlocSelector<
+            CreateMomentCubit,
+            CreateMomentState,
+            ({bool loading, String? name})
+          >(
+            selector: (state) =>
+                (loading: state.isPickingLocation, name: state.locationName),
+            builder: (context, data) {
+              return _TappableRow(
+                icon: Icons.location_on_outlined,
+                label: 'Địa điểm',
+                value: data.loading ? 'Đang lấy vị trí...' : data.name,
+                onTap: data.loading
+                    ? () {}
+                    : () => context
+                          .read<CreateMomentCubit>()
+                          .pickCurrentLocation(),
+              );
+            },
+          ),
     );
   }
 }
@@ -119,7 +125,11 @@ class _IconContainer extends StatelessWidget {
         shape: BoxShape.circle,
         border: Border.all(color: context.themeColors.privacyChipBorder),
       ),
-      child: Icon(icon, size: 18, color: context.themeColors.privacyChipForeground),
+      child: Icon(
+        icon,
+        size: 18,
+        color: context.themeColors.privacyChipForeground,
+      ),
     );
   }
 }
