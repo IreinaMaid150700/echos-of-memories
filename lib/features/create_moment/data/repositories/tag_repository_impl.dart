@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:uuid/uuid.dart';
 import 'package:music_app/core/error/failure.dart';
 import 'package:music_app/core/storage/app_database.dart';
-import 'package:music_app/features/create_moment/domain/models/tag_entity.dart';
+import 'package:music_app/features/moment/domain/models/tag_entity.dart';
 import 'package:music_app/features/create_moment/domain/repositories/tag_repository.dart';
 
 @LazySingleton(as: TagRepository)
@@ -36,7 +37,7 @@ class TagRepositoryImpl implements TagRepository {
         return Right(_toEntity(existing));
       }
 
-      final id = now.millisecondsSinceEpoch.toString();
+      final id = const Uuid().v4();
       await _db
           .into(_db.momentTags)
           .insert(
