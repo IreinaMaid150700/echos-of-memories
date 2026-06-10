@@ -11,7 +11,9 @@ class _MomentContent extends StatelessWidget {
         final moment = state.moment.data;
         if (moment == null) return const SizedBox.shrink();
         final note = moment.note;
-        final summary = note == null ? '' : note.substring(0, note.length.clamp(0, 80));
+        final summary = note == null
+            ? ''
+            : note.substring(0, note.length.clamp(0, 80));
         final displayTitle = moment.title ?? summary;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

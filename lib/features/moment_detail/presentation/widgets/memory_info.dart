@@ -10,7 +10,8 @@ class _MemoryInfoCard extends StatelessWidget {
       builder: (context, state) {
         final moment = state.moment.data;
         if (moment == null) return const SizedBox.shrink();
-        final dateStr = '${moment.momentDate.toVietnamese(showYear: false, showMonth: true, showDay: true)} · ${moment.momentDate.toTimeString()}';
+        final dateStr =
+            '${moment.momentDate.toVietnamese(showYear: false, showMonth: true, showDay: true)} · ${moment.momentDate.toTimeString()}';
         return _SectionCard(
           title: 'MEMORY INFO',
           child: Column(

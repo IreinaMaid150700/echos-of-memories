@@ -9,7 +9,8 @@ class _OrganizationCard extends StatelessWidget {
       buildWhen: (prev, curr) => prev.moment != curr.moment,
       builder: (context, state) {
         final moment = state.moment.data;
-        if (moment == null || moment.tags.isEmpty) return const SizedBox.shrink();
+        if (moment == null || moment.tags.isEmpty)
+          return const SizedBox.shrink();
         return _SectionCard(
           title: 'ORGANIZATION',
           child: Column(
