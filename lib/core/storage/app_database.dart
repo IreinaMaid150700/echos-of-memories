@@ -133,6 +133,13 @@ class AppDatabase extends _$AppDatabase {
           ),
         );
       },
+      // MIGRATION WORKFLOW — required when changing schema:
+      // 1. Edit table definition + increment schemaVersion.
+      // 2. Dump new schema:
+      //    fvm dart run drift_dev schema dump lib/core/storage/app_database.dart drift_schemas/drift_schema_vN.json
+      // 3. Write migration steps here (m.addColumn / m.alterTable / ...).
+      // 4. Write migration test using drift_dev schema steps + verify old data preserved.
+      // Leaving onUpgrade empty when schemaVersion increases = user update causes crash or data loss.
       onUpgrade: (Migrator m, int from, int to) async {},
     );
   }
