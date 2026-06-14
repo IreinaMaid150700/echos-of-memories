@@ -83,7 +83,13 @@ import '../../features/theme/data/repositories/theme_repository_impl.dart'
     as _i592;
 import '../../features/theme/domain/repositories/theme_repository.dart'
     as _i869;
+import '../../features/theme/domain/usecases/get_available_themes_usecase.dart'
+    as _i426;
+import '../../features/theme/domain/usecases/get_selected_theme_usecase.dart'
+    as _i1;
 import '../../features/theme/domain/usecases/get_theme_usecase.dart' as _i620;
+import '../../features/theme/domain/usecases/set_selected_theme_usecase.dart'
+    as _i831;
 import '../../features/theme/domain/usecases/set_theme_usecase.dart' as _i684;
 import '../../features/theme/presentation/cubit/theme_cubit.dart' as _i5;
 import '../location/data/location_service.dart' as _i659;
@@ -247,8 +253,17 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i746.LockSessionCubit>(),
       ),
     );
+    gh.factory<_i426.GetAvailableThemesUseCase>(
+      () => _i426.GetAvailableThemesUseCase(gh<_i869.ThemeRepository>()),
+    );
+    gh.factory<_i1.GetSelectedThemeUseCase>(
+      () => _i1.GetSelectedThemeUseCase(gh<_i869.ThemeRepository>()),
+    );
     gh.factory<_i620.GetThemeUseCase>(
       () => _i620.GetThemeUseCase(gh<_i869.ThemeRepository>()),
+    );
+    gh.factory<_i831.SetSelectedThemeUseCase>(
+      () => _i831.SetSelectedThemeUseCase(gh<_i869.ThemeRepository>()),
     );
     gh.factory<_i684.SetThemeUseCase>(
       () => _i684.SetThemeUseCase(gh<_i869.ThemeRepository>()),
