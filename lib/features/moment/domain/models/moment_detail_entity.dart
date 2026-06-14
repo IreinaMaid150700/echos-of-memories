@@ -1,7 +1,11 @@
 import 'package:equatable/equatable.dart';
-import 'package:music_app/features/create_moment/domain/models/tag_entity.dart';
+import 'package:music_app/features/moment/domain/models/moment_asset_entity.dart';
+import 'package:music_app/features/moment/domain/models/tag_entity.dart';
+import 'package:music_app/features/mood_tone/domain/models/mood_entity.dart';
+import 'package:music_app/features/mood_tone/domain/models/tone_entity.dart';
 
-class MomentEntity extends Equatable {
+/// Full read model for detail screen and createMoment result.
+class MomentDetailEntity extends Equatable {
   final String id;
   final String? title;
   final String? note;
@@ -16,13 +20,14 @@ class MomentEntity extends Equatable {
   final bool isPinned;
   final bool isHiddenFromWidget;
   final bool isLocked;
-  final String? moodId;
-  final String? toneId;
+  final MoodEntity? mood;
+  final ToneEntity? tone;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final List<MomentAssetEntity> assets;
   final List<TagEntity> tags;
 
-  const MomentEntity({
+  const MomentDetailEntity({
     required this.id,
     this.title,
     this.note,
@@ -37,33 +42,18 @@ class MomentEntity extends Equatable {
     this.isPinned = false,
     this.isHiddenFromWidget = false,
     this.isLocked = false,
-    this.moodId,
-    this.toneId,
+    this.mood,
+    this.tone,
     required this.createdAt,
     required this.updatedAt,
+    this.assets = const [],
     this.tags = const [],
   });
 
   @override
   List<Object?> get props => [
-        id,
-        title,
-        note,
-        momentDate,
-        locationName,
-        address,
-        city,
-        country,
-        latitude,
-        longitude,
-        isFavorite,
-        isPinned,
-        isHiddenFromWidget,
-        isLocked,
-        moodId,
-        toneId,
-        createdAt,
-        updatedAt,
-        tags,
-      ];
+    id, title, note, momentDate, locationName, address, city, country,
+    latitude, longitude, isFavorite, isPinned, isHiddenFromWidget, isLocked,
+    mood, tone, createdAt, updatedAt, assets, tags,
+  ];
 }

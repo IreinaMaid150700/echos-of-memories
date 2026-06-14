@@ -1,25 +1,24 @@
 import 'dart:io';
-import 'dart:ui' as ui;
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
-import 'package:music_app/features/moment/domain/models/moment_asset_input.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:music_app/core/cubit/base_cubit.dart';
 import 'package:music_app/core/utils/models/loaded.dart';
 import 'package:music_app/features/create_moment/domain/enum/create_moment_direct_enum.dart';
-import 'package:music_app/features/create_moment/domain/models/tag_entity.dart';
+import 'package:music_app/features/moment/domain/models/tag_entity.dart';
+import 'package:music_app/features/create_moment/domain/usecases/cleanup_moment_assets_usecase.dart';
+import 'package:music_app/features/create_moment/domain/usecases/get_current_moment_location_usecase.dart';
 import 'package:music_app/features/create_moment/domain/usecases/get_tags_usecase.dart';
+import 'package:music_app/features/create_moment/domain/usecases/persist_moment_assets_usecase.dart';
+import 'package:music_app/features/create_moment/domain/usecases/pick_moment_images_usecase.dart';
+import 'package:music_app/features/moment/domain/models/create_moment_params.dart';
+import 'package:music_app/features/moment/domain/models/moment_asset_input.dart';
+import 'package:music_app/features/moment/domain/models/moment_detail_entity.dart';
+import 'package:music_app/features/moment/domain/usecases/create_moment_usecase.dart';
 import 'package:music_app/features/mood_tone/domain/models/mood_entity.dart';
 import 'package:music_app/features/mood_tone/domain/models/tone_entity.dart';
 import 'package:music_app/features/mood_tone/domain/usecases/get_moods_usecase.dart';
 import 'package:music_app/features/mood_tone/domain/usecases/get_tones_usecase.dart';
-import 'package:music_app/features/moment/domain/models/create_moment_params.dart';
-import 'package:music_app/features/moment/domain/models/moment_entity.dart';
-import 'package:music_app/features/moment/domain/usecases/create_moment_usecase.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 part 'create_moment_state.dart';
 part 'create_moment_cubit.freezed.dart';
 
@@ -28,27 +27,45 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
   final CreateMomentUseCase _createMomentUseCase;
   final GetMoodsUseCase _getMoodsUseCase;
   final GetTonesUseCase _getTonesUseCase;
-  final ImagePicker _imagePicker;
+  final PickMomentImagesUseCase _pickMomentImagesUseCase;
+  final GetCurrentMomentLocationUseCase _getCurrentMomentLocationUseCase;
+  final PersistMomentAssetsUseCase _persistMomentAssetsUseCase;
+  final CleanupMomentAssetsUseCase _cleanupMomentAssetsUseCase;
 
   CreateMomentCubit({
     required GetTagsUseCase getTagsUseCase,
     required CreateMomentUseCase createMomentUseCase,
     required GetMoodsUseCase getMoodsUseCase,
     required GetTonesUseCase getTonesUseCase,
-    required ImagePicker imagePicker,
+    required PickMomentImagesUseCase pickMomentImagesUseCase,
+    required GetCurrentMomentLocationUseCase getCurrentMomentLocationUseCase,
+    required PersistMomentAssetsUseCase persistMomentAssetsUseCase,
+    required CleanupMomentAssetsUseCase cleanupMomentAssetsUseCase,
   }) : _getTagsUseCase = getTagsUseCase,
        _createMomentUseCase = createMomentUseCase,
        _getMoodsUseCase = getMoodsUseCase,
        _getTonesUseCase = getTonesUseCase,
-       _imagePicker = imagePicker,
+       _pickMomentImagesUseCase = pickMomentImagesUseCase,
+       _getCurrentMomentLocationUseCase = getCurrentMomentLocationUseCase,
+       _persistMomentAssetsUseCase = persistMomentAssetsUseCase,
+       _cleanupMomentAssetsUseCase = cleanupMomentAssetsUseCase,
        super(const CreateMomentState());
 
-  Future<void> initialData() async {
+  Future<void> initialData({List<File> initialImages = const []}) async {
+    seedInitialImages(initialImages);
     await Future.wait([
       loadTagsSuggestions(),
       loadMoods(),
       loadTones(),
+      pickCurrentLocation(),
     ]);
+  }
+
+  /// Seeds photos handed over from the camera capture screen. Pure (no I/O) so
+  /// it is unit-testable; file persistence still happens in [saveMoment].
+  void seedInitialImages(List<File> images) {
+    if (images.isEmpty) return;
+    emit(state.copyWith(imagePicker: [...state.imagePicker, ...images]));
   }
 
   Future<void> loadMoods() async {
@@ -93,6 +110,10 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
     emit(state.copyWith(inputText: text));
   }
 
+  void onChangeTitle(String? value) {
+    emit(state.copyWith(title: value));
+  }
+
   void onChangeNote(String? value) {
     emit(state.copyWith(note: value));
   }
@@ -116,24 +137,32 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
   }
 
   Future<void> openImagePicker() async {
-    try {
-      final List<XFile> pickedFileList = await _imagePicker.pickMultiImage();
-
-      if (pickedFileList.isNotEmpty) {
-        emit(
-          state.copyWith(
-            imagePicker: pickedFileList.map((e) => File(e.path)).toList(),
-          ),
-        );
-      }
-    } catch (_) {
-      emit(
+    final result = await _pickMomentImagesUseCase(state.imagePicker);
+    result.fold(
+      (_) => emit(
         state.copyWith(
           createMomentDirectEnum:
               CreateMomentDirectEnum.showDialogErrorWhenPicker,
+          timeStamp: state.timeStamp + 1,
         ),
-      );
-    }
+      ),
+      (added) {
+        if (added.isEmpty) return;
+        emit(
+          state.copyWith(
+            imagePicker: [...state.imagePicker, ...added],
+            createMomentDirectEnum: null,
+          ),
+        );
+      },
+    );
+  }
+
+  void removeImageAt(int index) {
+    final list = [...state.imagePicker];
+    if (index < 0 || index >= list.length) return;
+    list.removeAt(index);
+    emit(state.copyWith(imagePicker: list));
   }
 
   void showDevelopmentDialog() {
@@ -160,7 +189,7 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
     if (exists) return;
 
     final newTag = TagEntity(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      id: const Uuid().v4(),
       name: normalizedName,
       normalizedName: normalizedName,
     );
@@ -181,84 +210,44 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
     emit(state.copyWith(tagsSelected: updatedTags));
   }
 
-  /// Lấy vị trí hiện tại của thiết bị để gắn vào khoảnh khắc (xin quyền nếu
-  /// cần). Lưu lat/long + tên hiển thị dạng toạ độ vào state, sẽ persist khi
-  /// [saveMoment].
   Future<void> pickCurrentLocation() async {
     if (state.isPickingLocation) return;
     emit(state.copyWith(isPickingLocation: true, locationMessage: null));
-    try {
-      final serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) {
-        emit(
-          state.copyWith(
-            isPickingLocation: false,
-            locationMessage: 'Dịch vụ vị trí đang tắt. Hãy bật GPS rồi thử lại.',
-          ),
-        );
-        return;
-      }
 
-      var permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-      }
-      if (permission == LocationPermission.denied ||
-          permission == LocationPermission.deniedForever) {
-        emit(
-          state.copyWith(
-            isPickingLocation: false,
-            locationMessage: 'Ứng dụng chưa được cấp quyền vị trí.',
-          ),
-        );
-        return;
-      }
-
-      final position = await Geolocator.getCurrentPosition();
-      final name = await _resolveAddress(position.latitude, position.longitude);
-      emit(
+    final result = await _getCurrentMomentLocationUseCase();
+    result.fold(
+      (failure) => emit(
         state.copyWith(
           isPickingLocation: false,
-          latitude: position.latitude,
-          longitude: position.longitude,
-          locationName: name,
+          locationMessage: failure.message,
         ),
-      );
-    } catch (_) {
-      emit(
+      ),
+      (location) => emit(
         state.copyWith(
           isPickingLocation: false,
-          locationMessage: 'Không lấy được vị trí. Hãy thử lại.',
+          latitude: location.latitude,
+          longitude: location.longitude,
+          locationName: location.name,
         ),
-      );
-    }
-  }
-
-  /// Reverse-geocode toạ độ -> tên địa chỉ người đọc được.
-  /// Lỗi/không có kết quả -> fallback về toạ độ rút gọn.
-  Future<String> _resolveAddress(double lat, double long) async {
-    final fallback =
-        '${lat.toStringAsFixed(5)}, ${long.toStringAsFixed(5)}';
-    try {
-      final placemarks = await placemarkFromCoordinates(lat, long);
-      if (placemarks.isEmpty) return fallback;
-      final p = placemarks.first;
-      final parts = <String?>[
-        p.street,
-        p.subAdministrativeArea,
-        p.administrativeArea,
-        p.country,
-      ].where((e) => e != null && e.trim().isNotEmpty).toList();
-      if (parts.isEmpty) return fallback;
-      return parts.join(', ');
-    } catch (_) {
-      return fallback;
-    }
+      ),
+    );
   }
 
   Future<void> saveMoment() async {
+    if (state.saveAction.isLoading) return;
+    emit(state.copyWith(saveAction: state.saveAction.toLoading()));
+
+    final assetsResult = await _persistMomentAssetsUseCase(state.imagePicker);
+    final assets = assetsResult.fold<List<MomentAssetInput>?>((failure) {
+      emit(
+        state.copyWith(saveAction: state.saveAction.toFailure(failure.message)),
+      );
+      return null;
+    }, (assets) => assets);
+    if (assets == null) return;
+
     final trimmedNote = state.note?.trim();
-    final assets = await _persistPickedImages(state.imagePicker);
+    final trimmedTitle = state.title?.trim();
     final params = CreateMomentParams(
       note: (trimmedNote?.isEmpty ?? true) ? null : trimmedNote,
       momentDate: state.momentDate ?? DateTime.now(),
@@ -272,73 +261,21 @@ class CreateMomentCubit extends BaseCubit<CreateMomentState> {
       moodId: state.moodIdSelected,
       toneId: state.toneIdSelected,
       assets: assets,
+      title: (trimmedTitle?.isEmpty ?? true) ? null : trimmedTitle,
     );
-    await execute(
-      loadingState: state.copyWith(saveAction: state.saveAction.toLoading()),
-      action: () => _createMomentUseCase(params),
-      onSuccess: (moment) => state.copyWith(saveAction: state.saveAction.toSuccess(moment)),
-      onFailure: (f) => state.copyWith(saveAction: state.saveAction.toFailure(f.message)),
+
+    final result = await _createMomentUseCase(params);
+    await result.fold(
+      (failure) async {
+        await _cleanupMomentAssetsUseCase(assets);
+        emit(
+          state.copyWith(
+            saveAction: state.saveAction.toFailure(failure.message),
+          ),
+        );
+      },
+      (moment) async =>
+          emit(state.copyWith(saveAction: state.saveAction.toSuccess(moment))),
     );
-  }
-
-  /// Copies picked images into persistent app storage (image_picker returns
-  /// temp cache paths) and probes each file's dimensions + size so they can be
-  /// written into `moment_assets`.
-  Future<List<MomentAssetInput>> _persistPickedImages(List<File> files) async {
-    if (files.isEmpty) return const [];
-    final docsDir = await getApplicationDocumentsDirectory();
-    final assetsDir = Directory(p.join(docsDir.path, 'moment_assets'));
-    if (!await assetsDir.exists()) {
-      await assetsDir.create(recursive: true);
-    }
-
-    final result = <MomentAssetInput>[];
-    for (var i = 0; i < files.length; i++) {
-      final source = files[i];
-      final ext = p.extension(source.path);
-      final fileName = '${DateTime.now().microsecondsSinceEpoch}_$i$ext';
-      final copied = await source.copy(p.join(assetsDir.path, fileName));
-      final bytes = await copied.readAsBytes();
-
-      var width = 0;
-      var height = 0;
-      try {
-        final codec = await ui.instantiateImageCodec(bytes);
-        final frame = await codec.getNextFrame();
-        width = frame.image.width;
-        height = frame.image.height;
-        frame.image.dispose();
-        codec.dispose();
-      } catch (_) {
-        // Leave dimensions at 0 if the image can't be decoded.
-      }
-
-      result.add(MomentAssetInput(
-        path: copied.path,
-        width: width,
-        height: height,
-        fileSize: bytes.length,
-        mimeType: _mimeFromExtension(ext),
-        sortOrder: i,
-      ));
-    }
-    return result;
-  }
-
-  String _mimeFromExtension(String ext) {
-    switch (ext.toLowerCase()) {
-      case '.png':
-        return 'image/png';
-      case '.gif':
-        return 'image/gif';
-      case '.webp':
-        return 'image/webp';
-      case '.heic':
-        return 'image/heic';
-      case '.jpg':
-      case '.jpeg':
-      default:
-        return 'image/jpeg';
-    }
   }
 }

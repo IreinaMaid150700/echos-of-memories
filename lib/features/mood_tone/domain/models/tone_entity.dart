@@ -20,6 +20,13 @@ class ToneEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [id, code, name, key, lightColorHex, darkColorHex, sortOrder];
+  List<Object?> get props => [
+    id,
+    code,
+    name,
+    key,
+    lightColorHex,
+    darkColorHex,
+    sortOrder,
+  ];
 }

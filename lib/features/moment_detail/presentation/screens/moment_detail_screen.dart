@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
@@ -85,18 +87,28 @@ class _MediaCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Swiper(
-      itemBuilder: (BuildContext context, int index) {
-        return _imageOutlined(context);
+    return BlocBuilder<MomentDetailCubit, MomentDetailState>(
+      buildWhen: (prev, curr) =>
+          prev.moment.data?.assets != curr.moment.data?.assets,
+      builder: (context, state) {
+        final assets = state.moment.data?.assets ?? const [];
+        if (assets.isEmpty) {
+          return _EmptyMediaPlaceholder();
+        }
+        return Swiper(
+          itemBuilder: (BuildContext context, int index) {
+            return _imageCard(context, assets[index].path);
+          },
+          itemCount: assets.length,
+          itemWidth: 300.0,
+          itemHeight: 400.0,
+          layout: SwiperLayout.TINDER,
+        );
       },
-      itemCount: 1,
-      itemWidth: 300.0,
-      itemHeight: 400.0,
-      layout: SwiperLayout.TINDER,
     );
   }
 
-  Widget _imageOutlined(BuildContext context) {
+  Widget _imageCard(BuildContext context, String path) {
     return Stack(
       children: [
         Container(
@@ -106,11 +118,18 @@ class _MediaCarousel extends StatelessWidget {
             color: const Color.fromARGB(255, 32, 32, 32),
             borderRadius: BorderRadius.circular(AppRadius.xl),
           ),
-          child: Center(
-            child: Icon(
-              Icons.image_outlined,
-              size: 64,
-              color: context.themeColors.textMuted,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(AppRadius.xl),
+            child: Image.file(
+              File(path),
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Center(
+                child: Icon(
+                  Icons.broken_image_outlined,
+                  size: 64,
+                  color: context.themeColors.textMuted,
+                ),
+              ),
             ),
           ),
         ),
@@ -120,6 +139,29 @@ class _MediaCarousel extends StatelessWidget {
           child: const _FullscreenButton(),
         ),
       ],
+    );
+  }
+}
+
+class _EmptyMediaPlaceholder extends StatelessWidget {
+  const _EmptyMediaPlaceholder();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 280,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(255, 32, 32, 32),
+        borderRadius: BorderRadius.circular(AppRadius.xl),
+      ),
+      child: Center(
+        child: Icon(
+          Icons.image_outlined,
+          size: 64,
+          color: context.themeColors.textMuted,
+        ),
+      ),
     );
   }
 }

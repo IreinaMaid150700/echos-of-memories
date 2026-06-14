@@ -16,7 +16,8 @@ class DevDbViewerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => DevDbViewerCubit(DevDbInspector(getIt<AppDatabase>()))..init(),
+      create: (_) =>
+          DevDbViewerCubit(DevDbInspector(getIt<AppDatabase>()))..init(),
       child: const _DevDbViewerView(),
     );
   }
@@ -117,7 +118,9 @@ class _TablePicker extends StatelessWidget {
                 ),
               ),
               items: state.tables
-                  .map((t) => DropdownMenuItem(value: t.name, child: Text(t.name)))
+                  .map(
+                    (t) => DropdownMenuItem(value: t.name, child: Text(t.name)),
+                  )
                   .toList(),
               onChanged: (value) {
                 if (value != null) {
@@ -186,7 +189,8 @@ class _Body extends StatelessWidget {
               child: state.isLoadingMore
                   ? const CircularProgressIndicator()
                   : OutlinedButton(
-                      onPressed: () => context.read<DevDbViewerCubit>().loadMore(),
+                      onPressed: () =>
+                          context.read<DevDbViewerCubit>().loadMore(),
                       child: Text(
                         'Load more (${state.rows.length}/${state.totalCount})',
                       ),
@@ -203,7 +207,10 @@ class _Body extends StatelessWidget {
         ...state.columns.map((c) => DataCell(_valueText(context, row.data[c]))),
         DataCell(
           IconButton(
-            icon: Icon(Icons.delete_outline, color: context.themeColors.dangerText),
+            icon: Icon(
+              Icons.delete_outline,
+              color: context.themeColors.dangerText,
+            ),
             tooltip: 'Delete row',
             onPressed: () => _confirmDelete(context, row),
           ),

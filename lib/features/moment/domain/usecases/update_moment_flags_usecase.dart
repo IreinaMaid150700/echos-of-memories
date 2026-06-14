@@ -12,7 +12,9 @@ class UpdateMomentFlagsUseCase {
     String id, {
     bool? isPinned,
     bool? isHiddenFromWidget,
-  }) =>
-      _repository.updateMomentFlags(id,
-          isPinned: isPinned, isHiddenFromWidget: isHiddenFromWidget);
+  }) => _repository.updateMomentFlags(
+    id,
+    isPinned: isPinned,
+    isHiddenFromWidget: isHiddenFromWidget,
+  );
 }

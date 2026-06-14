@@ -1,5 +1,1 @@
-enum SplashNavigationEvent {
-  home,
-  onboarding,
-  none,
-}
+enum SplashNavigationEvent { home, onboarding, none }

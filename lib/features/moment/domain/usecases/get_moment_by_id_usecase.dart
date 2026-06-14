@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:music_app/core/error/failure.dart';
-import 'package:music_app/features/moment/domain/models/moment_entity.dart';
+import 'package:music_app/features/moment/domain/models/moment_detail_entity.dart';
 import 'package:music_app/features/moment/domain/repositories/moment_repository.dart';
 
 @injectable
 class GetMomentByIdUseCase {
   final MomentRepository _repository;
-
   GetMomentByIdUseCase(this._repository);
 
-  Future<Either<Failure, MomentEntity>> call(String id) => _repository.getMomentById(id);
+  Future<Either<Failure, MomentDetailEntity>> call(String id) =>
+      _repository.getMomentDetail(id);
 }

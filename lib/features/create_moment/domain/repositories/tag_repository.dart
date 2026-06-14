@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:music_app/core/error/failure.dart';
-import 'package:music_app/features/create_moment/domain/models/tag_entity.dart';
+import 'package:music_app/features/moment/domain/models/tag_entity.dart';
 
 abstract class TagRepository {
   Future<Either<Failure, List<TagEntity>>> getTags();

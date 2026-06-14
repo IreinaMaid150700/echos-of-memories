@@ -4,7 +4,8 @@ import 'moments_table.dart';
 
 class MomentAssets extends Table {
   TextColumn get id => text()();
-  TextColumn get momentId => text().references(Moments, #id, onDelete: KeyAction.cascade)();
+  TextColumn get momentId =>
+      text().references(Moments, #id, onDelete: KeyAction.cascade)();
   TextColumn get type => text()();
   TextColumn get path => text()();
   TextColumn get thumbnailPath => text().nullable()();

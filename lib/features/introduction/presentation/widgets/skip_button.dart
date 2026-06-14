@@ -1,4 +1,5 @@
 part of '../introduction_screen.dart';
+
 class _SkipButton extends StatelessWidget {
   const _SkipButton({required this.onSkip, required this.visible});
 

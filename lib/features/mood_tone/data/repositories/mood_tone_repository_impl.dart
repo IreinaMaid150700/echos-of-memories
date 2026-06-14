@@ -16,16 +16,19 @@ class MoodToneRepositoryImpl implements MoodToneRepository {
   @override
   Future<Either<Failure, List<MoodEntity>>> getMoods() async {
     try {
-      final packs = await (_db.select(_db.momentMoodPacks)
-            ..where((p) => p.isBuiltIn.equals(true) & p.isEnabled.equals(true)))
-          .get();
+      final packs =
+          await (_db.select(_db.momentMoodPacks)..where(
+                (p) => p.isBuiltIn.equals(true) & p.isEnabled.equals(true),
+              ))
+              .get();
       final packIds = packs.map((p) => p.id).toList();
       if (packIds.isEmpty) return const Right([]);
 
-      final rows = await (_db.select(_db.momentMoods)
-            ..where((m) =>
-                m.moodPackId.isIn(packIds) & m.isArchived.equals(false)))
-          .get();
+      final rows =
+          await (_db.select(_db.momentMoods)..where(
+                (m) => m.moodPackId.isIn(packIds) & m.isArchived.equals(false),
+              ))
+              .get();
       return Right(rows.map(_toMood).toList());
     } catch (e) {
       return Left(CacheFailure(message: 'Failed to fetch moods: $e'));
@@ -35,17 +38,22 @@ class MoodToneRepositoryImpl implements MoodToneRepository {
   @override
   Future<Either<Failure, List<ToneEntity>>> getTones() async {
     try {
-      final packs = await (_db.select(_db.momentTonePacks)
-            ..where((p) => p.isBuiltIn.equals(true) & p.isEnabled.equals(true)))
-          .get();
+      final packs =
+          await (_db.select(_db.momentTonePacks)..where(
+                (p) => p.isBuiltIn.equals(true) & p.isEnabled.equals(true),
+              ))
+              .get();
       final packIds = packs.map((p) => p.id).toList();
       if (packIds.isEmpty) return const Right([]);
 
-      final rows = await (_db.select(_db.momentTones)
-            ..where((t) =>
-                t.tonePackId.isIn(packIds) & t.isArchived.equals(false))
-            ..orderBy([(t) => OrderingTerm.asc(t.sortOrder)]))
-          .get();
+      final rows =
+          await (_db.select(_db.momentTones)
+                ..where(
+                  (t) =>
+                      t.tonePackId.isIn(packIds) & t.isArchived.equals(false),
+                )
+                ..orderBy([(t) => OrderingTerm.asc(t.sortOrder)]))
+              .get();
       return Right(rows.map(_toTone).toList());
     } catch (e) {
       return Left(CacheFailure(message: 'Failed to fetch tones: $e'));
@@ -53,21 +61,21 @@ class MoodToneRepositoryImpl implements MoodToneRepository {
   }
 
   MoodEntity _toMood(MomentMood m) => MoodEntity(
-        id: m.id,
-        code: m.code,
-        name: m.name,
-        emoji: m.emoji,
-        key: m.key,
-        colorHex: m.colorHex,
-      );
+    id: m.id,
+    code: m.code,
+    name: m.name,
+    emoji: m.emoji,
+    key: m.key,
+    colorHex: m.colorHex,
+  );
 
   ToneEntity _toTone(MomentTone t) => ToneEntity(
-        id: t.id,
-        code: t.code,
-        name: t.name,
-        key: t.key,
-        lightColorHex: t.lightColorHex,
-        darkColorHex: t.darkColorHex,
-        sortOrder: t.sortOrder,
-      );
+    id: t.id,
+    code: t.code,
+    name: t.name,
+    key: t.key,
+    lightColorHex: t.lightColorHex,
+    darkColorHex: t.darkColorHex,
+    sortOrder: t.sortOrder,
+  );
 }

@@ -1,36 +1,41 @@
+import 'dart:async';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:music_app/core/cubit/base_cubit.dart';
+import 'package:music_app/core/permissions/domain/app_permission.dart';
+import 'package:music_app/core/permissions/domain/permission_gateway.dart';
+import 'package:music_app/core/permissions/domain/permission_result.dart';
 import 'package:music_app/core/utils/models/loaded.dart';
-import 'package:music_app/features/moment/domain/models/moment_entity.dart';
-import 'package:music_app/features/moment/domain/usecases/get_moments_usecase.dart';
+import 'package:music_app/features/moment/domain/models/moment_summary.dart';
+import 'package:music_app/features/moment/domain/usecases/watch_moments_usecase.dart';
 
 part 'map_state.dart';
 part 'map_cubit.freezed.dart';
 
 class MapCubit extends BaseCubit<MapState> {
-  final GetMomentsUseCase _getMomentsUseCase;
+  final WatchMomentsUseCase _watchMomentsUseCase;
+  final PermissionGateway _permissionGateway;
+  StreamSubscription<List<MomentSummary>>? _sub;
 
-  MapCubit({required GetMomentsUseCase getMomentsUseCase})
-    : _getMomentsUseCase = getMomentsUseCase,
-      super(const MapState());
+  MapCubit({
+    required WatchMomentsUseCase watchMomentsUseCase,
+    required PermissionGateway permissionGateway,
+  }) : _watchMomentsUseCase = watchMomentsUseCase,
+       _permissionGateway = permissionGateway,
+       super(const MapState());
 
-  Future<void> loadMoments() async {
-    await execute(
-      loadingState: state.copyWith(moments: state.moments.toLoading()),
-      action: () => _getMomentsUseCase(),
-      onSuccess: (moments) =>
-          state.copyWith(moments: state.moments.toSuccess(moments)),
-      onFailure: (f) =>
-          state.copyWith(moments: state.moments.toFailure(f.message)),
+  void loadMoments() {
+    _sub?.cancel();
+    emit(state.copyWith(moments: state.moments.toLoading()));
+    _sub = _watchMomentsUseCase().listen(
+      (moments) =>
+          emit(state.copyWith(moments: state.moments.toSuccess(moments))),
+      onError: (Object e) =>
+          emit(state.copyWith(moments: state.moments.toFailure(e.toString()))),
     );
   }
 
-  /// Lấy vị trí hiện tại của thiết bị (xin quyền nếu cần).
-  ///
-  /// Thành công: tăng [MapState.focusTick] để UI recenter dù toạ độ trùng.
-  /// Thất bại (tắt GPS / từ chối quyền / lỗi): set [MapState.locateMessage]
-  /// để UI báo cho người dùng thay vì nuốt êm.
   Future<void> locateMe() async {
     if (state.isLocating) return;
     emit(state.copyWith(isLocating: true, locateMessage: null));
@@ -46,12 +51,8 @@ class MapCubit extends BaseCubit<MapState> {
         return;
       }
 
-      var permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-      }
-      if (permission == LocationPermission.denied ||
-          permission == LocationPermission.deniedForever) {
+      final result = await _permissionGateway.request(AppPermission.location);
+      if (!result.isGranted) {
         emit(
           state.copyWith(
             isLocating: false,
@@ -78,5 +79,11 @@ class MapCubit extends BaseCubit<MapState> {
         ),
       );
     }
+  }
+
+  @override
+  Future<void> close() {
+    _sub?.cancel();
+    return super.close();
   }
 }

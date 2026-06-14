@@ -44,23 +44,31 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
     _scaleAnims = _controllers.map((c) {
       return TweenSequence<double>([
         TweenSequenceItem(
-          tween: Tween(begin: 1.0, end: 0.74)
-              .chain(CurveTween(curve: Curves.easeIn)),
+          tween: Tween(
+            begin: 1.0,
+            end: 0.74,
+          ).chain(CurveTween(curve: Curves.easeIn)),
           weight: 18,
         ),
         TweenSequenceItem(
-          tween: Tween(begin: 0.74, end: 1.26)
-              .chain(CurveTween(curve: Curves.easeOut)),
+          tween: Tween(
+            begin: 0.74,
+            end: 1.26,
+          ).chain(CurveTween(curve: Curves.easeOut)),
           weight: 44,
         ),
         TweenSequenceItem(
-          tween: Tween(begin: 1.26, end: 0.93)
-              .chain(CurveTween(curve: Curves.easeOut)),
+          tween: Tween(
+            begin: 1.26,
+            end: 0.93,
+          ).chain(CurveTween(curve: Curves.easeOut)),
           weight: 22,
         ),
         TweenSequenceItem(
-          tween: Tween(begin: 0.93, end: 1.0)
-              .chain(CurveTween(curve: Curves.easeOut)),
+          tween: Tween(
+            begin: 0.93,
+            end: 1.0,
+          ).chain(CurveTween(curve: Curves.easeOut)),
           weight: 16,
         ),
       ]).animate(c);
@@ -155,8 +163,9 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
                                   Transform.scale(
                                     scale: _scaleAnims[index].value,
                                     child: AnimatedContainer(
-                                      duration:
-                                          const Duration(milliseconds: 260),
+                                      duration: const Duration(
+                                        milliseconds: 260,
+                                      ),
                                       curve: Curves.easeInOut,
                                       padding: EdgeInsets.symmetric(
                                         horizontal: isActive ? 14 : 10,
@@ -166,8 +175,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
                                         color: isActive
                                             ? colors.bottomNavActiveBackground
                                             : Colors.transparent,
-                                        borderRadius:
-                                            BorderRadius.circular(14),
+                                        borderRadius: BorderRadius.circular(14),
                                       ),
                                       child: SvgPicture.asset(
                                         item.iconPath,
@@ -184,8 +192,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
                                   ),
                                   const SizedBox(height: 3),
                                   AnimatedDefaultTextStyle(
-                                    duration:
-                                        const Duration(milliseconds: 200),
+                                    duration: const Duration(milliseconds: 200),
                                     style: TextStyle(
                                       fontFamily: 'Be Vietnam Pro',
                                       fontSize: 10,

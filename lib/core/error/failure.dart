@@ -12,10 +12,7 @@ abstract class Failure {
   /// Mã lỗi gốc từ server (nếu có). Dùng để log hoặc analytics.
   final int? statusCode;
 
-  const Failure({
-    required this.message,
-    this.statusCode,
-  });
+  const Failure({required this.message, this.statusCode});
 
   @override
   String toString() =>
@@ -28,14 +25,16 @@ abstract class Failure {
 
 /// Không có kết nối mạng (offline, DNS fail, timeout kết nối).
 class NetworkFailure extends Failure {
-  const NetworkFailure(
-      {super.message = 'Không có kết nối mạng. Vui lòng kiểm tra lại.'});
+  const NetworkFailure({
+    super.message = 'Không có kết nối mạng. Vui lòng kiểm tra lại.',
+  });
 }
 
 /// Request timeout — server không phản hồi trong thời gian cho phép.
 class TimeoutFailure extends Failure {
-  const TimeoutFailure(
-      {super.message = 'Yêu cầu mất quá nhiều thời gian. Vui lòng thử lại.'});
+  const TimeoutFailure({
+    super.message = 'Yêu cầu mất quá nhiều thời gian. Vui lòng thử lại.',
+  });
 }
 
 /// SSL / Certificate error.

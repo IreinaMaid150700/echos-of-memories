@@ -35,9 +35,10 @@ class _SplashScreenState extends State<SplashScreen> {
             loadedLocalData: (navigation) {
               switch (navigation) {
                 case SplashNavigationEvent.home:
+                  context.router.replaceAll([const HomeRoute()]);
                   break;
                 case SplashNavigationEvent.onboarding:
-                  context.router.push(const SaveYourMemIntroductionRoute());
+                  context.router.replace(const SaveYourMemIntroductionRoute());
                   break;
                 case SplashNavigationEvent.none:
                   break;

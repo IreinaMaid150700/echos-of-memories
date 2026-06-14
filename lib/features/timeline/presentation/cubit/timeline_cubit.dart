@@ -1,27 +1,36 @@
+import 'dart:async';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:music_app/core/cubit/base_cubit.dart';
 import 'package:music_app/core/utils/models/loaded.dart';
-import 'package:music_app/features/moment/domain/models/moment_entity.dart';
-import 'package:music_app/features/moment/domain/usecases/get_moments_usecase.dart';
+import 'package:music_app/features/moment/domain/models/moment_summary.dart';
+import 'package:music_app/features/moment/domain/usecases/watch_moments_usecase.dart';
 
 part 'timeline_state.dart';
 part 'timeline_cubit.freezed.dart';
 
 class TimelineCubit extends BaseCubit<TimelineState> {
-  final GetMomentsUseCase _getMomentsUseCase;
+  final WatchMomentsUseCase _watchMomentsUseCase;
+  StreamSubscription<List<MomentSummary>>? _sub;
 
-  TimelineCubit({required GetMomentsUseCase getMomentsUseCase})
-      : _getMomentsUseCase = getMomentsUseCase,
-        super(const TimelineState());
+  TimelineCubit({required WatchMomentsUseCase watchMomentsUseCase})
+    : _watchMomentsUseCase = watchMomentsUseCase,
+      super(const TimelineState());
 
-  Future<void> loadMoments() async {
-    await execute(
-      loadingState: state.copyWith(moments: state.moments.toLoading()),
-      action: () => _getMomentsUseCase(),
-      onSuccess: (moments) =>
-          state.copyWith(moments: state.moments.toSuccess(moments)),
-      onFailure: (f) =>
-          state.copyWith(moments: state.moments.toFailure(f.message)),
+  void loadMoments() {
+    _sub?.cancel();
+    emit(state.copyWith(moments: state.moments.toLoading()));
+    _sub = _watchMomentsUseCase().listen(
+      (moments) =>
+          emit(state.copyWith(moments: state.moments.toSuccess(moments))),
+      onError: (Object e) =>
+          emit(state.copyWith(moments: state.moments.toFailure(e.toString()))),
     );
+  }
+
+  @override
+  Future<void> close() {
+    _sub?.cancel();
+    return super.close();
   }
 }

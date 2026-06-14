@@ -55,30 +55,34 @@ class DioFailureMapper {
     final serverMessage = _extractServerMessage(e.response);
 
     return switch (statusCode) {
-      400 =>
-        BadRequestFailure(message: serverMessage ?? 'Yêu cầu không hợp lệ.'),
+      400 => BadRequestFailure(
+        message: serverMessage ?? 'Yêu cầu không hợp lệ.',
+      ),
       401 => UnauthorizedFailure(
-          message: serverMessage ?? 'Phiên đăng nhập đã hết hạn.'),
+        message: serverMessage ?? 'Phiên đăng nhập đã hết hạn.',
+      ),
       403 => ForbiddenFailure(
-          message:
-              serverMessage ?? 'Bạn không có quyền thực hiện thao tác này.'),
-      404 =>
-        NotFoundFailure(message: serverMessage ?? 'Không tìm thấy dữ liệu.'),
+        message: serverMessage ?? 'Bạn không có quyền thực hiện thao tác này.',
+      ),
+      404 => NotFoundFailure(
+        message: serverMessage ?? 'Không tìm thấy dữ liệu.',
+      ),
       408 => const RequestTimeoutFailure(),
       409 => ConflictFailure(message: serverMessage ?? 'Dữ liệu bị xung đột.'),
-      422 =>
-        ValidationFailure(message: serverMessage ?? 'Dữ liệu không hợp lệ.'),
+      422 => ValidationFailure(
+        message: serverMessage ?? 'Dữ liệu không hợp lệ.',
+      ),
       429 => const RateLimitFailure(),
       503 => const ServiceUnavailableFailure(),
       >= 500 => ServerFailure(
-          message:
-              serverMessage ?? 'Máy chủ đang gặp sự cố. Vui lòng thử lại sau.',
-          statusCode: statusCode,
-        ),
+        message:
+            serverMessage ?? 'Máy chủ đang gặp sự cố. Vui lòng thử lại sau.',
+        statusCode: statusCode,
+      ),
       _ => ServerFailure(
-          message: serverMessage ?? 'Lỗi không xác định (HTTP $statusCode).',
-          statusCode: statusCode,
-        ),
+        message: serverMessage ?? 'Lỗi không xác định (HTTP $statusCode).',
+        statusCode: statusCode,
+      ),
     };
   }
 

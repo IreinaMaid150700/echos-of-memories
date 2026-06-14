@@ -10,5 +10,6 @@ class SetThemeUseCase {
 
   SetThemeUseCase(this._repository);
 
-  Future<Either<Failure, Unit>> call(ThemeMode mode) => _repository.setThemeMode(mode);
+  Future<Either<Failure, Unit>> call(ThemeMode mode) =>
+      _repository.setThemeMode(mode);
 }

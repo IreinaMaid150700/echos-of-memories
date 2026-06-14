@@ -1,4 +1,5 @@
 part of '../introduction_screen.dart';
+
 class _BottomControls extends StatelessWidget {
   const _BottomControls({
     required this.currentPage,

@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TimelineState {
 
- Loaded<List<MomentEntity>> get moments;
+ Loaded<List<MomentSummary>> get moments;
 /// Create a copy of TimelineState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $TimelineStateCopyWith<$Res>  {
   factory $TimelineStateCopyWith(TimelineState value, $Res Function(TimelineState) _then) = _$TimelineStateCopyWithImpl;
 @useResult
 $Res call({
- Loaded<List<MomentEntity>> moments
+ Loaded<List<MomentSummary>> moments
 });
 
 
@@ -65,7 +65,7 @@ class _$TimelineStateCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? moments = null,}) {
   return _then(_self.copyWith(
 moments: null == moments ? _self.moments : moments // ignore: cast_nullable_to_non_nullable
-as Loaded<List<MomentEntity>>,
+as Loaded<List<MomentSummary>>,
   ));
 }
 
@@ -150,7 +150,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Loaded<List<MomentEntity>> moments)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Loaded<List<MomentSummary>> moments)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TimelineState() when $default != null:
 return $default(_that.moments);case _:
@@ -171,7 +171,7 @@ return $default(_that.moments);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Loaded<List<MomentEntity>> moments)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Loaded<List<MomentSummary>> moments)  $default,) {final _that = this;
 switch (_that) {
 case _TimelineState():
 return $default(_that.moments);case _:
@@ -191,7 +191,7 @@ return $default(_that.moments);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Loaded<List<MomentEntity>> moments)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Loaded<List<MomentSummary>> moments)?  $default,) {final _that = this;
 switch (_that) {
 case _TimelineState() when $default != null:
 return $default(_that.moments);case _:
@@ -206,10 +206,10 @@ return $default(_that.moments);case _:
 
 
 class _TimelineState implements TimelineState {
-  const _TimelineState({this.moments = const Loaded<List<MomentEntity>>()});
+  const _TimelineState({this.moments = const Loaded<List<MomentSummary>>()});
   
 
-@override@JsonKey() final  Loaded<List<MomentEntity>> moments;
+@override@JsonKey() final  Loaded<List<MomentSummary>> moments;
 
 /// Create a copy of TimelineState
 /// with the given fields replaced by the non-null parameter values.
@@ -241,7 +241,7 @@ abstract mixin class _$TimelineStateCopyWith<$Res> implements $TimelineStateCopy
   factory _$TimelineStateCopyWith(_TimelineState value, $Res Function(_TimelineState) _then) = __$TimelineStateCopyWithImpl;
 @override @useResult
 $Res call({
- Loaded<List<MomentEntity>> moments
+ Loaded<List<MomentSummary>> moments
 });
 
 
@@ -261,7 +261,7 @@ class __$TimelineStateCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? moments = null,}) {
   return _then(_TimelineState(
 moments: null == moments ? _self.moments : moments // ignore: cast_nullable_to_non_nullable
-as Loaded<List<MomentEntity>>,
+as Loaded<List<MomentSummary>>,
   ));
 }
 

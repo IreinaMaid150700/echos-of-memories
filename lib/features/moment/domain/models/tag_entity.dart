@@ -18,6 +18,12 @@ class TagEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [id, name, normalizedName, colorHex, groupKey, usageCount];
+  List<Object?> get props => [
+    id,
+    name,
+    normalizedName,
+    colorHex,
+    groupKey,
+    usageCount,
+  ];
 }

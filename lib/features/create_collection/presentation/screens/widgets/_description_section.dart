@@ -19,8 +19,9 @@ class _DescriptionSection extends StatelessWidget {
             border: Border.all(color: colors.borderSubtle),
           ),
           child: TextField(
-            onChanged:
-                context.read<CreateCollectionCubit>().onChangeDescription,
+            onChanged: context
+                .read<CreateCollectionCubit>()
+                .onChangeDescription,
             maxLines: 3,
             minLines: 3,
             maxLength: 180,

@@ -6,7 +6,7 @@ abstract class MomentDetailState with _$MomentDetailState {
     @Default(false) bool showDeleteConfirm,
     @Default(false) bool isEnablePinOnTop,
     @Default(false) bool isHideFromWidget,
-    @Default(Loaded<MomentEntity>()) Loaded<MomentEntity> moment,
+    @Default(Loaded<MomentDetailEntity>()) Loaded<MomentDetailEntity> moment,
     @Default(Loaded<Unit>()) Loaded<Unit> deleteAction,
   }) = _MomentDetailState;
 }

@@ -47,9 +47,11 @@ class _MoodSelectorSection extends StatelessWidget {
                 separatorBuilder: (_, __) => const Gap(AppSpacing.xs),
                 itemBuilder: (context, index) {
                   final mood = moods[index];
-                  final bg =
-                      mood.colorHex.toColorOr(context.themeColors.tertiary);
-                  final fg = ThemeData.estimateBrightnessForColor(bg) ==
+                  final bg = mood.colorHex.toColorOr(
+                    context.themeColors.tertiary,
+                  );
+                  final fg =
+                      ThemeData.estimateBrightnessForColor(bg) ==
                           Brightness.dark
                       ? Colors.white
                       : const Color(0xFF2A211E);
@@ -102,35 +104,35 @@ class _MoodChip extends StatelessWidget {
         onTap: onTap,
         behavior: HitTestBehavior.opaque,
         child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.sm,
-          vertical: AppSpacing.xs,
-        ),
-        decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: BorderRadius.circular(AppRadius.full),
-          border: Border.all(
-            color: selected
-                ? context.themeColors.primary
-                : textColor.withValues(alpha: 0.15),
-            width: selected ? 2 : 1,
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.sm,
+            vertical: AppSpacing.xs,
           ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(emoji, style: const TextStyle(fontSize: 14)),
-            const Gap(AppSpacing.xxs),
-            Text(
-              label,
-              style: TextStyle(
-                color: textColor,
-                fontSize: 13,
-                fontWeight: FontWeight.w700,
-              ),
+          decoration: BoxDecoration(
+            color: bgColor,
+            borderRadius: BorderRadius.circular(AppRadius.full),
+            border: Border.all(
+              color: selected
+                  ? context.themeColors.primary
+                  : textColor.withValues(alpha: 0.15),
+              width: selected ? 2 : 1,
             ),
-          ],
-        ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(emoji, style: const TextStyle(fontSize: 14)),
+              const Gap(AppSpacing.xxs),
+              Text(
+                label,
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

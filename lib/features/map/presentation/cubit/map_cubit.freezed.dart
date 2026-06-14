@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MapState {
 
- Loaded<List<MomentEntity>> get moments; bool get isLocating; double? get currentLatitude; double? get currentLongitude;// Tăng mỗi lần lấy vị trí thành công để UI recenter lại dù toạ độ trùng.
+ Loaded<List<MomentSummary>> get moments; bool get isLocating; double? get currentLatitude; double? get currentLongitude;// Tăng mỗi lần lấy vị trí thành công để UI recenter lại dù toạ độ trùng.
  int get focusTick;// Thông báo tạm thời khi không lấy được vị trí (tắt GPS / từ chối quyền).
  String? get locateMessage;
 /// Create a copy of MapState
@@ -47,7 +47,7 @@ abstract mixin class $MapStateCopyWith<$Res>  {
   factory $MapStateCopyWith(MapState value, $Res Function(MapState) _then) = _$MapStateCopyWithImpl;
 @useResult
 $Res call({
- Loaded<List<MomentEntity>> moments, bool isLocating, double? currentLatitude, double? currentLongitude, int focusTick, String? locateMessage
+ Loaded<List<MomentSummary>> moments, bool isLocating, double? currentLatitude, double? currentLongitude, int focusTick, String? locateMessage
 });
 
 
@@ -67,7 +67,7 @@ class _$MapStateCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? moments = null,Object? isLocating = null,Object? currentLatitude = freezed,Object? currentLongitude = freezed,Object? focusTick = null,Object? locateMessage = freezed,}) {
   return _then(_self.copyWith(
 moments: null == moments ? _self.moments : moments // ignore: cast_nullable_to_non_nullable
-as Loaded<List<MomentEntity>>,isLocating: null == isLocating ? _self.isLocating : isLocating // ignore: cast_nullable_to_non_nullable
+as Loaded<List<MomentSummary>>,isLocating: null == isLocating ? _self.isLocating : isLocating // ignore: cast_nullable_to_non_nullable
 as bool,currentLatitude: freezed == currentLatitude ? _self.currentLatitude : currentLatitude // ignore: cast_nullable_to_non_nullable
 as double?,currentLongitude: freezed == currentLongitude ? _self.currentLongitude : currentLongitude // ignore: cast_nullable_to_non_nullable
 as double?,focusTick: null == focusTick ? _self.focusTick : focusTick // ignore: cast_nullable_to_non_nullable
@@ -157,7 +157,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Loaded<List<MomentEntity>> moments,  bool isLocating,  double? currentLatitude,  double? currentLongitude,  int focusTick,  String? locateMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Loaded<List<MomentSummary>> moments,  bool isLocating,  double? currentLatitude,  double? currentLongitude,  int focusTick,  String? locateMessage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MapState() when $default != null:
 return $default(_that.moments,_that.isLocating,_that.currentLatitude,_that.currentLongitude,_that.focusTick,_that.locateMessage);case _:
@@ -178,7 +178,7 @@ return $default(_that.moments,_that.isLocating,_that.currentLatitude,_that.curre
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Loaded<List<MomentEntity>> moments,  bool isLocating,  double? currentLatitude,  double? currentLongitude,  int focusTick,  String? locateMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Loaded<List<MomentSummary>> moments,  bool isLocating,  double? currentLatitude,  double? currentLongitude,  int focusTick,  String? locateMessage)  $default,) {final _that = this;
 switch (_that) {
 case _MapState():
 return $default(_that.moments,_that.isLocating,_that.currentLatitude,_that.currentLongitude,_that.focusTick,_that.locateMessage);case _:
@@ -198,7 +198,7 @@ return $default(_that.moments,_that.isLocating,_that.currentLatitude,_that.curre
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Loaded<List<MomentEntity>> moments,  bool isLocating,  double? currentLatitude,  double? currentLongitude,  int focusTick,  String? locateMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Loaded<List<MomentSummary>> moments,  bool isLocating,  double? currentLatitude,  double? currentLongitude,  int focusTick,  String? locateMessage)?  $default,) {final _that = this;
 switch (_that) {
 case _MapState() when $default != null:
 return $default(_that.moments,_that.isLocating,_that.currentLatitude,_that.currentLongitude,_that.focusTick,_that.locateMessage);case _:
@@ -213,10 +213,10 @@ return $default(_that.moments,_that.isLocating,_that.currentLatitude,_that.curre
 
 
 class _MapState implements MapState {
-  const _MapState({this.moments = const Loaded<List<MomentEntity>>(), this.isLocating = false, this.currentLatitude, this.currentLongitude, this.focusTick = 0, this.locateMessage});
+  const _MapState({this.moments = const Loaded<List<MomentSummary>>(), this.isLocating = false, this.currentLatitude, this.currentLongitude, this.focusTick = 0, this.locateMessage});
   
 
-@override@JsonKey() final  Loaded<List<MomentEntity>> moments;
+@override@JsonKey() final  Loaded<List<MomentSummary>> moments;
 @override@JsonKey() final  bool isLocating;
 @override final  double? currentLatitude;
 @override final  double? currentLongitude;
@@ -255,7 +255,7 @@ abstract mixin class _$MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res>
   factory _$MapStateCopyWith(_MapState value, $Res Function(_MapState) _then) = __$MapStateCopyWithImpl;
 @override @useResult
 $Res call({
- Loaded<List<MomentEntity>> moments, bool isLocating, double? currentLatitude, double? currentLongitude, int focusTick, String? locateMessage
+ Loaded<List<MomentSummary>> moments, bool isLocating, double? currentLatitude, double? currentLongitude, int focusTick, String? locateMessage
 });
 
 
@@ -275,7 +275,7 @@ class __$MapStateCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? moments = null,Object? isLocating = null,Object? currentLatitude = freezed,Object? currentLongitude = freezed,Object? focusTick = null,Object? locateMessage = freezed,}) {
   return _then(_MapState(
 moments: null == moments ? _self.moments : moments // ignore: cast_nullable_to_non_nullable
-as Loaded<List<MomentEntity>>,isLocating: null == isLocating ? _self.isLocating : isLocating // ignore: cast_nullable_to_non_nullable
+as Loaded<List<MomentSummary>>,isLocating: null == isLocating ? _self.isLocating : isLocating // ignore: cast_nullable_to_non_nullable
 as bool,currentLatitude: freezed == currentLatitude ? _self.currentLatitude : currentLatitude // ignore: cast_nullable_to_non_nullable
 as double?,currentLongitude: freezed == currentLongitude ? _self.currentLongitude : currentLongitude // ignore: cast_nullable_to_non_nullable
 as double?,focusTick: null == focusTick ? _self.focusTick : focusTick // ignore: cast_nullable_to_non_nullable

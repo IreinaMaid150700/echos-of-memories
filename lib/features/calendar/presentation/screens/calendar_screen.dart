@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:music_app/features/moment/domain/models/moment_summary.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:music_app/core/theme/app_colors.dart';
 import 'package:music_app/core/theme/app_custom_colors.dart';
@@ -87,7 +88,7 @@ class _CalendarEventsList extends StatelessWidget {
           );
         }
 
-        final moments = _getMockMomentsForDay(selectedDay);
+        final moments = state.momentsForSelectedDay.data ?? [];
 
         return ListView.separated(
           shrinkWrap: true,
@@ -102,60 +103,10 @@ class _CalendarEventsList extends StatelessWidget {
       },
     );
   }
-
-  List<_MomentData> _getMockMomentsForDay(DateTime day) {
-    final dayOfMonth = day.day;
-    return [
-      _MomentData(
-        time: '08:30',
-        title: 'Buổi sáng yên bình',
-        note: 'Ánh nắng ban mai透过窗帘, một tách cà phê nóng.',
-        mood: 'Bình yên 🌿',
-        location: 'Nhà',
-        imageColor: '#E8D9C5',
-      ),
-      if (dayOfMonth % 2 == 0)
-        _MomentData(
-          time: '12:45',
-          title: 'Giải lao trưa',
-          note: 'Đi bộ một lát giữa buổi trưa. Không gian thật tĩnh lặng.',
-          mood: 'Thư giãn',
-          location: 'Công viên',
-          imageColor: '#DCEBD5',
-        ),
-      if (dayOfMonth % 3 == 0)
-        _MomentData(
-          time: '18:30',
-          title: 'Hoàng hôn',
-          note: 'Ngắm hoàng hôn từ ban công. Màu trời thật đẹp.',
-          mood: 'Nhẹ nhàng',
-          location: 'Ban công',
-          imageColor: '#F4C3B2',
-        ),
-    ];
-  }
-}
-
-class _MomentData {
-  final String time;
-  final String title;
-  final String note;
-  final String mood;
-  final String location;
-  final String imageColor;
-
-  const _MomentData({
-    required this.time,
-    required this.title,
-    required this.note,
-    required this.mood,
-    required this.location,
-    required this.imageColor,
-  });
 }
 
 class _MomentListItem extends StatelessWidget {
-  final _MomentData moment;
+  final MomentSummary moment;
 
   const _MomentListItem({required this.moment});
 
@@ -169,7 +120,7 @@ class _MomentListItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          _MomentImage(colorHex: moment.imageColor),
+          _MomentImage(colorHex: moment.tone?.id ?? ''),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(AppSpacing.md),
@@ -177,7 +128,7 @@ class _MomentListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    moment.title,
+                    moment.title ?? '',
                     style: context.textTheme.titleMedium?.copyWith(
                       color: context.themeColors.textPrimary,
                     ),
@@ -186,7 +137,7 @@ class _MomentListItem extends StatelessWidget {
                   ),
                   const Gap(AppSpacing.xxs),
                   Text(
-                    moment.note,
+                    moment.note ?? '',
                     style: context.textTheme.bodySmall?.copyWith(
                       color: context.themeColors.textSecondary,
                     ),
@@ -206,7 +157,7 @@ class _MomentListItem extends StatelessWidget {
                           borderRadius: BorderRadius.circular(AppRadius.sm),
                         ),
                         child: Text(
-                          moment.mood,
+                          moment.mood?.name ?? '',
                           style: context.textTheme.labelSmall?.copyWith(
                             color: context.themeColors.moodCalmText,
                             fontSize: 10,
@@ -222,7 +173,7 @@ class _MomentListItem extends StatelessWidget {
                       const Gap(2),
                       Expanded(
                         child: Text(
-                          moment.location,
+                          '',
                           style: context.textTheme.labelSmall?.copyWith(
                             color: context.themeColors.textMuted,
                             fontSize: 10,
@@ -243,7 +194,7 @@ class _MomentListItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  moment.time,
+                  moment.momentDate.toDateString(),
                   style: context.textTheme.labelMedium?.copyWith(
                     color: context.themeColors.primary,
                     fontWeight: FontWeight.w500,

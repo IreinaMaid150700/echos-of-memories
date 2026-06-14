@@ -10,15 +10,16 @@ abstract class StorageModule {
   // 1. SharedPreferences (async init)
   @preResolve
   @lazySingleton
-  Future<SharedPreferences> get sharedPreferences => SharedPreferences.getInstance();
+  Future<SharedPreferences> get sharedPreferences =>
+      SharedPreferences.getInstance();
 
   // 2. FlutterSecureStorage
   @lazySingleton
   FlutterSecureStorage get secureStorage => const FlutterSecureStorage(
-        // ignore: deprecated_member_use
-        aOptions: AndroidOptions(encryptedSharedPreferences: true),
-        iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
-      );
+    // ignore: deprecated_member_use
+    aOptions: AndroidOptions(encryptedSharedPreferences: true),
+    iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+  );
 
   // 3. Drift AppDatabase
   // Database quản lý connection state riêng nên có thể Inject đồng thời như Singleton

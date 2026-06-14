@@ -11,7 +11,7 @@ class ThemeCubit extends BaseCubit<ThemeState> {
   final SetThemeUseCase _setThemeUseCase;
 
   ThemeCubit(this._getThemeUseCase, this._setThemeUseCase)
-      : super(const ThemeState());
+    : super(const ThemeState());
 
   Future<void> loadTheme() async {
     await execute(

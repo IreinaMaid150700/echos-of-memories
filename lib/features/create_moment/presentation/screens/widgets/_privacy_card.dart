@@ -112,38 +112,43 @@ class _PrivacyToggleRow extends StatelessWidget {
 
 class _CustomSwitch extends StatelessWidget {
   final bool value;
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<bool>? onChanged;
 
-  const _CustomSwitch({required this.value, required this.onChanged});
+  const _CustomSwitch({required this.value, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onChanged(!value),
-      child: Container(
-        width: 48,
-        height: 28,
-        padding: const EdgeInsets.all(3),
-        decoration: BoxDecoration(
-          color: value ? context.themeColors.primary : context.themeColors.borderDefault,
-          borderRadius: BorderRadius.circular(AppRadius.full),
-        ),
-        child: AnimatedAlign(
-          duration: const Duration(milliseconds: 200),
-          alignment: value ? Alignment.centerRight : Alignment.centerLeft,
-          child: Container(
-            width: 22,
-            height: 22,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.18),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+      onTap: onChanged != null ? () => onChanged!(!value) : null,
+      child: Opacity(
+        opacity: onChanged != null ? 1.0 : 0.38,
+        child: Container(
+          width: 48,
+          height: 28,
+          padding: const EdgeInsets.all(3),
+          decoration: BoxDecoration(
+            color: value
+                ? context.themeColors.primary
+                : context.themeColors.borderDefault,
+            borderRadius: BorderRadius.circular(AppRadius.full),
+          ),
+          child: AnimatedAlign(
+            duration: const Duration(milliseconds: 200),
+            alignment: value ? Alignment.centerRight : Alignment.centerLeft,
+            child: Container(
+              width: 22,
+              height: 22,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.18),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -166,54 +171,33 @@ class _PrivacyToggleWithPromptState extends State<_PrivacyToggleWithPrompt> {
     return BlocBuilder<CreateMomentCubit, CreateMomentState>(
       buildWhen: (prev, curr) => prev.isLockMoment != curr.isLockMoment,
       builder: (context, state) {
-        return Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.md,
-                vertical: AppSpacing.sm,
-              ),
-              child: Row(
-                children: [
-                  const _PrivacyIconContainer(icon: Icons.lock_outlined),
-                  const Gap(AppSpacing.sm),
-                  Expanded(
-                    child: Text(
-                      'Khóa khoảnh khắc này',
-                      style: context.textTheme.bodySmall?.copyWith(
-                        color: context.themeColors.textPrimary,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  _CustomSwitch(
-                    value: state.isLockMoment,
-                    onChanged: (val) =>
-                        context.read<CreateMomentCubit>().toggleLockedMoment(val),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 68,
-                right: AppSpacing.md,
-                bottom: AppSpacing.md,
-              ),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'PIN chưa được thiết lập. Bạn có thể tạo PIN trong phần Cài đặt riêng tư.',
-                  style: context.textTheme.labelSmall?.copyWith(
-                    color: context.themeColors.textMuted,
-                  ),
-                ),
-              ),
-            ),
-          ],
+        return _PrivacyToggleRow(
+          icon: Icons.lock_outlined,
+          title: 'Khóa khoảnh khắc này',
+          subtitle: 'Yêu cầu PIN để xem khoảnh khắc',
+          value: state.isLockMoment,
+          onChanged: (value) => _onLockChanged(context, value),
         );
       },
     );
+  }
+
+  /// Enables locking this moment. If no PIN exists yet, route to PIN setup
+  /// first and only enable the toggle when setup completes.
+  Future<void> _onLockChanged(BuildContext context, bool value) async {
+    final cubit = context.read<CreateMomentCubit>();
+    if (!value) {
+      cubit.toggleLockedMoment(false);
+      return;
+    }
+    final hasPin = await getIt<AppLockRepository>().hasPin();
+    if (hasPin) {
+      cubit.toggleLockedMoment(true);
+      return;
+    }
+    if (!context.mounted) return;
+    final done = await context.router.push<bool>(const PinSetupRoute());
+    if (done == true) cubit.toggleLockedMoment(true);
   }
 }
 
@@ -232,7 +216,11 @@ class _PrivacyIconContainer extends StatelessWidget {
         shape: BoxShape.circle,
         border: Border.all(color: context.themeColors.privacyChipBorder),
       ),
-      child: Icon(icon, size: 18, color: context.themeColors.privacyChipForeground),
+      child: Icon(
+        icon,
+        size: 18,
+        color: context.themeColors.privacyChipForeground,
+      ),
     );
   }
 }

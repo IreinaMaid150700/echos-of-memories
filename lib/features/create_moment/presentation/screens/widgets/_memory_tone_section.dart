@@ -62,8 +62,9 @@ class _MemoryToneSection extends StatelessWidget {
                   return _ToneSwatch(
                     label: tone.name,
                     semanticLabel: '${tone.name}, tone',
-                    color: tone.lightColorHex
-                        .toColor(fallback: context.themeColors.tertiary),
+                    color: tone.lightColorHex.toColor(
+                      fallback: context.themeColors.tertiary,
+                    ),
                     selected: state.toneIdSelected == tone.id,
                     onTap: () =>
                         context.read<CreateMomentCubit>().selectTone(tone.id),
@@ -103,55 +104,57 @@ class _ToneSwatch extends StatelessWidget {
         onTap: onTap,
         behavior: HitTestBehavior.opaque,
         child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 54,
-            height: 54,
-            decoration: BoxDecoration(
-              color: color,
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: selected
-                    ? context.themeColors.primary
-                    : context.themeColors.borderSubtle,
-                width: selected ? 2.5 : 1,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: context.themeColors.background.withValues(alpha: 0.5),
-                  blurRadius: 0,
-                  spreadRadius: 3,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 54,
+              height: 54,
+              decoration: BoxDecoration(
+                color: color,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: selected
+                      ? context.themeColors.primary
+                      : context.themeColors.borderSubtle,
+                  width: selected ? 2.5 : 1,
                 ),
-              ],
+                boxShadow: [
+                  BoxShadow(
+                    color: context.themeColors.background.withValues(
+                      alpha: 0.5,
+                    ),
+                    blurRadius: 0,
+                    spreadRadius: 3,
+                  ),
+                ],
+              ),
+              child: selected
+                  ? Icon(
+                      Icons.check,
+                      size: 22,
+                      color: context.themeColors.primary,
+                    )
+                  : null,
             ),
-            child: selected
-                ? Icon(
-                    Icons.check,
-                    size: 22,
-                    color: context.themeColors.primary,
-                  )
-                : null,
-          ),
-          const Gap(AppSpacing.xs),
-          SizedBox(
-            width: 64,
-            child: Text(
-              label,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: context.textTheme.labelSmall?.copyWith(
-                color: selected
-                    ? context.themeColors.primary
-                    : context.themeColors.textMuted,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 0.03,
-                height: 1.2,
+            const Gap(AppSpacing.xs),
+            SizedBox(
+              width: 64,
+              child: Text(
+                label,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: context.textTheme.labelSmall?.copyWith(
+                  color: selected
+                      ? context.themeColors.primary
+                      : context.themeColors.textMuted,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0.03,
+                  height: 1.2,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
         ),
       ),
     );

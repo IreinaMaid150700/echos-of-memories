@@ -27,6 +27,38 @@ class CalendarRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CameraCaptureScreen]
+class CameraCaptureRoute extends PageRouteInfo<void> {
+  const CameraCaptureRoute({List<PageRouteInfo>? children})
+    : super(CameraCaptureRoute.name, initialChildren: children);
+
+  static const String name = 'CameraCaptureRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CameraCaptureScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [ChangePinScreen]
+class ChangePinRoute extends PageRouteInfo<void> {
+  const ChangePinRoute({List<PageRouteInfo>? children})
+    : super(ChangePinRoute.name, initialChildren: children);
+
+  static const String name = 'ChangePinRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ChangePinScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [CreateCollectionScreen]
 class CreateCollectionRoute extends PageRouteInfo<void> {
   const CreateCollectionRoute({List<PageRouteInfo>? children})
@@ -44,18 +76,56 @@ class CreateCollectionRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [CreateMomentScreen]
-class CreateMomentRoute extends PageRouteInfo<void> {
-  const CreateMomentRoute({List<PageRouteInfo>? children})
-    : super(CreateMomentRoute.name, initialChildren: children);
+class CreateMomentRoute extends PageRouteInfo<CreateMomentRouteArgs> {
+  CreateMomentRoute({
+    Key? key,
+    List<File> initialImages = const [],
+    List<PageRouteInfo>? children,
+  }) : super(
+         CreateMomentRoute.name,
+         args: CreateMomentRouteArgs(key: key, initialImages: initialImages),
+         initialChildren: children,
+       );
 
   static const String name = 'CreateMomentRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const CreateMomentScreen();
+      final args = data.argsAs<CreateMomentRouteArgs>(
+        orElse: () => const CreateMomentRouteArgs(),
+      );
+      return CreateMomentScreen(
+        key: args.key,
+        initialImages: args.initialImages,
+      );
     },
   );
+}
+
+class CreateMomentRouteArgs {
+  const CreateMomentRouteArgs({this.key, this.initialImages = const []});
+
+  final Key? key;
+
+  final List<File> initialImages;
+
+  @override
+  String toString() {
+    return 'CreateMomentRouteArgs{key: $key, initialImages: $initialImages}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! CreateMomentRouteArgs) return false;
+    return key == other.key &&
+        const ListEquality<File>().equals(initialImages, other.initialImages);
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^ const ListEquality<File>().hash(initialImages);
 }
 
 /// generated route for
@@ -138,6 +208,38 @@ class MomentDetailRouteArgs {
 }
 
 /// generated route for
+/// [PinSetupScreen]
+class PinSetupRoute extends PageRouteInfo<void> {
+  const PinSetupRoute({List<PageRouteInfo>? children})
+    : super(PinSetupRoute.name, initialChildren: children);
+
+  static const String name = 'PinSetupRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const PinSetupScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [RecoveryScreen]
+class RecoveryRoute extends PageRouteInfo<void> {
+  const RecoveryRoute({List<PageRouteInfo>? children})
+    : super(RecoveryRoute.name, initialChildren: children);
+
+  static const String name = 'RecoveryRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const RecoveryScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [SaveYourMemIntroductionScreen]
 class SaveYourMemIntroductionRoute extends PageRouteInfo<void> {
   const SaveYourMemIntroductionRoute({List<PageRouteInfo>? children})
@@ -197,6 +299,22 @@ class TimelineRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const TimelineScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [UnlockScreen]
+class UnlockRoute extends PageRouteInfo<void> {
+  const UnlockRoute({List<PageRouteInfo>? children})
+    : super(UnlockRoute.name, initialChildren: children);
+
+  static const String name = 'UnlockRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const UnlockScreen();
     },
   );
 }
