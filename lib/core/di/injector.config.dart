@@ -222,7 +222,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i173.GetTagsUseCase(gh<_i705.TagRepository>()),
     );
     gh.lazySingleton<_i869.ThemeRepository>(
-      () => _i592.ThemeRepositoryImpl(gh<_i636.PreferencesService>()),
+      () => _i592.ThemeRepositoryImpl(
+        gh<_i636.PreferencesService>(),
+        gh<_i690.AppDatabase>(),
+      ),
     );
     gh.lazySingleton<_i361.Dio>(() => networkModule.dio(gh<_i667.DioClient>()));
     gh.factory<_i874.GetMoodsUseCase>(
