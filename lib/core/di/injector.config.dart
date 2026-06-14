@@ -272,6 +272,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i5.ThemeCubit(
         gh<_i620.GetThemeUseCase>(),
         gh<_i684.SetThemeUseCase>(),
+        gh<_i426.GetAvailableThemesUseCase>(),
+        gh<_i1.GetSelectedThemeUseCase>(),
+        gh<_i831.SetSelectedThemeUseCase>(),
       ),
     );
     return this;
