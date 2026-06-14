@@ -1,13 +1,21 @@
 import 'package:music_app/core/cubit/base_cubit.dart';
 import 'package:music_app/core/storage/preferences_service.dart';
+import 'package:music_app/features/app_lock/domain/repositories/app_lock_repository.dart';
 import 'package:music_app/features/settings/presentation/cubit/settings_state.dart';
 
 class SettingsCubit extends BaseCubit<SettingsState> {
   final PreferencesService _preferencesService;
+  final AppLockRepository _appLockRepository;
 
-  SettingsCubit({required PreferencesService preferencesService})
-    : _preferencesService = preferencesService,
-      super(const SettingsState());
+  SettingsCubit({
+    required PreferencesService preferencesService,
+    required AppLockRepository appLockRepository,
+  }) : _preferencesService = preferencesService,
+       _appLockRepository = appLockRepository,
+       super(const SettingsState());
+
+  /// Whether a PIN has already been set up.
+  Future<bool> hasPin() => _appLockRepository.hasPin();
 
   void initialize() {
     final themeMode = _preferencesService.themeMode;

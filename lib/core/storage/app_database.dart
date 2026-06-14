@@ -44,7 +44,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.e);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration {
@@ -140,7 +140,12 @@ class AppDatabase extends _$AppDatabase {
       // 3. Write migration steps here (m.addColumn / m.alterTable / ...).
       // 4. Write migration test using drift_dev schema steps + verify old data preserved.
       // Leaving onUpgrade empty when schemaVersion increases = user update causes crash or data loss.
-      onUpgrade: (Migrator m, int from, int to) async {},
+      onUpgrade: (Migrator m, int from, int to) async {
+        // v1 -> v2: app lock for collections. Existing rows default to unlocked.
+        if (from < 2) {
+          await m.addColumn(momentCollections, momentCollections.isLocked);
+        }
+      },
     );
   }
 

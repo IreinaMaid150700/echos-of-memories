@@ -5,6 +5,12 @@ import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:music_app/core/di/injector.dart';
+import 'package:music_app/core/router/app_lock_guard.dart';
+import 'package:music_app/features/app_lock/presentation/screens/change_pin_screen.dart';
+import 'package:music_app/features/app_lock/presentation/screens/pin_setup_screen.dart';
+import 'package:music_app/features/app_lock/presentation/screens/recovery_screen.dart';
+import 'package:music_app/features/app_lock/presentation/screens/unlock_screen.dart';
 import 'package:music_app/features/calendar/presentation/screens/calendar_screen.dart';
 import 'package:music_app/features/create_collection/presentation/screens/create_collection_screen.dart';
 import 'package:music_app/features/camera_capture/presentation/screens/camera_capture_screen.dart';
@@ -25,14 +31,18 @@ final class AppRouters extends RootStackRouter {
   List<AutoRoute> get routes => [
     AutoRoute(page: SplashRoute.page, initial: true),
     AutoRoute(page: SaveYourMemIntroductionRoute.page),
-    AutoRoute(page: HomeRoute.page),
+    AutoRoute(page: HomeRoute.page, guards: [getIt<AppLockGuard>()]),
     AutoRoute(page: TimelineRoute.page),
     AutoRoute(page: SettingsRoute.page),
     AutoRoute(page: CalendarRoute.page),
-    AutoRoute(page: MomentDetailRoute.page),
+    AutoRoute(page: MomentDetailRoute.page, guards: [getIt<AppLockGuard>()]),
     AutoRoute(page: CreateMomentRoute.page),
     if (kDebugMode) ...[AutoRoute(page: DevDbViewerRoute.page)],
     AutoRoute(page: CreateCollectionRoute.page),
     AutoRoute(page: CameraCaptureRoute.page),
+    AutoRoute(page: UnlockRoute.page),
+    AutoRoute(page: PinSetupRoute.page),
+    AutoRoute(page: ChangePinRoute.page),
+    AutoRoute(page: RecoveryRoute.page),
   ];
 }

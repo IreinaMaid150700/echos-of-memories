@@ -273,6 +273,7 @@ class MomentRepositoryImpl implements MomentRepository {
     String id, {
     bool? isPinned,
     bool? isHiddenFromWidget,
+    bool? isLocked,
   }) async {
     try {
       await (_db.update(_db.moments)..where((t) => t.id.equals(id))).write(
@@ -281,6 +282,7 @@ class MomentRepositoryImpl implements MomentRepository {
           isHiddenFromWidget: isHiddenFromWidget != null
               ? Value(isHiddenFromWidget)
               : const Value.absent(),
+          isLocked: isLocked != null ? Value(isLocked) : const Value.absent(),
           updatedAt: Value(DateTime.now()),
         ),
       );

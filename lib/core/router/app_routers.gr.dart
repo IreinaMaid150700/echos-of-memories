@@ -43,6 +43,22 @@ class CameraCaptureRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ChangePinScreen]
+class ChangePinRoute extends PageRouteInfo<void> {
+  const ChangePinRoute({List<PageRouteInfo>? children})
+    : super(ChangePinRoute.name, initialChildren: children);
+
+  static const String name = 'ChangePinRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ChangePinScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [CreateCollectionScreen]
 class CreateCollectionRoute extends PageRouteInfo<void> {
   const CreateCollectionRoute({List<PageRouteInfo>? children})
@@ -192,6 +208,38 @@ class MomentDetailRouteArgs {
 }
 
 /// generated route for
+/// [PinSetupScreen]
+class PinSetupRoute extends PageRouteInfo<void> {
+  const PinSetupRoute({List<PageRouteInfo>? children})
+    : super(PinSetupRoute.name, initialChildren: children);
+
+  static const String name = 'PinSetupRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const PinSetupScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [RecoveryScreen]
+class RecoveryRoute extends PageRouteInfo<void> {
+  const RecoveryRoute({List<PageRouteInfo>? children})
+    : super(RecoveryRoute.name, initialChildren: children);
+
+  static const String name = 'RecoveryRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const RecoveryScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [SaveYourMemIntroductionScreen]
 class SaveYourMemIntroductionRoute extends PageRouteInfo<void> {
   const SaveYourMemIntroductionRoute({List<PageRouteInfo>? children})
@@ -251,6 +299,22 @@ class TimelineRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const TimelineScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [UnlockScreen]
+class UnlockRoute extends PageRouteInfo<void> {
+  const UnlockRoute({List<PageRouteInfo>? children})
+    : super(UnlockRoute.name, initialChildren: children);
+
+  static const String name = 'UnlockRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const UnlockScreen();
     },
   );
 }

@@ -171,53 +171,33 @@ class _PrivacyToggleWithPromptState extends State<_PrivacyToggleWithPrompt> {
     return BlocBuilder<CreateMomentCubit, CreateMomentState>(
       buildWhen: (prev, curr) => prev.isLockMoment != curr.isLockMoment,
       builder: (context, state) {
-        return Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.md,
-                vertical: AppSpacing.sm,
-              ),
-              child: Row(
-                children: [
-                  const _PrivacyIconContainer(icon: Icons.lock_outlined),
-                  const Gap(AppSpacing.sm),
-                  Expanded(
-                    child: Text(
-                      'Khóa khoảnh khắc này',
-                      style: context.textTheme.bodySmall?.copyWith(
-                        color: context.themeColors.textPrimary,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  _CustomSwitch(
-                    value: false,
-                    // disabled until PIN setup is implemented
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 68,
-                right: AppSpacing.md,
-                bottom: AppSpacing.md,
-              ),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'PIN chưa được thiết lập. Bạn có thể tạo PIN trong phần Cài đặt riêng tư.',
-                  style: context.textTheme.labelSmall?.copyWith(
-                    color: context.themeColors.textMuted,
-                  ),
-                ),
-              ),
-            ),
-          ],
+        return _PrivacyToggleRow(
+          icon: Icons.lock_outlined,
+          title: 'Khóa khoảnh khắc này',
+          subtitle: 'Yêu cầu PIN để xem khoảnh khắc',
+          value: state.isLockMoment,
+          onChanged: (value) => _onLockChanged(context, value),
         );
       },
     );
+  }
+
+  /// Enables locking this moment. If no PIN exists yet, route to PIN setup
+  /// first and only enable the toggle when setup completes.
+  Future<void> _onLockChanged(BuildContext context, bool value) async {
+    final cubit = context.read<CreateMomentCubit>();
+    if (!value) {
+      cubit.toggleLockedMoment(false);
+      return;
+    }
+    final hasPin = await getIt<AppLockRepository>().hasPin();
+    if (hasPin) {
+      cubit.toggleLockedMoment(true);
+      return;
+    }
+    if (!context.mounted) return;
+    final done = await context.router.push<bool>(const PinSetupRoute());
+    if (done == true) cubit.toggleLockedMoment(true);
   }
 }
 

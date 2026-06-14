@@ -5622,6 +5622,21 @@ class $MomentCollectionsTable extends MomentCollections
     ),
     defaultValue: const Constant(false),
   );
+  static const VerificationMeta _isLockedMeta = const VerificationMeta(
+    'isLocked',
+  );
+  @override
+  late final GeneratedColumn<bool> isLocked = GeneratedColumn<bool>(
+    'is_locked',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_locked" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -5663,6 +5678,7 @@ class $MomentCollectionsTable extends MomentCollections
     coverAssetId,
     sortOrder,
     isPinned,
+    isLocked,
     createdAt,
     updatedAt,
     deletedAt,
@@ -5722,6 +5738,12 @@ class $MomentCollectionsTable extends MomentCollections
         isPinned.isAcceptableOrUnknown(data['is_pinned']!, _isPinnedMeta),
       );
     }
+    if (data.containsKey('is_locked')) {
+      context.handle(
+        _isLockedMeta,
+        isLocked.isAcceptableOrUnknown(data['is_locked']!, _isLockedMeta),
+      );
+    }
     if (data.containsKey('created_at')) {
       context.handle(
         _createdAtMeta,
@@ -5777,6 +5799,10 @@ class $MomentCollectionsTable extends MomentCollections
         DriftSqlType.bool,
         data['${effectivePrefix}is_pinned'],
       )!,
+      isLocked: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_locked'],
+      )!,
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
@@ -5806,6 +5832,7 @@ class MomentCollection extends DataClass
   final String? coverAssetId;
   final int sortOrder;
   final bool isPinned;
+  final bool isLocked;
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? deletedAt;
@@ -5816,6 +5843,7 @@ class MomentCollection extends DataClass
     this.coverAssetId,
     required this.sortOrder,
     required this.isPinned,
+    required this.isLocked,
     required this.createdAt,
     required this.updatedAt,
     this.deletedAt,
@@ -5833,6 +5861,7 @@ class MomentCollection extends DataClass
     }
     map['sort_order'] = Variable<int>(sortOrder);
     map['is_pinned'] = Variable<bool>(isPinned);
+    map['is_locked'] = Variable<bool>(isLocked);
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
     if (!nullToAbsent || deletedAt != null) {
@@ -5853,6 +5882,7 @@ class MomentCollection extends DataClass
           : Value(coverAssetId),
       sortOrder: Value(sortOrder),
       isPinned: Value(isPinned),
+      isLocked: Value(isLocked),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
       deletedAt: deletedAt == null && nullToAbsent
@@ -5873,6 +5903,7 @@ class MomentCollection extends DataClass
       coverAssetId: serializer.fromJson<String?>(json['coverAssetId']),
       sortOrder: serializer.fromJson<int>(json['sortOrder']),
       isPinned: serializer.fromJson<bool>(json['isPinned']),
+      isLocked: serializer.fromJson<bool>(json['isLocked']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
       deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
@@ -5888,6 +5919,7 @@ class MomentCollection extends DataClass
       'coverAssetId': serializer.toJson<String?>(coverAssetId),
       'sortOrder': serializer.toJson<int>(sortOrder),
       'isPinned': serializer.toJson<bool>(isPinned),
+      'isLocked': serializer.toJson<bool>(isLocked),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
       'deletedAt': serializer.toJson<DateTime?>(deletedAt),
@@ -5901,6 +5933,7 @@ class MomentCollection extends DataClass
     Value<String?> coverAssetId = const Value.absent(),
     int? sortOrder,
     bool? isPinned,
+    bool? isLocked,
     DateTime? createdAt,
     DateTime? updatedAt,
     Value<DateTime?> deletedAt = const Value.absent(),
@@ -5911,6 +5944,7 @@ class MomentCollection extends DataClass
     coverAssetId: coverAssetId.present ? coverAssetId.value : this.coverAssetId,
     sortOrder: sortOrder ?? this.sortOrder,
     isPinned: isPinned ?? this.isPinned,
+    isLocked: isLocked ?? this.isLocked,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
     deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
@@ -5927,6 +5961,7 @@ class MomentCollection extends DataClass
           : this.coverAssetId,
       sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
       isPinned: data.isPinned.present ? data.isPinned.value : this.isPinned,
+      isLocked: data.isLocked.present ? data.isLocked.value : this.isLocked,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
       deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
@@ -5942,6 +5977,7 @@ class MomentCollection extends DataClass
           ..write('coverAssetId: $coverAssetId, ')
           ..write('sortOrder: $sortOrder, ')
           ..write('isPinned: $isPinned, ')
+          ..write('isLocked: $isLocked, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
           ..write('deletedAt: $deletedAt')
@@ -5957,6 +5993,7 @@ class MomentCollection extends DataClass
     coverAssetId,
     sortOrder,
     isPinned,
+    isLocked,
     createdAt,
     updatedAt,
     deletedAt,
@@ -5971,6 +6008,7 @@ class MomentCollection extends DataClass
           other.coverAssetId == this.coverAssetId &&
           other.sortOrder == this.sortOrder &&
           other.isPinned == this.isPinned &&
+          other.isLocked == this.isLocked &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt &&
           other.deletedAt == this.deletedAt);
@@ -5983,6 +6021,7 @@ class MomentCollectionsCompanion extends UpdateCompanion<MomentCollection> {
   final Value<String?> coverAssetId;
   final Value<int> sortOrder;
   final Value<bool> isPinned;
+  final Value<bool> isLocked;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   final Value<DateTime?> deletedAt;
@@ -5994,6 +6033,7 @@ class MomentCollectionsCompanion extends UpdateCompanion<MomentCollection> {
     this.coverAssetId = const Value.absent(),
     this.sortOrder = const Value.absent(),
     this.isPinned = const Value.absent(),
+    this.isLocked = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.deletedAt = const Value.absent(),
@@ -6006,6 +6046,7 @@ class MomentCollectionsCompanion extends UpdateCompanion<MomentCollection> {
     this.coverAssetId = const Value.absent(),
     this.sortOrder = const Value.absent(),
     this.isPinned = const Value.absent(),
+    this.isLocked = const Value.absent(),
     required DateTime createdAt,
     required DateTime updatedAt,
     this.deletedAt = const Value.absent(),
@@ -6021,6 +6062,7 @@ class MomentCollectionsCompanion extends UpdateCompanion<MomentCollection> {
     Expression<String>? coverAssetId,
     Expression<int>? sortOrder,
     Expression<bool>? isPinned,
+    Expression<bool>? isLocked,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
     Expression<DateTime>? deletedAt,
@@ -6033,6 +6075,7 @@ class MomentCollectionsCompanion extends UpdateCompanion<MomentCollection> {
       if (coverAssetId != null) 'cover_asset_id': coverAssetId,
       if (sortOrder != null) 'sort_order': sortOrder,
       if (isPinned != null) 'is_pinned': isPinned,
+      if (isLocked != null) 'is_locked': isLocked,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
       if (deletedAt != null) 'deleted_at': deletedAt,
@@ -6047,6 +6090,7 @@ class MomentCollectionsCompanion extends UpdateCompanion<MomentCollection> {
     Value<String?>? coverAssetId,
     Value<int>? sortOrder,
     Value<bool>? isPinned,
+    Value<bool>? isLocked,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
     Value<DateTime?>? deletedAt,
@@ -6059,6 +6103,7 @@ class MomentCollectionsCompanion extends UpdateCompanion<MomentCollection> {
       coverAssetId: coverAssetId ?? this.coverAssetId,
       sortOrder: sortOrder ?? this.sortOrder,
       isPinned: isPinned ?? this.isPinned,
+      isLocked: isLocked ?? this.isLocked,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       deletedAt: deletedAt ?? this.deletedAt,
@@ -6087,6 +6132,9 @@ class MomentCollectionsCompanion extends UpdateCompanion<MomentCollection> {
     if (isPinned.present) {
       map['is_pinned'] = Variable<bool>(isPinned.value);
     }
+    if (isLocked.present) {
+      map['is_locked'] = Variable<bool>(isLocked.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -6111,6 +6159,7 @@ class MomentCollectionsCompanion extends UpdateCompanion<MomentCollection> {
           ..write('coverAssetId: $coverAssetId, ')
           ..write('sortOrder: $sortOrder, ')
           ..write('isPinned: $isPinned, ')
+          ..write('isLocked: $isLocked, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
           ..write('deletedAt: $deletedAt, ')
@@ -11635,6 +11684,7 @@ typedef $$MomentCollectionsTableCreateCompanionBuilder =
       Value<String?> coverAssetId,
       Value<int> sortOrder,
       Value<bool> isPinned,
+      Value<bool> isLocked,
       required DateTime createdAt,
       required DateTime updatedAt,
       Value<DateTime?> deletedAt,
@@ -11648,6 +11698,7 @@ typedef $$MomentCollectionsTableUpdateCompanionBuilder =
       Value<String?> coverAssetId,
       Value<int> sortOrder,
       Value<bool> isPinned,
+      Value<bool> isLocked,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
       Value<DateTime?> deletedAt,
@@ -11735,6 +11786,11 @@ class $$MomentCollectionsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<bool> get isLocked => $composableBuilder(
+    column: $table.isLocked,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnFilters(column),
@@ -11816,6 +11872,11 @@ class $$MomentCollectionsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<bool> get isLocked => $composableBuilder(
+    column: $table.isLocked,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
@@ -11862,6 +11923,9 @@ class $$MomentCollectionsTableAnnotationComposer
 
   GeneratedColumn<bool> get isPinned =>
       $composableBuilder(column: $table.isPinned, builder: (column) => column);
+
+  GeneratedColumn<bool> get isLocked =>
+      $composableBuilder(column: $table.isLocked, builder: (column) => column);
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
@@ -11938,6 +12002,7 @@ class $$MomentCollectionsTableTableManager
                 Value<String?> coverAssetId = const Value.absent(),
                 Value<int> sortOrder = const Value.absent(),
                 Value<bool> isPinned = const Value.absent(),
+                Value<bool> isLocked = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<DateTime?> deletedAt = const Value.absent(),
@@ -11949,6 +12014,7 @@ class $$MomentCollectionsTableTableManager
                 coverAssetId: coverAssetId,
                 sortOrder: sortOrder,
                 isPinned: isPinned,
+                isLocked: isLocked,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 deletedAt: deletedAt,
@@ -11962,6 +12028,7 @@ class $$MomentCollectionsTableTableManager
                 Value<String?> coverAssetId = const Value.absent(),
                 Value<int> sortOrder = const Value.absent(),
                 Value<bool> isPinned = const Value.absent(),
+                Value<bool> isLocked = const Value.absent(),
                 required DateTime createdAt,
                 required DateTime updatedAt,
                 Value<DateTime?> deletedAt = const Value.absent(),
@@ -11973,6 +12040,7 @@ class $$MomentCollectionsTableTableManager
                 coverAssetId: coverAssetId,
                 sortOrder: sortOrder,
                 isPinned: isPinned,
+                isLocked: isLocked,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 deletedAt: deletedAt,

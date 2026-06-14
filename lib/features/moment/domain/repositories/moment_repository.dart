@@ -17,5 +17,6 @@ abstract class MomentRepository {
     String id, {
     bool? isPinned,
     bool? isHiddenFromWidget,
+    bool? isLocked,
   });
 }

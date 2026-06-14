@@ -28,7 +28,7 @@ class _SettingsSwitchItem extends StatelessWidget {
     final cubit = context.read<SettingsCubit>();
     switch (settingsKey) {
       case SettingsKey.appLock:
-        cubit.setAppLockEnabled(value);
+        _onAppLockChanged(context, cubit, value);
         break;
       case SettingsKey.keepMemoriesOffline:
         cubit.setKeepMemoriesOffline(value);
@@ -36,6 +36,28 @@ class _SettingsSwitchItem extends StatelessWidget {
       case SettingsKey.gentleReminders:
         cubit.setGentleReminders(value);
         break;
+    }
+  }
+
+  /// Turning ON with no PIN -> set up PIN first, only persist if completed.
+  /// Turning OFF -> require an unlock (PIN verify) before disabling.
+  Future<void> _onAppLockChanged(
+    BuildContext context,
+    SettingsCubit cubit,
+    bool value,
+  ) async {
+    final router = context.router;
+    if (value) {
+      final hasPin = await cubit.hasPin();
+      if (hasPin) {
+        cubit.setAppLockEnabled(true);
+        return;
+      }
+      final done = await router.push<bool>(const PinSetupRoute());
+      if (done == true) cubit.setAppLockEnabled(true);
+    } else {
+      final unlocked = await router.push<bool>(const UnlockRoute());
+      if (unlocked == true) cubit.setAppLockEnabled(false);
     }
   }
 
