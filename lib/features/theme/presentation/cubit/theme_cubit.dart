@@ -60,9 +60,24 @@ class ThemeCubit extends BaseCubit<ThemeState> {
   }
 
   /// Applies a palette instantly (optimistic) then persists the selection.
+  /// Reverts to the previous palette on persist error.
   Future<void> selectTheme(AppThemePalette palette) async {
+    final previous = state.palette.data;
     emit(state.copyWith(palette: state.palette.toSuccess(palette)));
-    await _setSelectedThemeUseCase(palette.id);
+
+    final result = await _setSelectedThemeUseCase(palette.id);
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          palette: Loaded<AppThemePalette>(
+            status: AsyncStatus.failure,
+            data: previous,
+            error: failure.message,
+          ),
+        ),
+      ),
+      (_) => null,
+    );
   }
 
   /// Changes the light/dark mode. Reverts to the previous mode on persist error.

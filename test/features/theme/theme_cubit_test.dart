@@ -39,6 +39,13 @@ ThemeCubit _build({
   setSelectedThemeUseCase ?? _MockSetSelectedThemeUseCase(),
 );
 
+GetThemeUseCase _successGetThemeUseCase() {
+  final m = _MockGetThemeUseCase();
+  when(() => m())
+      .thenAnswer((_) async => const Right<Failure, ThemeMode>(ThemeMode.system));
+  return m;
+}
+
 void main() {
   setUpAll(() {
     registerFallbackValue(ThemeMode.system);
@@ -108,7 +115,23 @@ void main() {
       await cubit.loadAvailableThemes();
 
       expect(cubit.state.available.isSuccess, isTrue);
-      expect(cubit.state.available.data!.length, 6);
+      expect(cubit.state.available.data!.length, kDefaultThemes.length);
+    });
+
+    test('loadAvailableThemes failure surfaces error', () async {
+      final getAvail = _MockGetAvailableThemesUseCase();
+      when(() => getAvail()).thenAnswer(
+        (_) async => const Left<Failure, List<AppThemePalette>>(
+          CacheFailure(message: 'no themes'),
+        ),
+      );
+      final cubit = _build(getAvailableThemesUseCase: getAvail);
+      addTearDown(cubit.close);
+
+      await cubit.loadAvailableThemes();
+
+      expect(cubit.state.available.isFailure, isTrue);
+      expect(cubit.state.available.error, 'no themes');
     });
 
     test('selectTheme emits palette immediately and persists id', () async {
@@ -124,6 +147,34 @@ void main() {
       expect(cubit.state.palette.isSuccess, isTrue);
       expect(cubit.state.palette.data!.id, 'ocean');
       verify(() => setSel('ocean')).called(1);
+    });
+
+    test('selectTheme persist failure reverts palette and surfaces error',
+        () async {
+      final getSel = _MockGetSelectedThemeUseCase();
+      final setSel = _MockSetSelectedThemeUseCase();
+      when(() => getSel()).thenAnswer(
+        (_) async => Right<Failure, AppThemePalette>(kDefaultThemePalette),
+      );
+      when(() => setSel(any())).thenAnswer(
+        (_) async =>
+            const Left<Failure, Unit>(CacheFailure(message: 'disk full')),
+      );
+      final cubit = _build(
+        getThemeUseCase: _successGetThemeUseCase(),
+        getSelectedThemeUseCase: getSel,
+        setSelectedThemeUseCase: setSel,
+      );
+      addTearDown(cubit.close);
+
+      await cubit.loadTheme(); // palette.data = warm_sand
+      final ocean = kDefaultThemes.firstWhere((t) => t.id == 'ocean');
+      await cubit.selectTheme(ocean);
+
+      expect(cubit.state.palette.isFailure, isTrue);
+      expect(cubit.state.palette.error, 'disk full');
+      // Reverted to the previously-applied palette, not the failed one.
+      expect(cubit.state.palette.data?.id, 'warm_sand');
     });
   });
 }
