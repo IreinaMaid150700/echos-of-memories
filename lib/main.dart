@@ -5,6 +5,7 @@ import 'package:music_app/core/lifecycle/app_lifecycle_observer.dart';
 import 'package:music_app/core/router/app_routers.dart';
 import 'package:music_app/core/theme/app_theme.dart';
 import 'package:music_app/features/app_lock/presentation/cubit/lock_session_cubit.dart';
+import 'package:music_app/features/theme/domain/data/default_app_themes.dart';
 import 'package:music_app/features/theme/presentation/cubit/theme_cubit.dart';
 import 'package:music_app/features/theme/presentation/cubit/theme_state.dart';
 
@@ -44,13 +45,23 @@ class _MyAppState extends State<MyApp> {
       create: (context) => getIt<ThemeCubit>()..loadTheme(),
       child: BlocBuilder<ThemeCubit, ThemeState>(
         buildWhen: (previous, current) =>
-            previous.theme.data != current.theme.data,
+            previous.theme.data != current.theme.data ||
+            previous.palette.data != current.palette.data,
         builder: (context, state) {
+          final palette = state.palette.data ?? kDefaultThemePalette;
           return MaterialApp.router(
             title: 'Save your Memories',
             debugShowCheckedModeBanner: false,
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
+            theme: AppTheme.build(
+              colors: palette.light.toAppCustomColors(),
+              onPrimary: palette.light.onPrimary,
+              brightness: Brightness.light,
+            ),
+            darkTheme: AppTheme.build(
+              colors: palette.dark.toAppCustomColors(),
+              onPrimary: palette.dark.onPrimary,
+              brightness: Brightness.dark,
+            ),
             themeMode: state.theme.data ?? ThemeMode.system,
             routerConfig: appRouters.config(),
           );
