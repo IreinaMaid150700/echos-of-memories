@@ -288,6 +288,22 @@ class SplashRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ThemePickerScreen]
+class ThemePickerRoute extends PageRouteInfo<void> {
+  const ThemePickerRoute({List<PageRouteInfo>? children})
+    : super(ThemePickerRoute.name, initialChildren: children);
+
+  static const String name = 'ThemePickerRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ThemePickerScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [TimelineScreen]
 class TimelineRoute extends PageRouteInfo<void> {
   const TimelineRoute({List<PageRouteInfo>? children})

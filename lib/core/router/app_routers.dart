@@ -21,6 +21,7 @@ import 'package:music_app/features/introduction/presentation/introduction_screen
 import 'package:music_app/features/moment_detail/presentation/screens/moment_detail_screen.dart';
 import 'package:music_app/features/settings/presentation/screens/settings_screen.dart';
 import 'package:music_app/features/splash_screen/splash_screen.dart';
+import 'package:music_app/features/theme/presentation/screens/theme_picker_screen.dart';
 import 'package:music_app/features/timeline/presentation/screens/timeline_screen.dart';
 part 'app_routers.gr.dart';
 
@@ -34,6 +35,7 @@ final class AppRouters extends RootStackRouter {
     AutoRoute(page: HomeRoute.page, guards: [getIt<AppLockGuard>()]),
     AutoRoute(page: TimelineRoute.page),
     AutoRoute(page: SettingsRoute.page),
+    AutoRoute(page: ThemePickerRoute.page),
     AutoRoute(page: CalendarRoute.page),
     AutoRoute(page: MomentDetailRoute.page, guards: [getIt<AppLockGuard>()]),
     AutoRoute(page: CreateMomentRoute.page),
