@@ -7263,6 +7263,474 @@ class AppSettingsCompanion extends UpdateCompanion<AppSetting> {
   }
 }
 
+class $AppThemesTable extends AppThemes
+    with TableInfo<$AppThemesTable, AppTheme> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AppThemesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _isBuiltInMeta = const VerificationMeta(
+    'isBuiltIn',
+  );
+  @override
+  late final GeneratedColumn<bool> isBuiltIn = GeneratedColumn<bool>(
+    'is_built_in',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_built_in" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _lightColorsMeta = const VerificationMeta(
+    'lightColors',
+  );
+  @override
+  late final GeneratedColumn<String> lightColors = GeneratedColumn<String>(
+    'light_colors',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _darkColorsMeta = const VerificationMeta(
+    'darkColors',
+  );
+  @override
+  late final GeneratedColumn<String> darkColors = GeneratedColumn<String>(
+    'dark_colors',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    sortOrder,
+    isBuiltIn,
+    lightColors,
+    darkColors,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'app_themes';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AppTheme> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    }
+    if (data.containsKey('is_built_in')) {
+      context.handle(
+        _isBuiltInMeta,
+        isBuiltIn.isAcceptableOrUnknown(data['is_built_in']!, _isBuiltInMeta),
+      );
+    }
+    if (data.containsKey('light_colors')) {
+      context.handle(
+        _lightColorsMeta,
+        lightColors.isAcceptableOrUnknown(
+          data['light_colors']!,
+          _lightColorsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_lightColorsMeta);
+    }
+    if (data.containsKey('dark_colors')) {
+      context.handle(
+        _darkColorsMeta,
+        darkColors.isAcceptableOrUnknown(data['dark_colors']!, _darkColorsMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_darkColorsMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AppTheme map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AppTheme(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      isBuiltIn: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_built_in'],
+      )!,
+      lightColors: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}light_colors'],
+      )!,
+      darkColors: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}dark_colors'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $AppThemesTable createAlias(String alias) {
+    return $AppThemesTable(attachedDatabase, alias);
+  }
+}
+
+class AppTheme extends DataClass implements Insertable<AppTheme> {
+  final String id;
+  final String name;
+  final int sortOrder;
+  final bool isBuiltIn;
+  final String lightColors;
+  final String darkColors;
+  final DateTime updatedAt;
+  const AppTheme({
+    required this.id,
+    required this.name,
+    required this.sortOrder,
+    required this.isBuiltIn,
+    required this.lightColors,
+    required this.darkColors,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    map['sort_order'] = Variable<int>(sortOrder);
+    map['is_built_in'] = Variable<bool>(isBuiltIn);
+    map['light_colors'] = Variable<String>(lightColors);
+    map['dark_colors'] = Variable<String>(darkColors);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  AppThemesCompanion toCompanion(bool nullToAbsent) {
+    return AppThemesCompanion(
+      id: Value(id),
+      name: Value(name),
+      sortOrder: Value(sortOrder),
+      isBuiltIn: Value(isBuiltIn),
+      lightColors: Value(lightColors),
+      darkColors: Value(darkColors),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory AppTheme.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AppTheme(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      isBuiltIn: serializer.fromJson<bool>(json['isBuiltIn']),
+      lightColors: serializer.fromJson<String>(json['lightColors']),
+      darkColors: serializer.fromJson<String>(json['darkColors']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'isBuiltIn': serializer.toJson<bool>(isBuiltIn),
+      'lightColors': serializer.toJson<String>(lightColors),
+      'darkColors': serializer.toJson<String>(darkColors),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  AppTheme copyWith({
+    String? id,
+    String? name,
+    int? sortOrder,
+    bool? isBuiltIn,
+    String? lightColors,
+    String? darkColors,
+    DateTime? updatedAt,
+  }) => AppTheme(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    sortOrder: sortOrder ?? this.sortOrder,
+    isBuiltIn: isBuiltIn ?? this.isBuiltIn,
+    lightColors: lightColors ?? this.lightColors,
+    darkColors: darkColors ?? this.darkColors,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  AppTheme copyWithCompanion(AppThemesCompanion data) {
+    return AppTheme(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      isBuiltIn: data.isBuiltIn.present ? data.isBuiltIn.value : this.isBuiltIn,
+      lightColors: data.lightColors.present
+          ? data.lightColors.value
+          : this.lightColors,
+      darkColors: data.darkColors.present
+          ? data.darkColors.value
+          : this.darkColors,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AppTheme(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('isBuiltIn: $isBuiltIn, ')
+          ..write('lightColors: $lightColors, ')
+          ..write('darkColors: $darkColors, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    name,
+    sortOrder,
+    isBuiltIn,
+    lightColors,
+    darkColors,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppTheme &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.sortOrder == this.sortOrder &&
+          other.isBuiltIn == this.isBuiltIn &&
+          other.lightColors == this.lightColors &&
+          other.darkColors == this.darkColors &&
+          other.updatedAt == this.updatedAt);
+}
+
+class AppThemesCompanion extends UpdateCompanion<AppTheme> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<int> sortOrder;
+  final Value<bool> isBuiltIn;
+  final Value<String> lightColors;
+  final Value<String> darkColors;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const AppThemesCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.isBuiltIn = const Value.absent(),
+    this.lightColors = const Value.absent(),
+    this.darkColors = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  AppThemesCompanion.insert({
+    required String id,
+    required String name,
+    this.sortOrder = const Value.absent(),
+    this.isBuiltIn = const Value.absent(),
+    required String lightColors,
+    required String darkColors,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name),
+       lightColors = Value(lightColors),
+       darkColors = Value(darkColors),
+       updatedAt = Value(updatedAt);
+  static Insertable<AppTheme> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<int>? sortOrder,
+    Expression<bool>? isBuiltIn,
+    Expression<String>? lightColors,
+    Expression<String>? darkColors,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (isBuiltIn != null) 'is_built_in': isBuiltIn,
+      if (lightColors != null) 'light_colors': lightColors,
+      if (darkColors != null) 'dark_colors': darkColors,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  AppThemesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<int>? sortOrder,
+    Value<bool>? isBuiltIn,
+    Value<String>? lightColors,
+    Value<String>? darkColors,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return AppThemesCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      sortOrder: sortOrder ?? this.sortOrder,
+      isBuiltIn: isBuiltIn ?? this.isBuiltIn,
+      lightColors: lightColors ?? this.lightColors,
+      darkColors: darkColors ?? this.darkColors,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (isBuiltIn.present) {
+      map['is_built_in'] = Variable<bool>(isBuiltIn.value);
+    }
+    if (lightColors.present) {
+      map['light_colors'] = Variable<String>(lightColors.value);
+    }
+    if (darkColors.present) {
+      map['dark_colors'] = Variable<String>(darkColors.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AppThemesCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('isBuiltIn: $isBuiltIn, ')
+          ..write('lightColors: $lightColors, ')
+          ..write('darkColors: $darkColors, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -7285,6 +7753,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $MomentWidgetConfigsTable momentWidgetConfigs =
       $MomentWidgetConfigsTable(this);
   late final $AppSettingsTable appSettings = $AppSettingsTable(this);
+  late final $AppThemesTable appThemes = $AppThemesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -7302,6 +7771,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     momentCollectionItems,
     momentWidgetConfigs,
     appSettings,
+    appThemes,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -13069,6 +13539,242 @@ typedef $$AppSettingsTableProcessedTableManager =
       AppSetting,
       PrefetchHooks Function()
     >;
+typedef $$AppThemesTableCreateCompanionBuilder =
+    AppThemesCompanion Function({
+      required String id,
+      required String name,
+      Value<int> sortOrder,
+      Value<bool> isBuiltIn,
+      required String lightColors,
+      required String darkColors,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$AppThemesTableUpdateCompanionBuilder =
+    AppThemesCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<int> sortOrder,
+      Value<bool> isBuiltIn,
+      Value<String> lightColors,
+      Value<String> darkColors,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+class $$AppThemesTableFilterComposer
+    extends Composer<_$AppDatabase, $AppThemesTable> {
+  $$AppThemesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isBuiltIn => $composableBuilder(
+    column: $table.isBuiltIn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lightColors => $composableBuilder(
+    column: $table.lightColors,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get darkColors => $composableBuilder(
+    column: $table.darkColors,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$AppThemesTableOrderingComposer
+    extends Composer<_$AppDatabase, $AppThemesTable> {
+  $$AppThemesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isBuiltIn => $composableBuilder(
+    column: $table.isBuiltIn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get lightColors => $composableBuilder(
+    column: $table.lightColors,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get darkColors => $composableBuilder(
+    column: $table.darkColors,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$AppThemesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $AppThemesTable> {
+  $$AppThemesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<bool> get isBuiltIn =>
+      $composableBuilder(column: $table.isBuiltIn, builder: (column) => column);
+
+  GeneratedColumn<String> get lightColors => $composableBuilder(
+    column: $table.lightColors,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get darkColors => $composableBuilder(
+    column: $table.darkColors,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$AppThemesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $AppThemesTable,
+          AppTheme,
+          $$AppThemesTableFilterComposer,
+          $$AppThemesTableOrderingComposer,
+          $$AppThemesTableAnnotationComposer,
+          $$AppThemesTableCreateCompanionBuilder,
+          $$AppThemesTableUpdateCompanionBuilder,
+          (AppTheme, BaseReferences<_$AppDatabase, $AppThemesTable, AppTheme>),
+          AppTheme,
+          PrefetchHooks Function()
+        > {
+  $$AppThemesTableTableManager(_$AppDatabase db, $AppThemesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AppThemesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$AppThemesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$AppThemesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<bool> isBuiltIn = const Value.absent(),
+                Value<String> lightColors = const Value.absent(),
+                Value<String> darkColors = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => AppThemesCompanion(
+                id: id,
+                name: name,
+                sortOrder: sortOrder,
+                isBuiltIn: isBuiltIn,
+                lightColors: lightColors,
+                darkColors: darkColors,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                Value<int> sortOrder = const Value.absent(),
+                Value<bool> isBuiltIn = const Value.absent(),
+                required String lightColors,
+                required String darkColors,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => AppThemesCompanion.insert(
+                id: id,
+                name: name,
+                sortOrder: sortOrder,
+                isBuiltIn: isBuiltIn,
+                lightColors: lightColors,
+                darkColors: darkColors,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$AppThemesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $AppThemesTable,
+      AppTheme,
+      $$AppThemesTableFilterComposer,
+      $$AppThemesTableOrderingComposer,
+      $$AppThemesTableAnnotationComposer,
+      $$AppThemesTableCreateCompanionBuilder,
+      $$AppThemesTableUpdateCompanionBuilder,
+      (AppTheme, BaseReferences<_$AppDatabase, $AppThemesTable, AppTheme>),
+      AppTheme,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -13097,4 +13803,6 @@ class $AppDatabaseManager {
       $$MomentWidgetConfigsTableTableManager(_db, _db.momentWidgetConfigs);
   $$AppSettingsTableTableManager get appSettings =>
       $$AppSettingsTableTableManager(_db, _db.appSettings);
+  $$AppThemesTableTableManager get appThemes =>
+      $$AppThemesTableTableManager(_db, _db.appThemes);
 }

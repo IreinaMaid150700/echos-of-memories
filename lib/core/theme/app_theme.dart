@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:music_app/features/theme/domain/data/default_app_themes.dart';
 import 'app_colors.dart';
 import 'app_custom_colors.dart';
 
@@ -84,10 +85,7 @@ class AppTheme {
   static ThemeData _buildBaseTheme({
     required Brightness brightness,
     required AppCustomColors colors,
-    required Color shadowColor,
-    required Color cardShadowColor,
-    required Color fabShadowColor,
-    required Color bottomNavShadowColor,
+    required Color onPrimary,
   }) {
     final colorScheme = ColorScheme.fromSeed(
       seedColor: colors.primary,
@@ -96,9 +94,7 @@ class AppTheme {
       secondary: colors.secondary,
       tertiary: colors.tertiary,
       surface: colors.surface,
-      onPrimary: brightness == Brightness.light
-          ? AppLightColors.textPrimary
-          : AppDarkColors.background,
+      onPrimary: onPrimary,
       onSurface: colors.textPrimary,
     );
 
@@ -121,9 +117,7 @@ class AppTheme {
 
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: colors.primary,
-        foregroundColor: brightness == Brightness.light
-            ? AppLightColors.textPrimary
-            : AppDarkColors.background,
+        foregroundColor: onPrimary,
         elevation: 8,
         shape: const CircleBorder(),
         sizeConstraints: const BoxConstraints.tightFor(width: 60, height: 60),
@@ -207,27 +201,33 @@ class AppTheme {
     );
   }
 
+  /// Builds a [ThemeData] for one palette variant.
+  static ThemeData build({
+    required AppCustomColors colors,
+    required Color onPrimary,
+    required Brightness brightness,
+  }) =>
+      _buildBaseTheme(
+        brightness: brightness,
+        colors: colors,
+        onPrimary: onPrimary,
+      );
+
   static ThemeData get lightTheme {
-    final colors = AppCustomColors.light();
-    return _buildBaseTheme(
+    final palette = kDefaultThemePalette.light;
+    return build(
+      colors: palette.toAppCustomColors(),
+      onPrimary: palette.onPrimary,
       brightness: Brightness.light,
-      colors: colors,
-      shadowColor: const Color(0x0F000000),
-      cardShadowColor: const Color(0x0F000000),
-      fabShadowColor: const Color(0x29000000),
-      bottomNavShadowColor: const Color(0x0F000000),
     );
   }
 
   static ThemeData get darkTheme {
-    final colors = AppCustomColors.dark();
-    return _buildBaseTheme(
+    final palette = kDefaultThemePalette.dark;
+    return build(
+      colors: palette.toAppCustomColors(),
+      onPrimary: palette.onPrimary,
       brightness: Brightness.dark,
-      colors: colors,
-      shadowColor: const Color(0x33000000),
-      cardShadowColor: const Color(0x33000000),
-      fabShadowColor: const Color(0x59000000),
-      bottomNavShadowColor: const Color(0x40000000),
     );
   }
 }

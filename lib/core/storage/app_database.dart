@@ -1,11 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:music_app/features/theme/domain/data/default_app_themes.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
 import 'tables/app_settings_table.dart';
+import 'tables/app_themes_table.dart';
 import 'tables/moment_assets_table.dart';
 import 'tables/moment_collection_items_table.dart';
 import 'tables/moment_collections_table.dart';
@@ -35,6 +38,7 @@ part 'app_database.g.dart';
     MomentTonePacks,
     MomentTones,
     AppSettings,
+    AppThemes,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -44,7 +48,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.e);
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration {
@@ -53,6 +57,7 @@ class AppDatabase extends _$AppDatabase {
         await customStatement('PRAGMA foreign_keys = ON');
         if (details.wasCreated) {
           await _seedDefaultPacks();
+          await _seedDefaultThemes();
         }
       },
       onCreate: (Migrator m) async {
@@ -145,8 +150,34 @@ class AppDatabase extends _$AppDatabase {
         if (from < 2) {
           await m.addColumn(momentCollections, momentCollections.isLocked);
         }
+        if (from < 3) {
+          await m.createTable(appThemes);
+          await _seedDefaultThemes();
+        }
       },
     );
+  }
+
+  /// Seeds the built-in selectable themes. Runs on first DB creation and on
+  /// upgrade to schema v3. Idempotent via insertOrIgnore by id.
+  Future<void> _seedDefaultThemes() async {
+    await transaction(() async {
+      final now = DateTime.now();
+      for (final theme in kDefaultThemes) {
+        await into(appThemes).insert(
+          AppThemesCompanion.insert(
+            id: theme.id,
+            name: theme.name,
+            sortOrder: Value(theme.sortOrder),
+            isBuiltIn: Value(theme.isBuiltIn),
+            lightColors: jsonEncode(theme.light.toJson()),
+            darkColors: jsonEncode(theme.dark.toJson()),
+            updatedAt: now,
+          ),
+          mode: InsertMode.insertOrIgnore,
+        );
+      }
+    });
   }
 
   /// Seeds the built-in "Basic" mood & tone packs. Runs once when the database

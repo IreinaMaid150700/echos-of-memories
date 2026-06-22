@@ -10,6 +10,8 @@ import 'package:music_app/core/theme/app_custom_colors.dart';
 import 'package:music_app/features/app_lock/domain/repositories/app_lock_repository.dart';
 import 'package:music_app/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:music_app/features/settings/presentation/cubit/settings_state.dart';
+import 'package:music_app/features/theme/presentation/cubit/theme_cubit.dart';
+import 'package:music_app/features/theme/presentation/cubit/theme_state.dart';
 
 part '../widgets/settings_switch_item.dart';
 part '../widgets/settings_navigation_item.dart';
@@ -56,10 +58,17 @@ class SettingsScreen extends StatelessWidget {
               _SettingsSection(
                 title: 'Appearance',
                 items: [
-                  _SettingsNavigationItem(
-                    icon: Icons.palette_outlined,
-                    title: 'Theme',
-                    subtitle: 'System',
+                  BlocBuilder<ThemeCubit, ThemeState>(
+                    buildWhen: (p, c) => p.palette.data != c.palette.data,
+                    builder: (context, state) {
+                      return _SettingsNavigationItem(
+                        icon: Icons.palette_outlined,
+                        title: 'Theme',
+                        subtitle: state.palette.data?.name ?? 'Warm Sand',
+                        onTap: () =>
+                            context.router.push(const ThemePickerRoute()),
+                      );
+                    },
                   ),
                 ],
               ),

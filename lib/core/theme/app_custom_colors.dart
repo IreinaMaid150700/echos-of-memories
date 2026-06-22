@@ -16,6 +16,10 @@ class AppCustomColors extends ThemeExtension<AppCustomColors> {
   final Color borderDefault;
   final Color dangerBackground;
   final Color dangerText;
+  final Color successBackground;
+  final Color successText;
+  final Color warningBackground;
+  final Color warningText;
   final Color moodCalmBackground;
   final Color moodCalmText;
   final Color moodWarmBackground;
@@ -48,6 +52,10 @@ class AppCustomColors extends ThemeExtension<AppCustomColors> {
     required this.borderDefault,
     required this.dangerBackground,
     required this.dangerText,
+    required this.successBackground,
+    required this.successText,
+    required this.warningBackground,
+    required this.warningText,
     required this.moodCalmBackground,
     required this.moodCalmText,
     required this.moodWarmBackground,
@@ -81,6 +89,10 @@ class AppCustomColors extends ThemeExtension<AppCustomColors> {
     borderDefault: AppLightColors.borderSubtle,
     dangerBackground: AppLightColors.dangerBackground,
     dangerText: AppLightColors.dangerText,
+    successBackground: AppLightColors.successBackground,
+    successText: AppLightColors.successText,
+    warningBackground: AppLightColors.warningBackground,
+    warningText: AppLightColors.warningText,
     moodCalmBackground: AppLightColors.moodCalmBackground,
     moodCalmText: AppLightColors.moodCalmText,
     moodWarmBackground: AppLightColors.moodWarmBackground,
@@ -114,6 +126,10 @@ class AppCustomColors extends ThemeExtension<AppCustomColors> {
     borderDefault: AppDarkColors.borderDefault,
     dangerBackground: AppDarkColors.dangerBackground,
     dangerText: AppDarkColors.dangerText,
+    successBackground: AppDarkColors.successBackground,
+    successText: AppDarkColors.successText,
+    warningBackground: AppDarkColors.warningBackground,
+    warningText: AppDarkColors.warningText,
     moodCalmBackground: AppDarkColors.moodCalmBackground,
     moodCalmText: AppDarkColors.moodCalmText,
     moodWarmBackground: AppDarkColors.moodWarmBackground,
@@ -148,6 +164,10 @@ class AppCustomColors extends ThemeExtension<AppCustomColors> {
     Color? borderDefault,
     Color? dangerBackground,
     Color? dangerText,
+    Color? successBackground,
+    Color? successText,
+    Color? warningBackground,
+    Color? warningText,
     Color? moodCalmBackground,
     Color? moodCalmText,
     Color? moodWarmBackground,
@@ -180,6 +200,10 @@ class AppCustomColors extends ThemeExtension<AppCustomColors> {
       borderDefault: borderDefault ?? this.borderDefault,
       dangerBackground: dangerBackground ?? this.dangerBackground,
       dangerText: dangerText ?? this.dangerText,
+      successBackground: successBackground ?? this.successBackground,
+      successText: successText ?? this.successText,
+      warningBackground: warningBackground ?? this.warningBackground,
+      warningText: warningText ?? this.warningText,
       moodCalmBackground: moodCalmBackground ?? this.moodCalmBackground,
       moodCalmText: moodCalmText ?? this.moodCalmText,
       moodWarmBackground: moodWarmBackground ?? this.moodWarmBackground,
@@ -228,6 +252,18 @@ class AppCustomColors extends ThemeExtension<AppCustomColors> {
         t,
       )!,
       dangerText: Color.lerp(dangerText, other.dangerText, t)!,
+      successBackground: Color.lerp(
+        successBackground,
+        other.successBackground,
+        t,
+      )!,
+      successText: Color.lerp(successText, other.successText, t)!,
+      warningBackground: Color.lerp(
+        warningBackground,
+        other.warningBackground,
+        t,
+      )!,
+      warningText: Color.lerp(warningText, other.warningText, t)!,
       moodCalmBackground: Color.lerp(
         moodCalmBackground,
         other.moodCalmBackground,

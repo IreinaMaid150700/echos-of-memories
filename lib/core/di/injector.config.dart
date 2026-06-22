@@ -79,11 +79,29 @@ import '../../features/mood_tone/domain/usecases/get_moods_usecase.dart'
     as _i874;
 import '../../features/mood_tone/domain/usecases/get_tones_usecase.dart'
     as _i618;
+import '../../features/search/data/repositories/search_history_repository_impl.dart'
+    as _i25;
+import '../../features/search/domain/repositories/search_history_repository.dart'
+    as _i513;
+import '../../features/search/domain/usecases/add_recent_search_usecase.dart'
+    as _i951;
+import '../../features/search/domain/usecases/get_recent_searches_usecase.dart'
+    as _i224;
+import '../../features/search/domain/usecases/get_suggested_tags_usecase.dart'
+    as _i1026;
+import '../../features/search/domain/usecases/search_moments_usecase.dart'
+    as _i87;
 import '../../features/theme/data/repositories/theme_repository_impl.dart'
     as _i592;
 import '../../features/theme/domain/repositories/theme_repository.dart'
     as _i869;
+import '../../features/theme/domain/usecases/get_available_themes_usecase.dart'
+    as _i426;
+import '../../features/theme/domain/usecases/get_selected_theme_usecase.dart'
+    as _i1;
 import '../../features/theme/domain/usecases/get_theme_usecase.dart' as _i620;
+import '../../features/theme/domain/usecases/set_selected_theme_usecase.dart'
+    as _i831;
 import '../../features/theme/domain/usecases/set_theme_usecase.dart' as _i684;
 import '../../features/theme/presentation/cubit/theme_cubit.dart' as _i5;
 import '../location/data/location_service.dart' as _i659;
@@ -212,6 +230,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i583.WatchMomentsUseCase>(
       () => _i583.WatchMomentsUseCase(gh<_i286.MomentRepository>()),
     );
+    gh.factory<_i87.SearchMomentsUseCase>(
+      () => _i87.SearchMomentsUseCase(gh<_i286.MomentRepository>()),
+    );
     gh.factory<_i938.CreateTagUseCase>(
       () => _i938.CreateTagUseCase(gh<_i705.TagRepository>()),
     );
@@ -221,8 +242,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i173.GetTagsUseCase>(
       () => _i173.GetTagsUseCase(gh<_i705.TagRepository>()),
     );
+    gh.factory<_i1026.GetSuggestedTagsUseCase>(
+      () => _i1026.GetSuggestedTagsUseCase(gh<_i705.TagRepository>()),
+    );
     gh.lazySingleton<_i869.ThemeRepository>(
-      () => _i592.ThemeRepositoryImpl(gh<_i636.PreferencesService>()),
+      () => _i592.ThemeRepositoryImpl(
+        gh<_i636.PreferencesService>(),
+        gh<_i690.AppDatabase>(),
+      ),
     );
     gh.lazySingleton<_i361.Dio>(() => networkModule.dio(gh<_i667.DioClient>()));
     gh.factory<_i874.GetMoodsUseCase>(
@@ -234,8 +261,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i90.PickMomentImagesUseCase>(
       () => _i90.PickMomentImagesUseCase(gh<_i181.MediaPickerGateway>()),
     );
+    gh.lazySingleton<_i513.SearchHistoryRepository>(
+      () => _i25.SearchHistoryRepositoryImpl(gh<_i636.PreferencesService>()),
+    );
     gh.factory<_i451.CreateCollectionUsecase>(
       () => _i451.CreateCollectionUsecase(gh<_i1058.CollectionRepository>()),
+    );
+    gh.factory<_i951.AddRecentSearchUseCase>(
+      () => _i951.AddRecentSearchUseCase(gh<_i513.SearchHistoryRepository>()),
+    );
+    gh.factory<_i224.GetRecentSearchesUseCase>(
+      () => _i224.GetRecentSearchesUseCase(gh<_i513.SearchHistoryRepository>()),
     );
     gh.factory<_i693.PinCubit>(
       () => _i693.PinCubit(
@@ -244,8 +280,17 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i746.LockSessionCubit>(),
       ),
     );
+    gh.factory<_i426.GetAvailableThemesUseCase>(
+      () => _i426.GetAvailableThemesUseCase(gh<_i869.ThemeRepository>()),
+    );
+    gh.factory<_i1.GetSelectedThemeUseCase>(
+      () => _i1.GetSelectedThemeUseCase(gh<_i869.ThemeRepository>()),
+    );
     gh.factory<_i620.GetThemeUseCase>(
       () => _i620.GetThemeUseCase(gh<_i869.ThemeRepository>()),
+    );
+    gh.factory<_i831.SetSelectedThemeUseCase>(
+      () => _i831.SetSelectedThemeUseCase(gh<_i869.ThemeRepository>()),
     );
     gh.factory<_i684.SetThemeUseCase>(
       () => _i684.SetThemeUseCase(gh<_i869.ThemeRepository>()),
@@ -254,6 +299,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i5.ThemeCubit(
         gh<_i620.GetThemeUseCase>(),
         gh<_i684.SetThemeUseCase>(),
+        gh<_i426.GetAvailableThemesUseCase>(),
+        gh<_i1.GetSelectedThemeUseCase>(),
+        gh<_i831.SetSelectedThemeUseCase>(),
       ),
     );
     return this;

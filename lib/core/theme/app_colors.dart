@@ -4,6 +4,7 @@ class AppLightColors {
   AppLightColors._();
 
   static const Color primary = Color(0xFFD67D61);
+  static const Color onPrimary = Color(0xFFFFF8F3);
   static const Color secondary = Color(0xFF8A9A84);
   static const Color tertiary = Color(0xFFE8D9C5);
   static const Color background = Color(0xFFF9F6F1);
@@ -19,14 +20,20 @@ class AppLightColors {
   static const Color dangerBackground = Color(0xFFFEE2E2);
   static const Color dangerText = Color(0xFF991B1B);
 
+  static const Color successBackground = Color(0xFFE3EEDB);
+  static const Color successText = Color(0xFF3F5733);
+
+  static const Color warningBackground = Color(0xFFF8ECCF);
+  static const Color warningText = Color(0xFF7A5A1B);
+
   static const Color moodCalmBackground = Color(0xFFDCEBD5);
   static const Color moodCalmText = Color(0xFF40523B);
 
   static const Color moodWarmBackground = Color(0xFFF4C3B2);
   static const Color moodWarmText = Color(0xFF6B2D1F);
 
-  static const Color moodFocusedBackground = Color(0xFFFFD8CC);
-  static const Color moodFocusedText = Color(0xFF6B2D1F);
+  static const Color moodFocusedBackground = Color(0xFFE6D4DE);
+  static const Color moodFocusedText = Color(0xFF5A3F52);
 
   static const Color moodPeacefulBackground = Color(0xFFE8D9C5);
   static const Color moodPeacefulText = Color(0xFF5C4A3A);
@@ -46,6 +53,7 @@ class AppDarkColors {
   AppDarkColors._();
 
   static const Color primary = Color(0xFFD4C3A1);
+  static const Color onPrimary = Color(0xFF1C1C1A);
   static const Color secondary = Color(0xFF6B705C);
   static const Color tertiary = Color(0xFFA5A58D);
   static const Color background = Color(0xFF1C1C1A);
@@ -62,14 +70,20 @@ class AppDarkColors {
   static const Color dangerBackground = Color(0xFF8F1D1D);
   static const Color dangerText = Color(0xFFFFE8E8);
 
+  static const Color successBackground = Color(0xFF445239);
+  static const Color successText = Color(0xFFE9F2E1);
+
+  static const Color warningBackground = Color(0xFF5C4A24);
+  static const Color warningText = Color(0xFFF6E6BD);
+
   static const Color moodCalmBackground = Color(0xFF6B705C);
   static const Color moodCalmText = Color(0xFFF5F1E8);
 
   static const Color moodWarmBackground = Color(0xFF9C4F38);
   static const Color moodWarmText = Color(0xFFFFF1EA);
 
-  static const Color moodFocusedBackground = Color(0xFF9C4F38);
-  static const Color moodFocusedText = Color(0xFFFFF1EA);
+  static const Color moodFocusedBackground = Color(0xFF5A4456);
+  static const Color moodFocusedText = Color(0xFFF0E4EE);
 
   static const Color moodPeacefulBackground = Color(0xFFA5A58D);
   static const Color moodPeacefulText = Color(0xFF2A2925);

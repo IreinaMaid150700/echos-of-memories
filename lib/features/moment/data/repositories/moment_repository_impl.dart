@@ -14,6 +14,7 @@ import 'package:music_app/features/moment/domain/models/create_moment_params.dar
 import 'package:music_app/features/moment/domain/repositories/moment_repository.dart';
 import 'package:music_app/features/mood_tone/domain/models/mood_entity.dart';
 import 'package:music_app/features/mood_tone/domain/models/tone_entity.dart';
+import 'package:music_app/features/search/domain/models/search_filters.dart';
 import 'package:uuid/uuid.dart';
 
 @LazySingleton(as: MomentRepository)
@@ -71,6 +72,73 @@ class MomentRepositoryImpl implements MomentRepository {
         longitude: moment.longitude,
       );
     }).toList();
+  }
+
+  @override
+  Future<Either<Failure, List<MomentSummary>>> searchMoments(
+    SearchFilters filters,
+  ) async {
+    try {
+      final query = _db.select(_db.moments).join([
+        leftOuterJoin(
+          _db.momentMoods,
+          _db.momentMoods.id.equalsExp(_db.moments.moodId),
+        ),
+        leftOuterJoin(
+          _db.momentTones,
+          _db.momentTones.id.equalsExp(_db.moments.toneId),
+        ),
+        leftOuterJoin(
+          _db.momentAssets,
+          _db.momentAssets.id.equalsExp(_db.moments.coverAssetId),
+        ),
+      ])..where(_db.moments.deletedAt.isNull());
+
+      final text = filters.text?.trim();
+      if (text != null && text.isNotEmpty) {
+        final like = '%$text%';
+        var cond =
+            _db.moments.title.like(like) |
+            _db.moments.note.like(like) |
+            _db.moments.locationName.like(like) |
+            _db.moments.city.like(like) |
+            _db.moments.address.like(like);
+
+        // Tag-name match: resolve matching tagIds → momentIds via a pre-query,
+        // then OR moments.id.isIn(...).
+        final matchingTags =
+            await (_db.select(_db.momentTags)..where(
+                  (t) =>
+                      t.normalizedName.like('%${text.toLowerCase()}%') &
+                      t.deletedAt.isNull(),
+                ))
+                .get();
+        if (matchingTags.isNotEmpty) {
+          final tagIds = matchingTags.map((t) => t.id).toList();
+          final links =
+              await (_db.select(_db.momentTagLinks)
+                    ..where((l) => l.tagId.isIn(tagIds)))
+                  .get();
+          final momentIds = links.map((l) => l.momentId).toSet().toList();
+          if (momentIds.isNotEmpty) {
+            cond = cond | _db.moments.id.isIn(momentIds);
+          }
+        }
+
+        query.where(cond);
+      }
+
+      if (filters.moodId != null) {
+        query.where(_db.moments.moodId.equals(filters.moodId!));
+      }
+
+      query.orderBy([OrderingTerm.desc(_db.moments.momentDate)]);
+
+      return Right(await _summariesFromRows(await query.get()));
+    } catch (e, s) {
+      log('searchMoments failed', error: e, stackTrace: s);
+      return const Left(CacheFailure(message: 'Không tìm được khoảnh khắc'));
+    }
   }
 
   @override

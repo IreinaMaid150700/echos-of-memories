@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ThemeState {
 
- Loaded<ThemeMode> get theme;
+ Loaded<ThemeMode> get theme; Loaded<AppThemePalette> get palette; Loaded<List<AppThemePalette>> get available;
 /// Create a copy of ThemeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ThemeStateCopyWith<ThemeState> get copyWith => _$ThemeStateCopyWithImpl<ThemeSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ThemeState&&(identical(other.theme, theme) || other.theme == theme));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ThemeState&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.palette, palette) || other.palette == palette)&&(identical(other.available, available) || other.available == available));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,theme);
+int get hashCode => Object.hash(runtimeType,theme,palette,available);
 
 @override
 String toString() {
-  return 'ThemeState(theme: $theme)';
+  return 'ThemeState(theme: $theme, palette: $palette, available: $available)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ThemeStateCopyWith<$Res>  {
   factory $ThemeStateCopyWith(ThemeState value, $Res Function(ThemeState) _then) = _$ThemeStateCopyWithImpl;
 @useResult
 $Res call({
- Loaded<ThemeMode> theme
+ Loaded<ThemeMode> theme, Loaded<AppThemePalette> palette, Loaded<List<AppThemePalette>> available
 });
 
 
@@ -62,10 +62,12 @@ class _$ThemeStateCopyWithImpl<$Res>
 
 /// Create a copy of ThemeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? theme = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? theme = null,Object? palette = null,Object? available = null,}) {
   return _then(_self.copyWith(
 theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
-as Loaded<ThemeMode>,
+as Loaded<ThemeMode>,palette: null == palette ? _self.palette : palette // ignore: cast_nullable_to_non_nullable
+as Loaded<AppThemePalette>,available: null == available ? _self.available : available // ignore: cast_nullable_to_non_nullable
+as Loaded<List<AppThemePalette>>,
   ));
 }
 
@@ -150,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Loaded<ThemeMode> theme)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Loaded<ThemeMode> theme,  Loaded<AppThemePalette> palette,  Loaded<List<AppThemePalette>> available)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ThemeState() when $default != null:
-return $default(_that.theme);case _:
+return $default(_that.theme,_that.palette,_that.available);case _:
   return orElse();
 
 }
@@ -171,10 +173,10 @@ return $default(_that.theme);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Loaded<ThemeMode> theme)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Loaded<ThemeMode> theme,  Loaded<AppThemePalette> palette,  Loaded<List<AppThemePalette>> available)  $default,) {final _that = this;
 switch (_that) {
 case _ThemeState():
-return $default(_that.theme);case _:
+return $default(_that.theme,_that.palette,_that.available);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -191,10 +193,10 @@ return $default(_that.theme);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Loaded<ThemeMode> theme)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Loaded<ThemeMode> theme,  Loaded<AppThemePalette> palette,  Loaded<List<AppThemePalette>> available)?  $default,) {final _that = this;
 switch (_that) {
 case _ThemeState() when $default != null:
-return $default(_that.theme);case _:
+return $default(_that.theme,_that.palette,_that.available);case _:
   return null;
 
 }
@@ -206,10 +208,12 @@ return $default(_that.theme);case _:
 
 
 class _ThemeState implements ThemeState {
-  const _ThemeState({this.theme = const Loaded<ThemeMode>()});
+  const _ThemeState({this.theme = const Loaded<ThemeMode>(), this.palette = const Loaded<AppThemePalette>(), this.available = const Loaded<List<AppThemePalette>>()});
   
 
 @override@JsonKey() final  Loaded<ThemeMode> theme;
+@override@JsonKey() final  Loaded<AppThemePalette> palette;
+@override@JsonKey() final  Loaded<List<AppThemePalette>> available;
 
 /// Create a copy of ThemeState
 /// with the given fields replaced by the non-null parameter values.
@@ -221,16 +225,16 @@ _$ThemeStateCopyWith<_ThemeState> get copyWith => __$ThemeStateCopyWithImpl<_The
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ThemeState&&(identical(other.theme, theme) || other.theme == theme));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ThemeState&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.palette, palette) || other.palette == palette)&&(identical(other.available, available) || other.available == available));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,theme);
+int get hashCode => Object.hash(runtimeType,theme,palette,available);
 
 @override
 String toString() {
-  return 'ThemeState(theme: $theme)';
+  return 'ThemeState(theme: $theme, palette: $palette, available: $available)';
 }
 
 
@@ -241,7 +245,7 @@ abstract mixin class _$ThemeStateCopyWith<$Res> implements $ThemeStateCopyWith<$
   factory _$ThemeStateCopyWith(_ThemeState value, $Res Function(_ThemeState) _then) = __$ThemeStateCopyWithImpl;
 @override @useResult
 $Res call({
- Loaded<ThemeMode> theme
+ Loaded<ThemeMode> theme, Loaded<AppThemePalette> palette, Loaded<List<AppThemePalette>> available
 });
 
 
@@ -258,10 +262,12 @@ class __$ThemeStateCopyWithImpl<$Res>
 
 /// Create a copy of ThemeState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? theme = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? theme = null,Object? palette = null,Object? available = null,}) {
   return _then(_ThemeState(
 theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
-as Loaded<ThemeMode>,
+as Loaded<ThemeMode>,palette: null == palette ? _self.palette : palette // ignore: cast_nullable_to_non_nullable
+as Loaded<AppThemePalette>,available: null == available ? _self.available : available // ignore: cast_nullable_to_non_nullable
+as Loaded<List<AppThemePalette>>,
   ));
 }
 

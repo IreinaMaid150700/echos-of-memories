@@ -18,6 +18,7 @@ import 'package:music_app/features/moment/domain/usecases/watch_moments_usecase.
 
 /// Bản đồ hiển thị các moment có toạ độ + vị trí hiện tại của người dùng.
 /// Tile dùng OpenStreetMap (không cần API key).
+@RoutePage()
 class MapScreen extends StatelessWidget {
   const MapScreen({super.key});
 
