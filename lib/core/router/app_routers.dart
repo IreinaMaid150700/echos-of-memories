@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:music_app/core/di/injector.dart';
 import 'package:music_app/core/router/app_lock_guard.dart';
@@ -18,7 +17,9 @@ import 'package:music_app/features/create_moment/presentation/screens/create_mom
 import 'package:music_app/features/dev_db_viewer/presentation/screens/dev_db_viewer_screen.dart';
 import 'package:music_app/features/home/presentation/screens/home_screen.dart';
 import 'package:music_app/features/introduction/presentation/introduction_screen.dart';
+import 'package:music_app/features/map/presentation/screens/map_screen.dart';
 import 'package:music_app/features/moment_detail/presentation/screens/moment_detail_screen.dart';
+import 'package:music_app/features/search/presentation/screens/search_screen.dart';
 import 'package:music_app/features/settings/presentation/screens/settings_screen.dart';
 import 'package:music_app/features/splash_screen/splash_screen.dart';
 import 'package:music_app/features/theme/presentation/screens/theme_picker_screen.dart';
@@ -37,6 +38,8 @@ final class AppRouters extends RootStackRouter {
     AutoRoute(page: SettingsRoute.page),
     AutoRoute(page: ThemePickerRoute.page),
     AutoRoute(page: CalendarRoute.page),
+    AutoRoute(page: MapRoute.page),
+    AutoRoute(page: SearchRoute.page),
     AutoRoute(page: MomentDetailRoute.page, guards: [getIt<AppLockGuard>()]),
     AutoRoute(page: CreateMomentRoute.page),
     if (kDebugMode) ...[AutoRoute(page: DevDbViewerRoute.page)],
